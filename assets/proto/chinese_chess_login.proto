@@ -1,0 +1,10 @@
+package chinese_chess_login;
+
+message LoginReq {
+	optional string token = 1;
+	optional int32 player_id = 2;
+}
+
+message LoginRes {
+	optional int32 player_id = 1;
+}
