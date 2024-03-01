@@ -334,7 +334,7 @@ cc.Class({
     },
 
     onLoad () {
-        let ws = new WebSocket("ws://127.0.0.1:8001")
+        let ws = new WebSocket("ws://127.0.0.1:9012")
 
         let chess_mgr = this
         this.m_player_info = {}
