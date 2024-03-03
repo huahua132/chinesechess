@@ -888,6 +888,204 @@ export namespace chinese_chess_game {
     }
 }
 
+/** Namespace chinese_chess_hall. */
+export namespace chinese_chess_hall {
+
+    /** Properties of a matchReq. */
+    interface ImatchReq {
+
+        /** matchReq playerId */
+        playerId?: (number|null);
+    }
+
+    /** Represents a matchReq. */
+    class matchReq implements ImatchReq {
+
+        /**
+         * Constructs a new matchReq.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: chinese_chess_hall.ImatchReq);
+
+        /** matchReq playerId. */
+        public playerId: number;
+
+        /**
+         * Creates a new matchReq instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns matchReq instance
+         */
+        public static create(properties?: chinese_chess_hall.ImatchReq): chinese_chess_hall.matchReq;
+
+        /**
+         * Encodes the specified matchReq message. Does not implicitly {@link chinese_chess_hall.matchReq.verify|verify} messages.
+         * @param message matchReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: chinese_chess_hall.ImatchReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified matchReq message, length delimited. Does not implicitly {@link chinese_chess_hall.matchReq.verify|verify} messages.
+         * @param message matchReq message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: chinese_chess_hall.ImatchReq, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a matchReq message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns matchReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): chinese_chess_hall.matchReq;
+
+        /**
+         * Decodes a matchReq message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns matchReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): chinese_chess_hall.matchReq;
+
+        /**
+         * Verifies a matchReq message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a matchReq message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns matchReq
+         */
+        public static fromObject(object: { [k: string]: any }): chinese_chess_hall.matchReq;
+
+        /**
+         * Creates a plain object from a matchReq message. Also converts values to other types if specified.
+         * @param message matchReq
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: chinese_chess_hall.matchReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this matchReq to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for matchReq
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+
+    /** Properties of a matchRes. */
+    interface ImatchRes {
+
+        /** matchRes tableId */
+        tableId?: (number|null);
+    }
+
+    /** Represents a matchRes. */
+    class matchRes implements ImatchRes {
+
+        /**
+         * Constructs a new matchRes.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: chinese_chess_hall.ImatchRes);
+
+        /** matchRes tableId. */
+        public tableId: number;
+
+        /**
+         * Creates a new matchRes instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns matchRes instance
+         */
+        public static create(properties?: chinese_chess_hall.ImatchRes): chinese_chess_hall.matchRes;
+
+        /**
+         * Encodes the specified matchRes message. Does not implicitly {@link chinese_chess_hall.matchRes.verify|verify} messages.
+         * @param message matchRes message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: chinese_chess_hall.ImatchRes, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified matchRes message, length delimited. Does not implicitly {@link chinese_chess_hall.matchRes.verify|verify} messages.
+         * @param message matchRes message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: chinese_chess_hall.ImatchRes, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a matchRes message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns matchRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): chinese_chess_hall.matchRes;
+
+        /**
+         * Decodes a matchRes message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns matchRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): chinese_chess_hall.matchRes;
+
+        /**
+         * Verifies a matchRes message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a matchRes message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns matchRes
+         */
+        public static fromObject(object: { [k: string]: any }): chinese_chess_hall.matchRes;
+
+        /**
+         * Creates a plain object from a matchRes message. Also converts values to other types if specified.
+         * @param message matchRes
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: chinese_chess_hall.matchRes, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this matchRes to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+
+        /**
+         * Gets the default type url for matchRes
+         * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns The default type url
+         */
+        public static getTypeUrl(typeUrlPrefix?: string): string;
+    }
+}
+
 /** Namespace chinese_chess_login. */
 export namespace chinese_chess_login {
 
@@ -999,18 +1197,6 @@ export namespace chinese_chess_login {
 
         /** LoginRes playerId */
         playerId?: (number|null);
-
-        /** LoginRes hallServerId */
-        hallServerId?: (number|null);
-
-        /** LoginRes matchServerId */
-        matchServerId?: (number|null);
-
-        /** LoginRes roomServerId */
-        roomServerId?: (number|null);
-
-        /** LoginRes tableId */
-        tableId?: (string|null);
     }
 
     /** Represents a LoginRes. */
@@ -1024,18 +1210,6 @@ export namespace chinese_chess_login {
 
         /** LoginRes playerId. */
         public playerId: number;
-
-        /** LoginRes hallServerId. */
-        public hallServerId: number;
-
-        /** LoginRes matchServerId. */
-        public matchServerId: number;
-
-        /** LoginRes roomServerId. */
-        public roomServerId: number;
-
-        /** LoginRes tableId. */
-        public tableId: string;
 
         /**
          * Creates a new LoginRes instance using the specified properties.

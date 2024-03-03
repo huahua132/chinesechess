@@ -1,0 +1,11 @@
+package hallserver_login;
+
+message LoginReq {
+	optional string token = 1;
+	optional int64 player_id = 2;
+}
+
+message LoginRes {
+	optional int64 player_id = 1;
+	optional string nickname = 2;
+}

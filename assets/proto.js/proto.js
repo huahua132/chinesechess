@@ -3040,4 +3040,498 @@ $root.chinese_chess_login = (function() {
     return chinese_chess_login;
 })();
 
+$root.hallserver_login = (function() {
+
+    /**
+     * Namespace hallserver_login.
+     * @exports hallserver_login
+     * @namespace
+     */
+    var hallserver_login = {};
+
+    hallserver_login.LoginReq = (function() {
+
+        /**
+         * Properties of a LoginReq.
+         * @memberof hallserver_login
+         * @interface ILoginReq
+         * @property {string|null} [token] LoginReq token
+         * @property {number|Long|null} [playerId] LoginReq playerId
+         */
+
+        /**
+         * Constructs a new LoginReq.
+         * @memberof hallserver_login
+         * @classdesc Represents a LoginReq.
+         * @implements ILoginReq
+         * @constructor
+         * @param {hallserver_login.ILoginReq=} [properties] Properties to set
+         */
+        function LoginReq(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * LoginReq token.
+         * @member {string} token
+         * @memberof hallserver_login.LoginReq
+         * @instance
+         */
+        LoginReq.prototype.token = "";
+
+        /**
+         * LoginReq playerId.
+         * @member {number|Long} playerId
+         * @memberof hallserver_login.LoginReq
+         * @instance
+         */
+        LoginReq.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new LoginReq instance using the specified properties.
+         * @function create
+         * @memberof hallserver_login.LoginReq
+         * @static
+         * @param {hallserver_login.ILoginReq=} [properties] Properties to set
+         * @returns {hallserver_login.LoginReq} LoginReq instance
+         */
+        LoginReq.create = function create(properties) {
+            return new LoginReq(properties);
+        };
+
+        /**
+         * Encodes the specified LoginReq message. Does not implicitly {@link hallserver_login.LoginReq.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_login.LoginReq
+         * @static
+         * @param {hallserver_login.ILoginReq} message LoginReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        LoginReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.token != null && Object.hasOwnProperty.call(message, "token"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.token);
+            if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.playerId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified LoginReq message, length delimited. Does not implicitly {@link hallserver_login.LoginReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_login.LoginReq
+         * @static
+         * @param {hallserver_login.ILoginReq} message LoginReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        LoginReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a LoginReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_login.LoginReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_login.LoginReq} LoginReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        LoginReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_login.LoginReq();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.token = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.playerId = reader.int64();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a LoginReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_login.LoginReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_login.LoginReq} LoginReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        LoginReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a LoginReq message.
+         * @function verify
+         * @memberof hallserver_login.LoginReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        LoginReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.token != null && message.hasOwnProperty("token"))
+                if (!$util.isString(message.token))
+                    return "token: string expected";
+            if (message.playerId != null && message.hasOwnProperty("playerId"))
+                if (!$util.isInteger(message.playerId) && !(message.playerId && $util.isInteger(message.playerId.low) && $util.isInteger(message.playerId.high)))
+                    return "playerId: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a LoginReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_login.LoginReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_login.LoginReq} LoginReq
+         */
+        LoginReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_login.LoginReq)
+                return object;
+            var message = new $root.hallserver_login.LoginReq();
+            if (object.token != null)
+                message.token = String(object.token);
+            if (object.playerId != null)
+                if ($util.Long)
+                    (message.playerId = $util.Long.fromValue(object.playerId)).unsigned = false;
+                else if (typeof object.playerId === "string")
+                    message.playerId = parseInt(object.playerId, 10);
+                else if (typeof object.playerId === "number")
+                    message.playerId = object.playerId;
+                else if (typeof object.playerId === "object")
+                    message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a LoginReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_login.LoginReq
+         * @static
+         * @param {hallserver_login.LoginReq} message LoginReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        LoginReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.token = "";
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.playerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.playerId = options.longs === String ? "0" : 0;
+            }
+            if (message.token != null && message.hasOwnProperty("token"))
+                object.token = message.token;
+            if (message.playerId != null && message.hasOwnProperty("playerId"))
+                if (typeof message.playerId === "number")
+                    object.playerId = options.longs === String ? String(message.playerId) : message.playerId;
+                else
+                    object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
+            return object;
+        };
+
+        /**
+         * Converts this LoginReq to JSON.
+         * @function toJSON
+         * @memberof hallserver_login.LoginReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        LoginReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for LoginReq
+         * @function getTypeUrl
+         * @memberof hallserver_login.LoginReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        LoginReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_login.LoginReq";
+        };
+
+        return LoginReq;
+    })();
+
+    hallserver_login.LoginRes = (function() {
+
+        /**
+         * Properties of a LoginRes.
+         * @memberof hallserver_login
+         * @interface ILoginRes
+         * @property {number|Long|null} [playerId] LoginRes playerId
+         * @property {string|null} [nickname] LoginRes nickname
+         */
+
+        /**
+         * Constructs a new LoginRes.
+         * @memberof hallserver_login
+         * @classdesc Represents a LoginRes.
+         * @implements ILoginRes
+         * @constructor
+         * @param {hallserver_login.ILoginRes=} [properties] Properties to set
+         */
+        function LoginRes(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * LoginRes playerId.
+         * @member {number|Long} playerId
+         * @memberof hallserver_login.LoginRes
+         * @instance
+         */
+        LoginRes.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * LoginRes nickname.
+         * @member {string} nickname
+         * @memberof hallserver_login.LoginRes
+         * @instance
+         */
+        LoginRes.prototype.nickname = "";
+
+        /**
+         * Creates a new LoginRes instance using the specified properties.
+         * @function create
+         * @memberof hallserver_login.LoginRes
+         * @static
+         * @param {hallserver_login.ILoginRes=} [properties] Properties to set
+         * @returns {hallserver_login.LoginRes} LoginRes instance
+         */
+        LoginRes.create = function create(properties) {
+            return new LoginRes(properties);
+        };
+
+        /**
+         * Encodes the specified LoginRes message. Does not implicitly {@link hallserver_login.LoginRes.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_login.LoginRes
+         * @static
+         * @param {hallserver_login.ILoginRes} message LoginRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        LoginRes.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.playerId);
+            if (message.nickname != null && Object.hasOwnProperty.call(message, "nickname"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.nickname);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified LoginRes message, length delimited. Does not implicitly {@link hallserver_login.LoginRes.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_login.LoginRes
+         * @static
+         * @param {hallserver_login.ILoginRes} message LoginRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        LoginRes.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a LoginRes message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_login.LoginRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_login.LoginRes} LoginRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        LoginRes.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_login.LoginRes();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.playerId = reader.int64();
+                        break;
+                    }
+                case 2: {
+                        message.nickname = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a LoginRes message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_login.LoginRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_login.LoginRes} LoginRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        LoginRes.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a LoginRes message.
+         * @function verify
+         * @memberof hallserver_login.LoginRes
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        LoginRes.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.playerId != null && message.hasOwnProperty("playerId"))
+                if (!$util.isInteger(message.playerId) && !(message.playerId && $util.isInteger(message.playerId.low) && $util.isInteger(message.playerId.high)))
+                    return "playerId: integer|Long expected";
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                if (!$util.isString(message.nickname))
+                    return "nickname: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a LoginRes message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_login.LoginRes
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_login.LoginRes} LoginRes
+         */
+        LoginRes.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_login.LoginRes)
+                return object;
+            var message = new $root.hallserver_login.LoginRes();
+            if (object.playerId != null)
+                if ($util.Long)
+                    (message.playerId = $util.Long.fromValue(object.playerId)).unsigned = false;
+                else if (typeof object.playerId === "string")
+                    message.playerId = parseInt(object.playerId, 10);
+                else if (typeof object.playerId === "number")
+                    message.playerId = object.playerId;
+                else if (typeof object.playerId === "object")
+                    message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
+            if (object.nickname != null)
+                message.nickname = String(object.nickname);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a LoginRes message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_login.LoginRes
+         * @static
+         * @param {hallserver_login.LoginRes} message LoginRes
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        LoginRes.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.playerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.playerId = options.longs === String ? "0" : 0;
+                object.nickname = "";
+            }
+            if (message.playerId != null && message.hasOwnProperty("playerId"))
+                if (typeof message.playerId === "number")
+                    object.playerId = options.longs === String ? String(message.playerId) : message.playerId;
+                else
+                    object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                object.nickname = message.nickname;
+            return object;
+        };
+
+        /**
+         * Converts this LoginRes to JSON.
+         * @function toJSON
+         * @memberof hallserver_login.LoginRes
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        LoginRes.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for LoginRes
+         * @function getTypeUrl
+         * @memberof hallserver_login.LoginRes
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        LoginRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_login.LoginRes";
+        };
+
+        return LoginRes;
+    })();
+
+    return hallserver_login;
+})();
+
 module.exports = $root;

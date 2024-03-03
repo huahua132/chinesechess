@@ -100,6 +100,7 @@ cc.Class({
                 //进入大厅
                 global.hallhost = data.host
                 global.halltoken = data.token
+                global.player_id = data.player_id
                 cc.director.loadScene("hall");
             }
         } else {
