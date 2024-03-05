@@ -593,8 +593,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        59,
-        0,
+        120,
+        1,
         0,
         0,
         0,
@@ -825,6 +825,9 @@
       "__id__": 7
     },
     "_enabled": true,
+    "nickname": {
+      "__id__": 11
+    },
     "_id": "actCXvXL9NKY/S8t7QkgxD"
   },
   {

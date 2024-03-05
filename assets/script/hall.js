@@ -12,26 +12,47 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+        nickname : {
+            default : null,
+            type : cc.Node,
+        }
+    },
+
+    LoginRes(msg) {
+        console.log("LoginRes >>>>>>> ", msg)
+        let label = this.nickname.getComponent(cc.Label)
+        label.string = msg.nickname
+
+        // 以秒为单位的时间间隔
+        var interval = 5;
+        // 重复次数
+        var repeat = 99999999999;
+        // 开始延时
+        var delay = 1;
+        this.schedule(function() {
+            // 这里的 this 指向 component
+            let heart_req = {
+                time: Date.now()
+            };
+            
+            let send_buffer = netpack.pack(".hallserver_hall.HeartReq",proto.hallserver_hall.HeartReq.encode(heart_req).finish())
+            this.ws.send(send_buffer)
+        }, interval, repeat, delay);
     },
 
     // LIFE-CYCLE CALLBACKS:
     dispatch(packname, packbuffer) {
-
+        console.log("dispatch >>> ",packname)
+        switch(packname) {
+            case ".hallserver_login.LoginRes":{
+                console.log("packbuffer",packbuffer)
+                let msg = proto.hallserver_login.LoginRes.decode(packbuffer);
+                this.LoginRes(msg)
+                break
+            }
+            default:
+                console.log("unkown packname ",packname)
+        }
     },
 
     onLoad () {
@@ -39,6 +60,7 @@ cc.Class({
         let ws = new WebSocket("ws://" + global.hallhost)
 
         let hall_mgr = this
+        hall_mgr.ws = ws 
         ws.onopen = function (event) {
             console.log("Send Text WS was opened.",this.m_player_info);
             let login_req = {
@@ -81,5 +103,7 @@ cc.Class({
 
     },
 
-    // update (dt) {},
+    update (dt) {
+
+    },
 });

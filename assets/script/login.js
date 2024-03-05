@@ -72,8 +72,8 @@ cc.Class({
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && (xhr.status >= 200 && xhr.status < 400)) {
                 var response = xhr.responseText;
-                response = JSON.parse(response)
                 console.log("response: ", response);
+                response = JSON.parse(response)
                 code = response.code
                 message = response.message
                 data = response.data
