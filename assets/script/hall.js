@@ -99,6 +99,15 @@ cc.Class({
         }, 3);
     },
 
+    onMatchClick(event) {
+        console.log("请求匹配 >>>>>>>>>>>>>>>>>>>>")
+        let match_game_req = {
+            gameId : 1,
+        }
+        let send_buffer = netpack.pack(".hallserver_hall.MatchGameReq", proto.hallserver_hall.MatchGameReq.encode(match_game_req).finish())
+        this.ws.send(send_buffer)
+    },
+
     start () {
 
     },

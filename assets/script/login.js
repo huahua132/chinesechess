@@ -95,7 +95,7 @@ cc.Class({
         }));
 
         //成功
-        if (code == 0) {
+        if (code == 20000) {
             if (this.mtype == "login") {
                 //进入大厅
                 global.hallhost = data.host
