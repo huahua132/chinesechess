@@ -7,7 +7,6 @@
 var global = require("global")
 import proto from '../proto.js/proto.js'
 import netpack from '../jslib/net/netpack.js'
-import { configure } from 'protobufjs';
 
 cc.Class({
     extends: cc.Component,
@@ -46,7 +45,7 @@ cc.Class({
     LoginRes(msg) {
         console.log("LoginRes >>>>>>> ", msg)
         let label = this.nickname.getComponent(cc.Label)
-        label.string = msg.nickname
+        label.string = msg.playerId
 
         // 以秒为单位的时间间隔
         var interval = 5;
@@ -56,7 +55,7 @@ cc.Class({
                 time: Date.now()
             };
             
-            let send_buffer = netpack.pack(".hallserver_hall.HeartReq",proto.hallserver_hall.HeartReq.encode(heart_req).finish())
+            let send_buffer = netpack.pack(".hallserver_player.HeartReq",proto.hallserver_player.HeartReq.encode(heart_req).finish())
             this.ws.send(send_buffer)
         }, interval);
     },
@@ -99,7 +98,7 @@ cc.Class({
                     gameId : 1,
                 }
                 this.is_clickReqMatch = false
-                let send_buffer = netpack.pack(".hallserver_hall.MatchGameReq", proto.hallserver_hall.MatchGameReq.encode(match_game_req).finish())
+                let send_buffer = netpack.pack(".hallserver_match.MatchGameReq", proto.hallserver_match.MatchGameReq.encode(match_game_req).finish())
                 this.ws.send(send_buffer)
             }
 
@@ -128,28 +127,28 @@ cc.Class({
                 this.LoginRes(msg)
                 break
             }
-            case ".hallserver_hall.MatchGameRes":{
-                let msg = proto.hallserver_hall.MatchGameRes.decode(packbuffer);
+            case ".hallserver_match.MatchGameRes":{
+                let msg = proto.hallserver_match.MatchGameRes.decode(packbuffer);
                 this.MatchGameRes(msg)
                 break
             }
-            case ".hallserver_hall.CancelMatchGameRes":{
-                let msg = proto.hallserver_hall.CancelMatchGameRes.decode(packbuffer);
+            case ".hallserver_match.CancelMatchGameRes":{
+                let msg = proto.hallserver_match.CancelMatchGameRes.decode(packbuffer);
                 this.CancelMatchGameRes(msg)
                 break
             }
-            case ".hallserver_hall.MatchGameNotice":{
-                let msg = proto.hallserver_hall.MatchGameNotice.decode(packbuffer);
+            case ".hallserver_match.MatchGameNotice":{
+                let msg = proto.hallserver_match.MatchGameNotice.decode(packbuffer);
                 this.MatchGameNotice(msg)
                 break
             }
-            case ".hallserver_hall.AcceptMatchRes":{
-                let msg = proto.hallserver_hall.AcceptMatchRes.decode(packbuffer);
+            case ".hallserver_match.AcceptMatchRes":{
+                let msg = proto.hallserver_match.AcceptMatchRes.decode(packbuffer);
                 this.AcceptMatchRes(msg)
                 break
             }
-            case ".hallserver_hall.JoinGameNotice":{
-                let msg = proto.hallserver_hall.JoinGameNotice.decode(packbuffer);
+            case ".hallserver_match.JoinGameNotice":{
+                let msg = proto.hallserver_match.JoinGameNotice.decode(packbuffer);
                 this.JoinGameNotice(msg)
                 break
             }
@@ -211,14 +210,14 @@ cc.Class({
             let match_game_req = {
                 gameId : 1,
             }
-            let send_buffer = netpack.pack(".hallserver_hall.MatchGameReq", proto.hallserver_hall.MatchGameReq.encode(match_game_req).finish())
+            let send_buffer = netpack.pack(".hallserver_match.MatchGameReq", proto.hallserver_match.MatchGameReq.encode(match_game_req).finish())
             this.ws.send(send_buffer)
             this.is_clickReqMatch = true
         } else {
             let cancel_match_req = {
                 gameId : 1,
             }
-            let send_buffer = netpack.pack(".hallserver_hall.CancelMatchGameReq", proto.hallserver_hall.CancelMatchGameReq.encode(cancel_match_req).finish())
+            let send_buffer = netpack.pack(".hallserver_match.CancelMatchGameReq", proto.hallserver_match.CancelMatchGameReq.encode(cancel_match_req).finish())
             this.ws.send(send_buffer)
         }
     },
@@ -230,7 +229,7 @@ cc.Class({
             gameId : 1,
             sessionId : this.m_match_succ_session_id
         }
-        let send_buffer = netpack.pack(".hallserver_hall.AcceptMatchReq", proto.hallserver_hall.AcceptMatchReq.encode(accept_match_req).finish())
+        let send_buffer = netpack.pack(".hallserver_match.AcceptMatchReq", proto.hallserver_match.AcceptMatchReq.encode(accept_match_req).finish())
         this.ws.send(send_buffer)
     },
 

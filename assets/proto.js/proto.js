@@ -3040,2001 +3040,6 @@ $root.chinese_chess_login = (function() {
     return chinese_chess_login;
 })();
 
-$root.hallserver_hall = (function() {
-
-    /**
-     * Namespace hallserver_hall.
-     * @exports hallserver_hall
-     * @namespace
-     */
-    var hallserver_hall = {};
-
-    hallserver_hall.HeartReq = (function() {
-
-        /**
-         * Properties of a HeartReq.
-         * @memberof hallserver_hall
-         * @interface IHeartReq
-         * @property {number|Long|null} [time] HeartReq time
-         */
-
-        /**
-         * Constructs a new HeartReq.
-         * @memberof hallserver_hall
-         * @classdesc Represents a HeartReq.
-         * @implements IHeartReq
-         * @constructor
-         * @param {hallserver_hall.IHeartReq=} [properties] Properties to set
-         */
-        function HeartReq(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * HeartReq time.
-         * @member {number|Long} time
-         * @memberof hallserver_hall.HeartReq
-         * @instance
-         */
-        HeartReq.prototype.time = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * Creates a new HeartReq instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.HeartReq
-         * @static
-         * @param {hallserver_hall.IHeartReq=} [properties] Properties to set
-         * @returns {hallserver_hall.HeartReq} HeartReq instance
-         */
-        HeartReq.create = function create(properties) {
-            return new HeartReq(properties);
-        };
-
-        /**
-         * Encodes the specified HeartReq message. Does not implicitly {@link hallserver_hall.HeartReq.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.HeartReq
-         * @static
-         * @param {hallserver_hall.IHeartReq} message HeartReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        HeartReq.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.time != null && Object.hasOwnProperty.call(message, "time"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.time);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified HeartReq message, length delimited. Does not implicitly {@link hallserver_hall.HeartReq.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.HeartReq
-         * @static
-         * @param {hallserver_hall.IHeartReq} message HeartReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        HeartReq.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a HeartReq message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.HeartReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.HeartReq} HeartReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        HeartReq.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.HeartReq();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.time = reader.int64();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a HeartReq message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.HeartReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.HeartReq} HeartReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        HeartReq.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a HeartReq message.
-         * @function verify
-         * @memberof hallserver_hall.HeartReq
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        HeartReq.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.time != null && message.hasOwnProperty("time"))
-                if (!$util.isInteger(message.time) && !(message.time && $util.isInteger(message.time.low) && $util.isInteger(message.time.high)))
-                    return "time: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a HeartReq message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.HeartReq
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.HeartReq} HeartReq
-         */
-        HeartReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.HeartReq)
-                return object;
-            var message = new $root.hallserver_hall.HeartReq();
-            if (object.time != null)
-                if ($util.Long)
-                    (message.time = $util.Long.fromValue(object.time)).unsigned = false;
-                else if (typeof object.time === "string")
-                    message.time = parseInt(object.time, 10);
-                else if (typeof object.time === "number")
-                    message.time = object.time;
-                else if (typeof object.time === "object")
-                    message.time = new $util.LongBits(object.time.low >>> 0, object.time.high >>> 0).toNumber();
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a HeartReq message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.HeartReq
-         * @static
-         * @param {hallserver_hall.HeartReq} message HeartReq
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        HeartReq.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.time = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.time = options.longs === String ? "0" : 0;
-            if (message.time != null && message.hasOwnProperty("time"))
-                if (typeof message.time === "number")
-                    object.time = options.longs === String ? String(message.time) : message.time;
-                else
-                    object.time = options.longs === String ? $util.Long.prototype.toString.call(message.time) : options.longs === Number ? new $util.LongBits(message.time.low >>> 0, message.time.high >>> 0).toNumber() : message.time;
-            return object;
-        };
-
-        /**
-         * Converts this HeartReq to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.HeartReq
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        HeartReq.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for HeartReq
-         * @function getTypeUrl
-         * @memberof hallserver_hall.HeartReq
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        HeartReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.HeartReq";
-        };
-
-        return HeartReq;
-    })();
-
-    hallserver_hall.MatchGameReq = (function() {
-
-        /**
-         * Properties of a MatchGameReq.
-         * @memberof hallserver_hall
-         * @interface IMatchGameReq
-         * @property {number|null} [gameId] MatchGameReq gameId
-         */
-
-        /**
-         * Constructs a new MatchGameReq.
-         * @memberof hallserver_hall
-         * @classdesc Represents a MatchGameReq.
-         * @implements IMatchGameReq
-         * @constructor
-         * @param {hallserver_hall.IMatchGameReq=} [properties] Properties to set
-         */
-        function MatchGameReq(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * MatchGameReq gameId.
-         * @member {number} gameId
-         * @memberof hallserver_hall.MatchGameReq
-         * @instance
-         */
-        MatchGameReq.prototype.gameId = 0;
-
-        /**
-         * Creates a new MatchGameReq instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.MatchGameReq
-         * @static
-         * @param {hallserver_hall.IMatchGameReq=} [properties] Properties to set
-         * @returns {hallserver_hall.MatchGameReq} MatchGameReq instance
-         */
-        MatchGameReq.create = function create(properties) {
-            return new MatchGameReq(properties);
-        };
-
-        /**
-         * Encodes the specified MatchGameReq message. Does not implicitly {@link hallserver_hall.MatchGameReq.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.MatchGameReq
-         * @static
-         * @param {hallserver_hall.IMatchGameReq} message MatchGameReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        MatchGameReq.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified MatchGameReq message, length delimited. Does not implicitly {@link hallserver_hall.MatchGameReq.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.MatchGameReq
-         * @static
-         * @param {hallserver_hall.IMatchGameReq} message MatchGameReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        MatchGameReq.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a MatchGameReq message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.MatchGameReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.MatchGameReq} MatchGameReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        MatchGameReq.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.MatchGameReq();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.gameId = reader.int32();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a MatchGameReq message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.MatchGameReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.MatchGameReq} MatchGameReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        MatchGameReq.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a MatchGameReq message.
-         * @function verify
-         * @memberof hallserver_hall.MatchGameReq
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        MatchGameReq.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                if (!$util.isInteger(message.gameId))
-                    return "gameId: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a MatchGameReq message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.MatchGameReq
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.MatchGameReq} MatchGameReq
-         */
-        MatchGameReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.MatchGameReq)
-                return object;
-            var message = new $root.hallserver_hall.MatchGameReq();
-            if (object.gameId != null)
-                message.gameId = object.gameId | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a MatchGameReq message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.MatchGameReq
-         * @static
-         * @param {hallserver_hall.MatchGameReq} message MatchGameReq
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        MatchGameReq.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.gameId = 0;
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                object.gameId = message.gameId;
-            return object;
-        };
-
-        /**
-         * Converts this MatchGameReq to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.MatchGameReq
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        MatchGameReq.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for MatchGameReq
-         * @function getTypeUrl
-         * @memberof hallserver_hall.MatchGameReq
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        MatchGameReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.MatchGameReq";
-        };
-
-        return MatchGameReq;
-    })();
-
-    hallserver_hall.MatchGameRes = (function() {
-
-        /**
-         * Properties of a MatchGameRes.
-         * @memberof hallserver_hall
-         * @interface IMatchGameRes
-         * @property {number|null} [gameId] MatchGameRes gameId
-         */
-
-        /**
-         * Constructs a new MatchGameRes.
-         * @memberof hallserver_hall
-         * @classdesc Represents a MatchGameRes.
-         * @implements IMatchGameRes
-         * @constructor
-         * @param {hallserver_hall.IMatchGameRes=} [properties] Properties to set
-         */
-        function MatchGameRes(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * MatchGameRes gameId.
-         * @member {number} gameId
-         * @memberof hallserver_hall.MatchGameRes
-         * @instance
-         */
-        MatchGameRes.prototype.gameId = 0;
-
-        /**
-         * Creates a new MatchGameRes instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.MatchGameRes
-         * @static
-         * @param {hallserver_hall.IMatchGameRes=} [properties] Properties to set
-         * @returns {hallserver_hall.MatchGameRes} MatchGameRes instance
-         */
-        MatchGameRes.create = function create(properties) {
-            return new MatchGameRes(properties);
-        };
-
-        /**
-         * Encodes the specified MatchGameRes message. Does not implicitly {@link hallserver_hall.MatchGameRes.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.MatchGameRes
-         * @static
-         * @param {hallserver_hall.IMatchGameRes} message MatchGameRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        MatchGameRes.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified MatchGameRes message, length delimited. Does not implicitly {@link hallserver_hall.MatchGameRes.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.MatchGameRes
-         * @static
-         * @param {hallserver_hall.IMatchGameRes} message MatchGameRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        MatchGameRes.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a MatchGameRes message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.MatchGameRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.MatchGameRes} MatchGameRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        MatchGameRes.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.MatchGameRes();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.gameId = reader.int32();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a MatchGameRes message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.MatchGameRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.MatchGameRes} MatchGameRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        MatchGameRes.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a MatchGameRes message.
-         * @function verify
-         * @memberof hallserver_hall.MatchGameRes
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        MatchGameRes.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                if (!$util.isInteger(message.gameId))
-                    return "gameId: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a MatchGameRes message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.MatchGameRes
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.MatchGameRes} MatchGameRes
-         */
-        MatchGameRes.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.MatchGameRes)
-                return object;
-            var message = new $root.hallserver_hall.MatchGameRes();
-            if (object.gameId != null)
-                message.gameId = object.gameId | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a MatchGameRes message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.MatchGameRes
-         * @static
-         * @param {hallserver_hall.MatchGameRes} message MatchGameRes
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        MatchGameRes.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.gameId = 0;
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                object.gameId = message.gameId;
-            return object;
-        };
-
-        /**
-         * Converts this MatchGameRes to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.MatchGameRes
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        MatchGameRes.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for MatchGameRes
-         * @function getTypeUrl
-         * @memberof hallserver_hall.MatchGameRes
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        MatchGameRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.MatchGameRes";
-        };
-
-        return MatchGameRes;
-    })();
-
-    hallserver_hall.CancelMatchGameReq = (function() {
-
-        /**
-         * Properties of a CancelMatchGameReq.
-         * @memberof hallserver_hall
-         * @interface ICancelMatchGameReq
-         * @property {number|null} [gameId] CancelMatchGameReq gameId
-         */
-
-        /**
-         * Constructs a new CancelMatchGameReq.
-         * @memberof hallserver_hall
-         * @classdesc Represents a CancelMatchGameReq.
-         * @implements ICancelMatchGameReq
-         * @constructor
-         * @param {hallserver_hall.ICancelMatchGameReq=} [properties] Properties to set
-         */
-        function CancelMatchGameReq(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * CancelMatchGameReq gameId.
-         * @member {number} gameId
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @instance
-         */
-        CancelMatchGameReq.prototype.gameId = 0;
-
-        /**
-         * Creates a new CancelMatchGameReq instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @static
-         * @param {hallserver_hall.ICancelMatchGameReq=} [properties] Properties to set
-         * @returns {hallserver_hall.CancelMatchGameReq} CancelMatchGameReq instance
-         */
-        CancelMatchGameReq.create = function create(properties) {
-            return new CancelMatchGameReq(properties);
-        };
-
-        /**
-         * Encodes the specified CancelMatchGameReq message. Does not implicitly {@link hallserver_hall.CancelMatchGameReq.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @static
-         * @param {hallserver_hall.ICancelMatchGameReq} message CancelMatchGameReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CancelMatchGameReq.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified CancelMatchGameReq message, length delimited. Does not implicitly {@link hallserver_hall.CancelMatchGameReq.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @static
-         * @param {hallserver_hall.ICancelMatchGameReq} message CancelMatchGameReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CancelMatchGameReq.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a CancelMatchGameReq message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.CancelMatchGameReq} CancelMatchGameReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CancelMatchGameReq.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.CancelMatchGameReq();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.gameId = reader.int32();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a CancelMatchGameReq message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.CancelMatchGameReq} CancelMatchGameReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CancelMatchGameReq.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a CancelMatchGameReq message.
-         * @function verify
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        CancelMatchGameReq.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                if (!$util.isInteger(message.gameId))
-                    return "gameId: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a CancelMatchGameReq message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.CancelMatchGameReq} CancelMatchGameReq
-         */
-        CancelMatchGameReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.CancelMatchGameReq)
-                return object;
-            var message = new $root.hallserver_hall.CancelMatchGameReq();
-            if (object.gameId != null)
-                message.gameId = object.gameId | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a CancelMatchGameReq message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @static
-         * @param {hallserver_hall.CancelMatchGameReq} message CancelMatchGameReq
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        CancelMatchGameReq.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.gameId = 0;
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                object.gameId = message.gameId;
-            return object;
-        };
-
-        /**
-         * Converts this CancelMatchGameReq to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        CancelMatchGameReq.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for CancelMatchGameReq
-         * @function getTypeUrl
-         * @memberof hallserver_hall.CancelMatchGameReq
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        CancelMatchGameReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.CancelMatchGameReq";
-        };
-
-        return CancelMatchGameReq;
-    })();
-
-    hallserver_hall.CancelMatchGameRes = (function() {
-
-        /**
-         * Properties of a CancelMatchGameRes.
-         * @memberof hallserver_hall
-         * @interface ICancelMatchGameRes
-         * @property {number|null} [gameId] CancelMatchGameRes gameId
-         */
-
-        /**
-         * Constructs a new CancelMatchGameRes.
-         * @memberof hallserver_hall
-         * @classdesc Represents a CancelMatchGameRes.
-         * @implements ICancelMatchGameRes
-         * @constructor
-         * @param {hallserver_hall.ICancelMatchGameRes=} [properties] Properties to set
-         */
-        function CancelMatchGameRes(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * CancelMatchGameRes gameId.
-         * @member {number} gameId
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @instance
-         */
-        CancelMatchGameRes.prototype.gameId = 0;
-
-        /**
-         * Creates a new CancelMatchGameRes instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @static
-         * @param {hallserver_hall.ICancelMatchGameRes=} [properties] Properties to set
-         * @returns {hallserver_hall.CancelMatchGameRes} CancelMatchGameRes instance
-         */
-        CancelMatchGameRes.create = function create(properties) {
-            return new CancelMatchGameRes(properties);
-        };
-
-        /**
-         * Encodes the specified CancelMatchGameRes message. Does not implicitly {@link hallserver_hall.CancelMatchGameRes.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @static
-         * @param {hallserver_hall.ICancelMatchGameRes} message CancelMatchGameRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CancelMatchGameRes.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified CancelMatchGameRes message, length delimited. Does not implicitly {@link hallserver_hall.CancelMatchGameRes.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @static
-         * @param {hallserver_hall.ICancelMatchGameRes} message CancelMatchGameRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CancelMatchGameRes.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a CancelMatchGameRes message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.CancelMatchGameRes} CancelMatchGameRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CancelMatchGameRes.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.CancelMatchGameRes();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.gameId = reader.int32();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a CancelMatchGameRes message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.CancelMatchGameRes} CancelMatchGameRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CancelMatchGameRes.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a CancelMatchGameRes message.
-         * @function verify
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        CancelMatchGameRes.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                if (!$util.isInteger(message.gameId))
-                    return "gameId: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a CancelMatchGameRes message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.CancelMatchGameRes} CancelMatchGameRes
-         */
-        CancelMatchGameRes.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.CancelMatchGameRes)
-                return object;
-            var message = new $root.hallserver_hall.CancelMatchGameRes();
-            if (object.gameId != null)
-                message.gameId = object.gameId | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a CancelMatchGameRes message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @static
-         * @param {hallserver_hall.CancelMatchGameRes} message CancelMatchGameRes
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        CancelMatchGameRes.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.gameId = 0;
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                object.gameId = message.gameId;
-            return object;
-        };
-
-        /**
-         * Converts this CancelMatchGameRes to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        CancelMatchGameRes.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for CancelMatchGameRes
-         * @function getTypeUrl
-         * @memberof hallserver_hall.CancelMatchGameRes
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        CancelMatchGameRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.CancelMatchGameRes";
-        };
-
-        return CancelMatchGameRes;
-    })();
-
-    hallserver_hall.MatchGameNotice = (function() {
-
-        /**
-         * Properties of a MatchGameNotice.
-         * @memberof hallserver_hall
-         * @interface IMatchGameNotice
-         * @property {number|null} [gameId] MatchGameNotice gameId
-         * @property {string|null} [sessionId] MatchGameNotice sessionId
-         * @property {number|null} [remainTime] MatchGameNotice remainTime
-         */
-
-        /**
-         * Constructs a new MatchGameNotice.
-         * @memberof hallserver_hall
-         * @classdesc Represents a MatchGameNotice.
-         * @implements IMatchGameNotice
-         * @constructor
-         * @param {hallserver_hall.IMatchGameNotice=} [properties] Properties to set
-         */
-        function MatchGameNotice(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * MatchGameNotice gameId.
-         * @member {number} gameId
-         * @memberof hallserver_hall.MatchGameNotice
-         * @instance
-         */
-        MatchGameNotice.prototype.gameId = 0;
-
-        /**
-         * MatchGameNotice sessionId.
-         * @member {string} sessionId
-         * @memberof hallserver_hall.MatchGameNotice
-         * @instance
-         */
-        MatchGameNotice.prototype.sessionId = "";
-
-        /**
-         * MatchGameNotice remainTime.
-         * @member {number} remainTime
-         * @memberof hallserver_hall.MatchGameNotice
-         * @instance
-         */
-        MatchGameNotice.prototype.remainTime = 0;
-
-        /**
-         * Creates a new MatchGameNotice instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.MatchGameNotice
-         * @static
-         * @param {hallserver_hall.IMatchGameNotice=} [properties] Properties to set
-         * @returns {hallserver_hall.MatchGameNotice} MatchGameNotice instance
-         */
-        MatchGameNotice.create = function create(properties) {
-            return new MatchGameNotice(properties);
-        };
-
-        /**
-         * Encodes the specified MatchGameNotice message. Does not implicitly {@link hallserver_hall.MatchGameNotice.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.MatchGameNotice
-         * @static
-         * @param {hallserver_hall.IMatchGameNotice} message MatchGameNotice message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        MatchGameNotice.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
-            if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sessionId);
-            if (message.remainTime != null && Object.hasOwnProperty.call(message, "remainTime"))
-                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.remainTime);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified MatchGameNotice message, length delimited. Does not implicitly {@link hallserver_hall.MatchGameNotice.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.MatchGameNotice
-         * @static
-         * @param {hallserver_hall.IMatchGameNotice} message MatchGameNotice message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        MatchGameNotice.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a MatchGameNotice message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.MatchGameNotice
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.MatchGameNotice} MatchGameNotice
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        MatchGameNotice.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.MatchGameNotice();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.gameId = reader.int32();
-                        break;
-                    }
-                case 2: {
-                        message.sessionId = reader.string();
-                        break;
-                    }
-                case 3: {
-                        message.remainTime = reader.int32();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a MatchGameNotice message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.MatchGameNotice
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.MatchGameNotice} MatchGameNotice
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        MatchGameNotice.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a MatchGameNotice message.
-         * @function verify
-         * @memberof hallserver_hall.MatchGameNotice
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        MatchGameNotice.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                if (!$util.isInteger(message.gameId))
-                    return "gameId: integer expected";
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                if (!$util.isString(message.sessionId))
-                    return "sessionId: string expected";
-            if (message.remainTime != null && message.hasOwnProperty("remainTime"))
-                if (!$util.isInteger(message.remainTime))
-                    return "remainTime: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a MatchGameNotice message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.MatchGameNotice
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.MatchGameNotice} MatchGameNotice
-         */
-        MatchGameNotice.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.MatchGameNotice)
-                return object;
-            var message = new $root.hallserver_hall.MatchGameNotice();
-            if (object.gameId != null)
-                message.gameId = object.gameId | 0;
-            if (object.sessionId != null)
-                message.sessionId = String(object.sessionId);
-            if (object.remainTime != null)
-                message.remainTime = object.remainTime | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a MatchGameNotice message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.MatchGameNotice
-         * @static
-         * @param {hallserver_hall.MatchGameNotice} message MatchGameNotice
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        MatchGameNotice.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.gameId = 0;
-                object.sessionId = "";
-                object.remainTime = 0;
-            }
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                object.gameId = message.gameId;
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                object.sessionId = message.sessionId;
-            if (message.remainTime != null && message.hasOwnProperty("remainTime"))
-                object.remainTime = message.remainTime;
-            return object;
-        };
-
-        /**
-         * Converts this MatchGameNotice to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.MatchGameNotice
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        MatchGameNotice.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for MatchGameNotice
-         * @function getTypeUrl
-         * @memberof hallserver_hall.MatchGameNotice
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        MatchGameNotice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.MatchGameNotice";
-        };
-
-        return MatchGameNotice;
-    })();
-
-    hallserver_hall.AcceptMatchReq = (function() {
-
-        /**
-         * Properties of an AcceptMatchReq.
-         * @memberof hallserver_hall
-         * @interface IAcceptMatchReq
-         * @property {number|null} [gameId] AcceptMatchReq gameId
-         * @property {string|null} [sessionId] AcceptMatchReq sessionId
-         */
-
-        /**
-         * Constructs a new AcceptMatchReq.
-         * @memberof hallserver_hall
-         * @classdesc Represents an AcceptMatchReq.
-         * @implements IAcceptMatchReq
-         * @constructor
-         * @param {hallserver_hall.IAcceptMatchReq=} [properties] Properties to set
-         */
-        function AcceptMatchReq(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * AcceptMatchReq gameId.
-         * @member {number} gameId
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @instance
-         */
-        AcceptMatchReq.prototype.gameId = 0;
-
-        /**
-         * AcceptMatchReq sessionId.
-         * @member {string} sessionId
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @instance
-         */
-        AcceptMatchReq.prototype.sessionId = "";
-
-        /**
-         * Creates a new AcceptMatchReq instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @static
-         * @param {hallserver_hall.IAcceptMatchReq=} [properties] Properties to set
-         * @returns {hallserver_hall.AcceptMatchReq} AcceptMatchReq instance
-         */
-        AcceptMatchReq.create = function create(properties) {
-            return new AcceptMatchReq(properties);
-        };
-
-        /**
-         * Encodes the specified AcceptMatchReq message. Does not implicitly {@link hallserver_hall.AcceptMatchReq.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @static
-         * @param {hallserver_hall.IAcceptMatchReq} message AcceptMatchReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        AcceptMatchReq.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
-            if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sessionId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified AcceptMatchReq message, length delimited. Does not implicitly {@link hallserver_hall.AcceptMatchReq.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @static
-         * @param {hallserver_hall.IAcceptMatchReq} message AcceptMatchReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        AcceptMatchReq.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes an AcceptMatchReq message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.AcceptMatchReq} AcceptMatchReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        AcceptMatchReq.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.AcceptMatchReq();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.gameId = reader.int32();
-                        break;
-                    }
-                case 2: {
-                        message.sessionId = reader.string();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes an AcceptMatchReq message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.AcceptMatchReq} AcceptMatchReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        AcceptMatchReq.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies an AcceptMatchReq message.
-         * @function verify
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        AcceptMatchReq.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                if (!$util.isInteger(message.gameId))
-                    return "gameId: integer expected";
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                if (!$util.isString(message.sessionId))
-                    return "sessionId: string expected";
-            return null;
-        };
-
-        /**
-         * Creates an AcceptMatchReq message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.AcceptMatchReq} AcceptMatchReq
-         */
-        AcceptMatchReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.AcceptMatchReq)
-                return object;
-            var message = new $root.hallserver_hall.AcceptMatchReq();
-            if (object.gameId != null)
-                message.gameId = object.gameId | 0;
-            if (object.sessionId != null)
-                message.sessionId = String(object.sessionId);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from an AcceptMatchReq message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @static
-         * @param {hallserver_hall.AcceptMatchReq} message AcceptMatchReq
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        AcceptMatchReq.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.gameId = 0;
-                object.sessionId = "";
-            }
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                object.gameId = message.gameId;
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                object.sessionId = message.sessionId;
-            return object;
-        };
-
-        /**
-         * Converts this AcceptMatchReq to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        AcceptMatchReq.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for AcceptMatchReq
-         * @function getTypeUrl
-         * @memberof hallserver_hall.AcceptMatchReq
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        AcceptMatchReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.AcceptMatchReq";
-        };
-
-        return AcceptMatchReq;
-    })();
-
-    hallserver_hall.AcceptMatchRes = (function() {
-
-        /**
-         * Properties of an AcceptMatchRes.
-         * @memberof hallserver_hall
-         * @interface IAcceptMatchRes
-         * @property {number|null} [gameId] AcceptMatchRes gameId
-         * @property {string|null} [sessionId] AcceptMatchRes sessionId
-         */
-
-        /**
-         * Constructs a new AcceptMatchRes.
-         * @memberof hallserver_hall
-         * @classdesc Represents an AcceptMatchRes.
-         * @implements IAcceptMatchRes
-         * @constructor
-         * @param {hallserver_hall.IAcceptMatchRes=} [properties] Properties to set
-         */
-        function AcceptMatchRes(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * AcceptMatchRes gameId.
-         * @member {number} gameId
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @instance
-         */
-        AcceptMatchRes.prototype.gameId = 0;
-
-        /**
-         * AcceptMatchRes sessionId.
-         * @member {string} sessionId
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @instance
-         */
-        AcceptMatchRes.prototype.sessionId = "";
-
-        /**
-         * Creates a new AcceptMatchRes instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @static
-         * @param {hallserver_hall.IAcceptMatchRes=} [properties] Properties to set
-         * @returns {hallserver_hall.AcceptMatchRes} AcceptMatchRes instance
-         */
-        AcceptMatchRes.create = function create(properties) {
-            return new AcceptMatchRes(properties);
-        };
-
-        /**
-         * Encodes the specified AcceptMatchRes message. Does not implicitly {@link hallserver_hall.AcceptMatchRes.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @static
-         * @param {hallserver_hall.IAcceptMatchRes} message AcceptMatchRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        AcceptMatchRes.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
-            if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sessionId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified AcceptMatchRes message, length delimited. Does not implicitly {@link hallserver_hall.AcceptMatchRes.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @static
-         * @param {hallserver_hall.IAcceptMatchRes} message AcceptMatchRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        AcceptMatchRes.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes an AcceptMatchRes message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.AcceptMatchRes} AcceptMatchRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        AcceptMatchRes.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.AcceptMatchRes();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.gameId = reader.int32();
-                        break;
-                    }
-                case 2: {
-                        message.sessionId = reader.string();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes an AcceptMatchRes message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.AcceptMatchRes} AcceptMatchRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        AcceptMatchRes.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies an AcceptMatchRes message.
-         * @function verify
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        AcceptMatchRes.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                if (!$util.isInteger(message.gameId))
-                    return "gameId: integer expected";
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                if (!$util.isString(message.sessionId))
-                    return "sessionId: string expected";
-            return null;
-        };
-
-        /**
-         * Creates an AcceptMatchRes message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.AcceptMatchRes} AcceptMatchRes
-         */
-        AcceptMatchRes.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.AcceptMatchRes)
-                return object;
-            var message = new $root.hallserver_hall.AcceptMatchRes();
-            if (object.gameId != null)
-                message.gameId = object.gameId | 0;
-            if (object.sessionId != null)
-                message.sessionId = String(object.sessionId);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from an AcceptMatchRes message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @static
-         * @param {hallserver_hall.AcceptMatchRes} message AcceptMatchRes
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        AcceptMatchRes.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.gameId = 0;
-                object.sessionId = "";
-            }
-            if (message.gameId != null && message.hasOwnProperty("gameId"))
-                object.gameId = message.gameId;
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                object.sessionId = message.sessionId;
-            return object;
-        };
-
-        /**
-         * Converts this AcceptMatchRes to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        AcceptMatchRes.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for AcceptMatchRes
-         * @function getTypeUrl
-         * @memberof hallserver_hall.AcceptMatchRes
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        AcceptMatchRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.AcceptMatchRes";
-        };
-
-        return AcceptMatchRes;
-    })();
-
-    hallserver_hall.JoinGameNotice = (function() {
-
-        /**
-         * Properties of a JoinGameNotice.
-         * @memberof hallserver_hall
-         * @interface IJoinGameNotice
-         * @property {string|null} [gamehost] JoinGameNotice gamehost
-         * @property {string|null} [gametoken] JoinGameNotice gametoken
-         * @property {string|null} [tableId] JoinGameNotice tableId
-         */
-
-        /**
-         * Constructs a new JoinGameNotice.
-         * @memberof hallserver_hall
-         * @classdesc Represents a JoinGameNotice.
-         * @implements IJoinGameNotice
-         * @constructor
-         * @param {hallserver_hall.IJoinGameNotice=} [properties] Properties to set
-         */
-        function JoinGameNotice(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * JoinGameNotice gamehost.
-         * @member {string} gamehost
-         * @memberof hallserver_hall.JoinGameNotice
-         * @instance
-         */
-        JoinGameNotice.prototype.gamehost = "";
-
-        /**
-         * JoinGameNotice gametoken.
-         * @member {string} gametoken
-         * @memberof hallserver_hall.JoinGameNotice
-         * @instance
-         */
-        JoinGameNotice.prototype.gametoken = "";
-
-        /**
-         * JoinGameNotice tableId.
-         * @member {string} tableId
-         * @memberof hallserver_hall.JoinGameNotice
-         * @instance
-         */
-        JoinGameNotice.prototype.tableId = "";
-
-        /**
-         * Creates a new JoinGameNotice instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.JoinGameNotice
-         * @static
-         * @param {hallserver_hall.IJoinGameNotice=} [properties] Properties to set
-         * @returns {hallserver_hall.JoinGameNotice} JoinGameNotice instance
-         */
-        JoinGameNotice.create = function create(properties) {
-            return new JoinGameNotice(properties);
-        };
-
-        /**
-         * Encodes the specified JoinGameNotice message. Does not implicitly {@link hallserver_hall.JoinGameNotice.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.JoinGameNotice
-         * @static
-         * @param {hallserver_hall.IJoinGameNotice} message JoinGameNotice message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        JoinGameNotice.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.gamehost != null && Object.hasOwnProperty.call(message, "gamehost"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.gamehost);
-            if (message.gametoken != null && Object.hasOwnProperty.call(message, "gametoken"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.gametoken);
-            if (message.tableId != null && Object.hasOwnProperty.call(message, "tableId"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.tableId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified JoinGameNotice message, length delimited. Does not implicitly {@link hallserver_hall.JoinGameNotice.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.JoinGameNotice
-         * @static
-         * @param {hallserver_hall.IJoinGameNotice} message JoinGameNotice message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        JoinGameNotice.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a JoinGameNotice message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.JoinGameNotice
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.JoinGameNotice} JoinGameNotice
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        JoinGameNotice.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.JoinGameNotice();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.gamehost = reader.string();
-                        break;
-                    }
-                case 2: {
-                        message.gametoken = reader.string();
-                        break;
-                    }
-                case 3: {
-                        message.tableId = reader.string();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a JoinGameNotice message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.JoinGameNotice
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.JoinGameNotice} JoinGameNotice
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        JoinGameNotice.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a JoinGameNotice message.
-         * @function verify
-         * @memberof hallserver_hall.JoinGameNotice
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        JoinGameNotice.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.gamehost != null && message.hasOwnProperty("gamehost"))
-                if (!$util.isString(message.gamehost))
-                    return "gamehost: string expected";
-            if (message.gametoken != null && message.hasOwnProperty("gametoken"))
-                if (!$util.isString(message.gametoken))
-                    return "gametoken: string expected";
-            if (message.tableId != null && message.hasOwnProperty("tableId"))
-                if (!$util.isString(message.tableId))
-                    return "tableId: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a JoinGameNotice message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.JoinGameNotice
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.JoinGameNotice} JoinGameNotice
-         */
-        JoinGameNotice.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.JoinGameNotice)
-                return object;
-            var message = new $root.hallserver_hall.JoinGameNotice();
-            if (object.gamehost != null)
-                message.gamehost = String(object.gamehost);
-            if (object.gametoken != null)
-                message.gametoken = String(object.gametoken);
-            if (object.tableId != null)
-                message.tableId = String(object.tableId);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a JoinGameNotice message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.JoinGameNotice
-         * @static
-         * @param {hallserver_hall.JoinGameNotice} message JoinGameNotice
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        JoinGameNotice.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.gamehost = "";
-                object.gametoken = "";
-                object.tableId = "";
-            }
-            if (message.gamehost != null && message.hasOwnProperty("gamehost"))
-                object.gamehost = message.gamehost;
-            if (message.gametoken != null && message.hasOwnProperty("gametoken"))
-                object.gametoken = message.gametoken;
-            if (message.tableId != null && message.hasOwnProperty("tableId"))
-                object.tableId = message.tableId;
-            return object;
-        };
-
-        /**
-         * Converts this JoinGameNotice to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.JoinGameNotice
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        JoinGameNotice.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for JoinGameNotice
-         * @function getTypeUrl
-         * @memberof hallserver_hall.JoinGameNotice
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        JoinGameNotice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.JoinGameNotice";
-        };
-
-        return JoinGameNotice;
-    })();
-
-    return hallserver_hall;
-})();
-
 $root.hallserver_login = (function() {
 
     /**
@@ -5292,7 +3297,6 @@ $root.hallserver_login = (function() {
          * @memberof hallserver_login
          * @interface ILoginRes
          * @property {number|Long|null} [playerId] LoginRes playerId
-         * @property {string|null} [nickname] LoginRes nickname
          */
 
         /**
@@ -5317,14 +3321,6 @@ $root.hallserver_login = (function() {
          * @instance
          */
         LoginRes.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * LoginRes nickname.
-         * @member {string} nickname
-         * @memberof hallserver_login.LoginRes
-         * @instance
-         */
-        LoginRes.prototype.nickname = "";
 
         /**
          * Creates a new LoginRes instance using the specified properties.
@@ -5352,8 +3348,6 @@ $root.hallserver_login = (function() {
                 writer = $Writer.create();
             if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
                 writer.uint32(/* id 1, wireType 0 =*/8).int64(message.playerId);
-            if (message.nickname != null && Object.hasOwnProperty.call(message, "nickname"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.nickname);
             return writer;
         };
 
@@ -5390,10 +3384,6 @@ $root.hallserver_login = (function() {
                 switch (tag >>> 3) {
                 case 1: {
                         message.playerId = reader.int64();
-                        break;
-                    }
-                case 2: {
-                        message.nickname = reader.string();
                         break;
                     }
                 default:
@@ -5434,9 +3424,6 @@ $root.hallserver_login = (function() {
             if (message.playerId != null && message.hasOwnProperty("playerId"))
                 if (!$util.isInteger(message.playerId) && !(message.playerId && $util.isInteger(message.playerId.low) && $util.isInteger(message.playerId.high)))
                     return "playerId: integer|Long expected";
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                if (!$util.isString(message.nickname))
-                    return "nickname: string expected";
             return null;
         };
 
@@ -5461,8 +3448,6 @@ $root.hallserver_login = (function() {
                     message.playerId = object.playerId;
                 else if (typeof object.playerId === "object")
                     message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
-            if (object.nickname != null)
-                message.nickname = String(object.nickname);
             return message;
         };
 
@@ -5479,21 +3464,17 @@ $root.hallserver_login = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults) {
+            if (options.defaults)
                 if ($util.Long) {
                     var long = new $util.Long(0, 0, false);
                     object.playerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.playerId = options.longs === String ? "0" : 0;
-                object.nickname = "";
-            }
             if (message.playerId != null && message.hasOwnProperty("playerId"))
                 if (typeof message.playerId === "number")
                     object.playerId = options.longs === String ? String(message.playerId) : message.playerId;
                 else
                     object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
-            if (message.nickname != null && message.hasOwnProperty("nickname"))
-                object.nickname = message.nickname;
             return object;
         };
 
@@ -5527,6 +3508,2013 @@ $root.hallserver_login = (function() {
     })();
 
     return hallserver_login;
+})();
+
+$root.hallserver_match = (function() {
+
+    /**
+     * Namespace hallserver_match.
+     * @exports hallserver_match
+     * @namespace
+     */
+    var hallserver_match = {};
+
+    hallserver_match.MatchGameReq = (function() {
+
+        /**
+         * Properties of a MatchGameReq.
+         * @memberof hallserver_match
+         * @interface IMatchGameReq
+         * @property {number|null} [gameId] MatchGameReq gameId
+         */
+
+        /**
+         * Constructs a new MatchGameReq.
+         * @memberof hallserver_match
+         * @classdesc Represents a MatchGameReq.
+         * @implements IMatchGameReq
+         * @constructor
+         * @param {hallserver_match.IMatchGameReq=} [properties] Properties to set
+         */
+        function MatchGameReq(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * MatchGameReq gameId.
+         * @member {number} gameId
+         * @memberof hallserver_match.MatchGameReq
+         * @instance
+         */
+        MatchGameReq.prototype.gameId = 0;
+
+        /**
+         * Creates a new MatchGameReq instance using the specified properties.
+         * @function create
+         * @memberof hallserver_match.MatchGameReq
+         * @static
+         * @param {hallserver_match.IMatchGameReq=} [properties] Properties to set
+         * @returns {hallserver_match.MatchGameReq} MatchGameReq instance
+         */
+        MatchGameReq.create = function create(properties) {
+            return new MatchGameReq(properties);
+        };
+
+        /**
+         * Encodes the specified MatchGameReq message. Does not implicitly {@link hallserver_match.MatchGameReq.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_match.MatchGameReq
+         * @static
+         * @param {hallserver_match.IMatchGameReq} message MatchGameReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MatchGameReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified MatchGameReq message, length delimited. Does not implicitly {@link hallserver_match.MatchGameReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_match.MatchGameReq
+         * @static
+         * @param {hallserver_match.IMatchGameReq} message MatchGameReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MatchGameReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a MatchGameReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_match.MatchGameReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_match.MatchGameReq} MatchGameReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MatchGameReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_match.MatchGameReq();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a MatchGameReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_match.MatchGameReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_match.MatchGameReq} MatchGameReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MatchGameReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a MatchGameReq message.
+         * @function verify
+         * @memberof hallserver_match.MatchGameReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        MatchGameReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a MatchGameReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_match.MatchGameReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_match.MatchGameReq} MatchGameReq
+         */
+        MatchGameReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_match.MatchGameReq)
+                return object;
+            var message = new $root.hallserver_match.MatchGameReq();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a MatchGameReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_match.MatchGameReq
+         * @static
+         * @param {hallserver_match.MatchGameReq} message MatchGameReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        MatchGameReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.gameId = 0;
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            return object;
+        };
+
+        /**
+         * Converts this MatchGameReq to JSON.
+         * @function toJSON
+         * @memberof hallserver_match.MatchGameReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        MatchGameReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for MatchGameReq
+         * @function getTypeUrl
+         * @memberof hallserver_match.MatchGameReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        MatchGameReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_match.MatchGameReq";
+        };
+
+        return MatchGameReq;
+    })();
+
+    hallserver_match.MatchGameRes = (function() {
+
+        /**
+         * Properties of a MatchGameRes.
+         * @memberof hallserver_match
+         * @interface IMatchGameRes
+         * @property {number|null} [gameId] MatchGameRes gameId
+         */
+
+        /**
+         * Constructs a new MatchGameRes.
+         * @memberof hallserver_match
+         * @classdesc Represents a MatchGameRes.
+         * @implements IMatchGameRes
+         * @constructor
+         * @param {hallserver_match.IMatchGameRes=} [properties] Properties to set
+         */
+        function MatchGameRes(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * MatchGameRes gameId.
+         * @member {number} gameId
+         * @memberof hallserver_match.MatchGameRes
+         * @instance
+         */
+        MatchGameRes.prototype.gameId = 0;
+
+        /**
+         * Creates a new MatchGameRes instance using the specified properties.
+         * @function create
+         * @memberof hallserver_match.MatchGameRes
+         * @static
+         * @param {hallserver_match.IMatchGameRes=} [properties] Properties to set
+         * @returns {hallserver_match.MatchGameRes} MatchGameRes instance
+         */
+        MatchGameRes.create = function create(properties) {
+            return new MatchGameRes(properties);
+        };
+
+        /**
+         * Encodes the specified MatchGameRes message. Does not implicitly {@link hallserver_match.MatchGameRes.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_match.MatchGameRes
+         * @static
+         * @param {hallserver_match.IMatchGameRes} message MatchGameRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MatchGameRes.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified MatchGameRes message, length delimited. Does not implicitly {@link hallserver_match.MatchGameRes.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_match.MatchGameRes
+         * @static
+         * @param {hallserver_match.IMatchGameRes} message MatchGameRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MatchGameRes.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a MatchGameRes message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_match.MatchGameRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_match.MatchGameRes} MatchGameRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MatchGameRes.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_match.MatchGameRes();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a MatchGameRes message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_match.MatchGameRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_match.MatchGameRes} MatchGameRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MatchGameRes.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a MatchGameRes message.
+         * @function verify
+         * @memberof hallserver_match.MatchGameRes
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        MatchGameRes.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a MatchGameRes message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_match.MatchGameRes
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_match.MatchGameRes} MatchGameRes
+         */
+        MatchGameRes.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_match.MatchGameRes)
+                return object;
+            var message = new $root.hallserver_match.MatchGameRes();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a MatchGameRes message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_match.MatchGameRes
+         * @static
+         * @param {hallserver_match.MatchGameRes} message MatchGameRes
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        MatchGameRes.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.gameId = 0;
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            return object;
+        };
+
+        /**
+         * Converts this MatchGameRes to JSON.
+         * @function toJSON
+         * @memberof hallserver_match.MatchGameRes
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        MatchGameRes.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for MatchGameRes
+         * @function getTypeUrl
+         * @memberof hallserver_match.MatchGameRes
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        MatchGameRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_match.MatchGameRes";
+        };
+
+        return MatchGameRes;
+    })();
+
+    hallserver_match.CancelMatchGameReq = (function() {
+
+        /**
+         * Properties of a CancelMatchGameReq.
+         * @memberof hallserver_match
+         * @interface ICancelMatchGameReq
+         * @property {number|null} [gameId] CancelMatchGameReq gameId
+         */
+
+        /**
+         * Constructs a new CancelMatchGameReq.
+         * @memberof hallserver_match
+         * @classdesc Represents a CancelMatchGameReq.
+         * @implements ICancelMatchGameReq
+         * @constructor
+         * @param {hallserver_match.ICancelMatchGameReq=} [properties] Properties to set
+         */
+        function CancelMatchGameReq(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * CancelMatchGameReq gameId.
+         * @member {number} gameId
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @instance
+         */
+        CancelMatchGameReq.prototype.gameId = 0;
+
+        /**
+         * Creates a new CancelMatchGameReq instance using the specified properties.
+         * @function create
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @static
+         * @param {hallserver_match.ICancelMatchGameReq=} [properties] Properties to set
+         * @returns {hallserver_match.CancelMatchGameReq} CancelMatchGameReq instance
+         */
+        CancelMatchGameReq.create = function create(properties) {
+            return new CancelMatchGameReq(properties);
+        };
+
+        /**
+         * Encodes the specified CancelMatchGameReq message. Does not implicitly {@link hallserver_match.CancelMatchGameReq.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @static
+         * @param {hallserver_match.ICancelMatchGameReq} message CancelMatchGameReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CancelMatchGameReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified CancelMatchGameReq message, length delimited. Does not implicitly {@link hallserver_match.CancelMatchGameReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @static
+         * @param {hallserver_match.ICancelMatchGameReq} message CancelMatchGameReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CancelMatchGameReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a CancelMatchGameReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_match.CancelMatchGameReq} CancelMatchGameReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CancelMatchGameReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_match.CancelMatchGameReq();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a CancelMatchGameReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_match.CancelMatchGameReq} CancelMatchGameReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CancelMatchGameReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a CancelMatchGameReq message.
+         * @function verify
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        CancelMatchGameReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a CancelMatchGameReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_match.CancelMatchGameReq} CancelMatchGameReq
+         */
+        CancelMatchGameReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_match.CancelMatchGameReq)
+                return object;
+            var message = new $root.hallserver_match.CancelMatchGameReq();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a CancelMatchGameReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @static
+         * @param {hallserver_match.CancelMatchGameReq} message CancelMatchGameReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        CancelMatchGameReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.gameId = 0;
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            return object;
+        };
+
+        /**
+         * Converts this CancelMatchGameReq to JSON.
+         * @function toJSON
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        CancelMatchGameReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for CancelMatchGameReq
+         * @function getTypeUrl
+         * @memberof hallserver_match.CancelMatchGameReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        CancelMatchGameReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_match.CancelMatchGameReq";
+        };
+
+        return CancelMatchGameReq;
+    })();
+
+    hallserver_match.CancelMatchGameRes = (function() {
+
+        /**
+         * Properties of a CancelMatchGameRes.
+         * @memberof hallserver_match
+         * @interface ICancelMatchGameRes
+         * @property {number|null} [gameId] CancelMatchGameRes gameId
+         */
+
+        /**
+         * Constructs a new CancelMatchGameRes.
+         * @memberof hallserver_match
+         * @classdesc Represents a CancelMatchGameRes.
+         * @implements ICancelMatchGameRes
+         * @constructor
+         * @param {hallserver_match.ICancelMatchGameRes=} [properties] Properties to set
+         */
+        function CancelMatchGameRes(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * CancelMatchGameRes gameId.
+         * @member {number} gameId
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @instance
+         */
+        CancelMatchGameRes.prototype.gameId = 0;
+
+        /**
+         * Creates a new CancelMatchGameRes instance using the specified properties.
+         * @function create
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @static
+         * @param {hallserver_match.ICancelMatchGameRes=} [properties] Properties to set
+         * @returns {hallserver_match.CancelMatchGameRes} CancelMatchGameRes instance
+         */
+        CancelMatchGameRes.create = function create(properties) {
+            return new CancelMatchGameRes(properties);
+        };
+
+        /**
+         * Encodes the specified CancelMatchGameRes message. Does not implicitly {@link hallserver_match.CancelMatchGameRes.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @static
+         * @param {hallserver_match.ICancelMatchGameRes} message CancelMatchGameRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CancelMatchGameRes.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified CancelMatchGameRes message, length delimited. Does not implicitly {@link hallserver_match.CancelMatchGameRes.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @static
+         * @param {hallserver_match.ICancelMatchGameRes} message CancelMatchGameRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CancelMatchGameRes.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a CancelMatchGameRes message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_match.CancelMatchGameRes} CancelMatchGameRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CancelMatchGameRes.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_match.CancelMatchGameRes();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a CancelMatchGameRes message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_match.CancelMatchGameRes} CancelMatchGameRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CancelMatchGameRes.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a CancelMatchGameRes message.
+         * @function verify
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        CancelMatchGameRes.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a CancelMatchGameRes message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_match.CancelMatchGameRes} CancelMatchGameRes
+         */
+        CancelMatchGameRes.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_match.CancelMatchGameRes)
+                return object;
+            var message = new $root.hallserver_match.CancelMatchGameRes();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a CancelMatchGameRes message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @static
+         * @param {hallserver_match.CancelMatchGameRes} message CancelMatchGameRes
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        CancelMatchGameRes.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.gameId = 0;
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            return object;
+        };
+
+        /**
+         * Converts this CancelMatchGameRes to JSON.
+         * @function toJSON
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        CancelMatchGameRes.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for CancelMatchGameRes
+         * @function getTypeUrl
+         * @memberof hallserver_match.CancelMatchGameRes
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        CancelMatchGameRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_match.CancelMatchGameRes";
+        };
+
+        return CancelMatchGameRes;
+    })();
+
+    hallserver_match.MatchGameNotice = (function() {
+
+        /**
+         * Properties of a MatchGameNotice.
+         * @memberof hallserver_match
+         * @interface IMatchGameNotice
+         * @property {number|null} [gameId] MatchGameNotice gameId
+         * @property {string|null} [sessionId] MatchGameNotice sessionId
+         * @property {number|null} [remainTime] MatchGameNotice remainTime
+         */
+
+        /**
+         * Constructs a new MatchGameNotice.
+         * @memberof hallserver_match
+         * @classdesc Represents a MatchGameNotice.
+         * @implements IMatchGameNotice
+         * @constructor
+         * @param {hallserver_match.IMatchGameNotice=} [properties] Properties to set
+         */
+        function MatchGameNotice(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * MatchGameNotice gameId.
+         * @member {number} gameId
+         * @memberof hallserver_match.MatchGameNotice
+         * @instance
+         */
+        MatchGameNotice.prototype.gameId = 0;
+
+        /**
+         * MatchGameNotice sessionId.
+         * @member {string} sessionId
+         * @memberof hallserver_match.MatchGameNotice
+         * @instance
+         */
+        MatchGameNotice.prototype.sessionId = "";
+
+        /**
+         * MatchGameNotice remainTime.
+         * @member {number} remainTime
+         * @memberof hallserver_match.MatchGameNotice
+         * @instance
+         */
+        MatchGameNotice.prototype.remainTime = 0;
+
+        /**
+         * Creates a new MatchGameNotice instance using the specified properties.
+         * @function create
+         * @memberof hallserver_match.MatchGameNotice
+         * @static
+         * @param {hallserver_match.IMatchGameNotice=} [properties] Properties to set
+         * @returns {hallserver_match.MatchGameNotice} MatchGameNotice instance
+         */
+        MatchGameNotice.create = function create(properties) {
+            return new MatchGameNotice(properties);
+        };
+
+        /**
+         * Encodes the specified MatchGameNotice message. Does not implicitly {@link hallserver_match.MatchGameNotice.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_match.MatchGameNotice
+         * @static
+         * @param {hallserver_match.IMatchGameNotice} message MatchGameNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MatchGameNotice.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sessionId);
+            if (message.remainTime != null && Object.hasOwnProperty.call(message, "remainTime"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.remainTime);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified MatchGameNotice message, length delimited. Does not implicitly {@link hallserver_match.MatchGameNotice.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_match.MatchGameNotice
+         * @static
+         * @param {hallserver_match.IMatchGameNotice} message MatchGameNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        MatchGameNotice.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a MatchGameNotice message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_match.MatchGameNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_match.MatchGameNotice} MatchGameNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MatchGameNotice.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_match.MatchGameNotice();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                case 2: {
+                        message.sessionId = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.remainTime = reader.int32();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a MatchGameNotice message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_match.MatchGameNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_match.MatchGameNotice} MatchGameNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        MatchGameNotice.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a MatchGameNotice message.
+         * @function verify
+         * @memberof hallserver_match.MatchGameNotice
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        MatchGameNotice.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
+                if (!$util.isString(message.sessionId))
+                    return "sessionId: string expected";
+            if (message.remainTime != null && message.hasOwnProperty("remainTime"))
+                if (!$util.isInteger(message.remainTime))
+                    return "remainTime: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a MatchGameNotice message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_match.MatchGameNotice
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_match.MatchGameNotice} MatchGameNotice
+         */
+        MatchGameNotice.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_match.MatchGameNotice)
+                return object;
+            var message = new $root.hallserver_match.MatchGameNotice();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            if (object.sessionId != null)
+                message.sessionId = String(object.sessionId);
+            if (object.remainTime != null)
+                message.remainTime = object.remainTime | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a MatchGameNotice message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_match.MatchGameNotice
+         * @static
+         * @param {hallserver_match.MatchGameNotice} message MatchGameNotice
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        MatchGameNotice.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.gameId = 0;
+                object.sessionId = "";
+                object.remainTime = 0;
+            }
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
+                object.sessionId = message.sessionId;
+            if (message.remainTime != null && message.hasOwnProperty("remainTime"))
+                object.remainTime = message.remainTime;
+            return object;
+        };
+
+        /**
+         * Converts this MatchGameNotice to JSON.
+         * @function toJSON
+         * @memberof hallserver_match.MatchGameNotice
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        MatchGameNotice.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for MatchGameNotice
+         * @function getTypeUrl
+         * @memberof hallserver_match.MatchGameNotice
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        MatchGameNotice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_match.MatchGameNotice";
+        };
+
+        return MatchGameNotice;
+    })();
+
+    hallserver_match.AcceptMatchReq = (function() {
+
+        /**
+         * Properties of an AcceptMatchReq.
+         * @memberof hallserver_match
+         * @interface IAcceptMatchReq
+         * @property {number|null} [gameId] AcceptMatchReq gameId
+         * @property {string|null} [sessionId] AcceptMatchReq sessionId
+         */
+
+        /**
+         * Constructs a new AcceptMatchReq.
+         * @memberof hallserver_match
+         * @classdesc Represents an AcceptMatchReq.
+         * @implements IAcceptMatchReq
+         * @constructor
+         * @param {hallserver_match.IAcceptMatchReq=} [properties] Properties to set
+         */
+        function AcceptMatchReq(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * AcceptMatchReq gameId.
+         * @member {number} gameId
+         * @memberof hallserver_match.AcceptMatchReq
+         * @instance
+         */
+        AcceptMatchReq.prototype.gameId = 0;
+
+        /**
+         * AcceptMatchReq sessionId.
+         * @member {string} sessionId
+         * @memberof hallserver_match.AcceptMatchReq
+         * @instance
+         */
+        AcceptMatchReq.prototype.sessionId = "";
+
+        /**
+         * Creates a new AcceptMatchReq instance using the specified properties.
+         * @function create
+         * @memberof hallserver_match.AcceptMatchReq
+         * @static
+         * @param {hallserver_match.IAcceptMatchReq=} [properties] Properties to set
+         * @returns {hallserver_match.AcceptMatchReq} AcceptMatchReq instance
+         */
+        AcceptMatchReq.create = function create(properties) {
+            return new AcceptMatchReq(properties);
+        };
+
+        /**
+         * Encodes the specified AcceptMatchReq message. Does not implicitly {@link hallserver_match.AcceptMatchReq.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_match.AcceptMatchReq
+         * @static
+         * @param {hallserver_match.IAcceptMatchReq} message AcceptMatchReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        AcceptMatchReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sessionId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified AcceptMatchReq message, length delimited. Does not implicitly {@link hallserver_match.AcceptMatchReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_match.AcceptMatchReq
+         * @static
+         * @param {hallserver_match.IAcceptMatchReq} message AcceptMatchReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        AcceptMatchReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an AcceptMatchReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_match.AcceptMatchReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_match.AcceptMatchReq} AcceptMatchReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        AcceptMatchReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_match.AcceptMatchReq();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                case 2: {
+                        message.sessionId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an AcceptMatchReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_match.AcceptMatchReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_match.AcceptMatchReq} AcceptMatchReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        AcceptMatchReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an AcceptMatchReq message.
+         * @function verify
+         * @memberof hallserver_match.AcceptMatchReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        AcceptMatchReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
+                if (!$util.isString(message.sessionId))
+                    return "sessionId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an AcceptMatchReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_match.AcceptMatchReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_match.AcceptMatchReq} AcceptMatchReq
+         */
+        AcceptMatchReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_match.AcceptMatchReq)
+                return object;
+            var message = new $root.hallserver_match.AcceptMatchReq();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            if (object.sessionId != null)
+                message.sessionId = String(object.sessionId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an AcceptMatchReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_match.AcceptMatchReq
+         * @static
+         * @param {hallserver_match.AcceptMatchReq} message AcceptMatchReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        AcceptMatchReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.gameId = 0;
+                object.sessionId = "";
+            }
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
+                object.sessionId = message.sessionId;
+            return object;
+        };
+
+        /**
+         * Converts this AcceptMatchReq to JSON.
+         * @function toJSON
+         * @memberof hallserver_match.AcceptMatchReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        AcceptMatchReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for AcceptMatchReq
+         * @function getTypeUrl
+         * @memberof hallserver_match.AcceptMatchReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        AcceptMatchReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_match.AcceptMatchReq";
+        };
+
+        return AcceptMatchReq;
+    })();
+
+    hallserver_match.AcceptMatchRes = (function() {
+
+        /**
+         * Properties of an AcceptMatchRes.
+         * @memberof hallserver_match
+         * @interface IAcceptMatchRes
+         * @property {number|null} [gameId] AcceptMatchRes gameId
+         * @property {string|null} [sessionId] AcceptMatchRes sessionId
+         */
+
+        /**
+         * Constructs a new AcceptMatchRes.
+         * @memberof hallserver_match
+         * @classdesc Represents an AcceptMatchRes.
+         * @implements IAcceptMatchRes
+         * @constructor
+         * @param {hallserver_match.IAcceptMatchRes=} [properties] Properties to set
+         */
+        function AcceptMatchRes(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * AcceptMatchRes gameId.
+         * @member {number} gameId
+         * @memberof hallserver_match.AcceptMatchRes
+         * @instance
+         */
+        AcceptMatchRes.prototype.gameId = 0;
+
+        /**
+         * AcceptMatchRes sessionId.
+         * @member {string} sessionId
+         * @memberof hallserver_match.AcceptMatchRes
+         * @instance
+         */
+        AcceptMatchRes.prototype.sessionId = "";
+
+        /**
+         * Creates a new AcceptMatchRes instance using the specified properties.
+         * @function create
+         * @memberof hallserver_match.AcceptMatchRes
+         * @static
+         * @param {hallserver_match.IAcceptMatchRes=} [properties] Properties to set
+         * @returns {hallserver_match.AcceptMatchRes} AcceptMatchRes instance
+         */
+        AcceptMatchRes.create = function create(properties) {
+            return new AcceptMatchRes(properties);
+        };
+
+        /**
+         * Encodes the specified AcceptMatchRes message. Does not implicitly {@link hallserver_match.AcceptMatchRes.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_match.AcceptMatchRes
+         * @static
+         * @param {hallserver_match.IAcceptMatchRes} message AcceptMatchRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        AcceptMatchRes.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sessionId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified AcceptMatchRes message, length delimited. Does not implicitly {@link hallserver_match.AcceptMatchRes.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_match.AcceptMatchRes
+         * @static
+         * @param {hallserver_match.IAcceptMatchRes} message AcceptMatchRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        AcceptMatchRes.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an AcceptMatchRes message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_match.AcceptMatchRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_match.AcceptMatchRes} AcceptMatchRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        AcceptMatchRes.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_match.AcceptMatchRes();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                case 2: {
+                        message.sessionId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an AcceptMatchRes message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_match.AcceptMatchRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_match.AcceptMatchRes} AcceptMatchRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        AcceptMatchRes.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an AcceptMatchRes message.
+         * @function verify
+         * @memberof hallserver_match.AcceptMatchRes
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        AcceptMatchRes.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
+                if (!$util.isString(message.sessionId))
+                    return "sessionId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an AcceptMatchRes message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_match.AcceptMatchRes
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_match.AcceptMatchRes} AcceptMatchRes
+         */
+        AcceptMatchRes.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_match.AcceptMatchRes)
+                return object;
+            var message = new $root.hallserver_match.AcceptMatchRes();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            if (object.sessionId != null)
+                message.sessionId = String(object.sessionId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an AcceptMatchRes message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_match.AcceptMatchRes
+         * @static
+         * @param {hallserver_match.AcceptMatchRes} message AcceptMatchRes
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        AcceptMatchRes.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.gameId = 0;
+                object.sessionId = "";
+            }
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
+                object.sessionId = message.sessionId;
+            return object;
+        };
+
+        /**
+         * Converts this AcceptMatchRes to JSON.
+         * @function toJSON
+         * @memberof hallserver_match.AcceptMatchRes
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        AcceptMatchRes.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for AcceptMatchRes
+         * @function getTypeUrl
+         * @memberof hallserver_match.AcceptMatchRes
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        AcceptMatchRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_match.AcceptMatchRes";
+        };
+
+        return AcceptMatchRes;
+    })();
+
+    hallserver_match.JoinGameNotice = (function() {
+
+        /**
+         * Properties of a JoinGameNotice.
+         * @memberof hallserver_match
+         * @interface IJoinGameNotice
+         * @property {string|null} [gamehost] JoinGameNotice gamehost
+         * @property {string|null} [gametoken] JoinGameNotice gametoken
+         * @property {string|null} [tableId] JoinGameNotice tableId
+         */
+
+        /**
+         * Constructs a new JoinGameNotice.
+         * @memberof hallserver_match
+         * @classdesc Represents a JoinGameNotice.
+         * @implements IJoinGameNotice
+         * @constructor
+         * @param {hallserver_match.IJoinGameNotice=} [properties] Properties to set
+         */
+        function JoinGameNotice(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * JoinGameNotice gamehost.
+         * @member {string} gamehost
+         * @memberof hallserver_match.JoinGameNotice
+         * @instance
+         */
+        JoinGameNotice.prototype.gamehost = "";
+
+        /**
+         * JoinGameNotice gametoken.
+         * @member {string} gametoken
+         * @memberof hallserver_match.JoinGameNotice
+         * @instance
+         */
+        JoinGameNotice.prototype.gametoken = "";
+
+        /**
+         * JoinGameNotice tableId.
+         * @member {string} tableId
+         * @memberof hallserver_match.JoinGameNotice
+         * @instance
+         */
+        JoinGameNotice.prototype.tableId = "";
+
+        /**
+         * Creates a new JoinGameNotice instance using the specified properties.
+         * @function create
+         * @memberof hallserver_match.JoinGameNotice
+         * @static
+         * @param {hallserver_match.IJoinGameNotice=} [properties] Properties to set
+         * @returns {hallserver_match.JoinGameNotice} JoinGameNotice instance
+         */
+        JoinGameNotice.create = function create(properties) {
+            return new JoinGameNotice(properties);
+        };
+
+        /**
+         * Encodes the specified JoinGameNotice message. Does not implicitly {@link hallserver_match.JoinGameNotice.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_match.JoinGameNotice
+         * @static
+         * @param {hallserver_match.IJoinGameNotice} message JoinGameNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        JoinGameNotice.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gamehost != null && Object.hasOwnProperty.call(message, "gamehost"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.gamehost);
+            if (message.gametoken != null && Object.hasOwnProperty.call(message, "gametoken"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.gametoken);
+            if (message.tableId != null && Object.hasOwnProperty.call(message, "tableId"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.tableId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified JoinGameNotice message, length delimited. Does not implicitly {@link hallserver_match.JoinGameNotice.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_match.JoinGameNotice
+         * @static
+         * @param {hallserver_match.IJoinGameNotice} message JoinGameNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        JoinGameNotice.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a JoinGameNotice message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_match.JoinGameNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_match.JoinGameNotice} JoinGameNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        JoinGameNotice.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_match.JoinGameNotice();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.gamehost = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.gametoken = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.tableId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a JoinGameNotice message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_match.JoinGameNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_match.JoinGameNotice} JoinGameNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        JoinGameNotice.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a JoinGameNotice message.
+         * @function verify
+         * @memberof hallserver_match.JoinGameNotice
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        JoinGameNotice.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gamehost != null && message.hasOwnProperty("gamehost"))
+                if (!$util.isString(message.gamehost))
+                    return "gamehost: string expected";
+            if (message.gametoken != null && message.hasOwnProperty("gametoken"))
+                if (!$util.isString(message.gametoken))
+                    return "gametoken: string expected";
+            if (message.tableId != null && message.hasOwnProperty("tableId"))
+                if (!$util.isString(message.tableId))
+                    return "tableId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a JoinGameNotice message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_match.JoinGameNotice
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_match.JoinGameNotice} JoinGameNotice
+         */
+        JoinGameNotice.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_match.JoinGameNotice)
+                return object;
+            var message = new $root.hallserver_match.JoinGameNotice();
+            if (object.gamehost != null)
+                message.gamehost = String(object.gamehost);
+            if (object.gametoken != null)
+                message.gametoken = String(object.gametoken);
+            if (object.tableId != null)
+                message.tableId = String(object.tableId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a JoinGameNotice message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_match.JoinGameNotice
+         * @static
+         * @param {hallserver_match.JoinGameNotice} message JoinGameNotice
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        JoinGameNotice.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.gamehost = "";
+                object.gametoken = "";
+                object.tableId = "";
+            }
+            if (message.gamehost != null && message.hasOwnProperty("gamehost"))
+                object.gamehost = message.gamehost;
+            if (message.gametoken != null && message.hasOwnProperty("gametoken"))
+                object.gametoken = message.gametoken;
+            if (message.tableId != null && message.hasOwnProperty("tableId"))
+                object.tableId = message.tableId;
+            return object;
+        };
+
+        /**
+         * Converts this JoinGameNotice to JSON.
+         * @function toJSON
+         * @memberof hallserver_match.JoinGameNotice
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        JoinGameNotice.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for JoinGameNotice
+         * @function getTypeUrl
+         * @memberof hallserver_match.JoinGameNotice
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        JoinGameNotice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_match.JoinGameNotice";
+        };
+
+        return JoinGameNotice;
+    })();
+
+    return hallserver_match;
+})();
+
+$root.hallserver_player = (function() {
+
+    /**
+     * Namespace hallserver_player.
+     * @exports hallserver_player
+     * @namespace
+     */
+    var hallserver_player = {};
+
+    hallserver_player.HeartReq = (function() {
+
+        /**
+         * Properties of a HeartReq.
+         * @memberof hallserver_player
+         * @interface IHeartReq
+         * @property {number|Long|null} [time] HeartReq time
+         */
+
+        /**
+         * Constructs a new HeartReq.
+         * @memberof hallserver_player
+         * @classdesc Represents a HeartReq.
+         * @implements IHeartReq
+         * @constructor
+         * @param {hallserver_player.IHeartReq=} [properties] Properties to set
+         */
+        function HeartReq(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * HeartReq time.
+         * @member {number|Long} time
+         * @memberof hallserver_player.HeartReq
+         * @instance
+         */
+        HeartReq.prototype.time = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new HeartReq instance using the specified properties.
+         * @function create
+         * @memberof hallserver_player.HeartReq
+         * @static
+         * @param {hallserver_player.IHeartReq=} [properties] Properties to set
+         * @returns {hallserver_player.HeartReq} HeartReq instance
+         */
+        HeartReq.create = function create(properties) {
+            return new HeartReq(properties);
+        };
+
+        /**
+         * Encodes the specified HeartReq message. Does not implicitly {@link hallserver_player.HeartReq.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_player.HeartReq
+         * @static
+         * @param {hallserver_player.IHeartReq} message HeartReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        HeartReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.time != null && Object.hasOwnProperty.call(message, "time"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.time);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified HeartReq message, length delimited. Does not implicitly {@link hallserver_player.HeartReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_player.HeartReq
+         * @static
+         * @param {hallserver_player.IHeartReq} message HeartReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        HeartReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a HeartReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_player.HeartReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_player.HeartReq} HeartReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        HeartReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_player.HeartReq();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.time = reader.int64();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a HeartReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_player.HeartReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_player.HeartReq} HeartReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        HeartReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a HeartReq message.
+         * @function verify
+         * @memberof hallserver_player.HeartReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        HeartReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.time != null && message.hasOwnProperty("time"))
+                if (!$util.isInteger(message.time) && !(message.time && $util.isInteger(message.time.low) && $util.isInteger(message.time.high)))
+                    return "time: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a HeartReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_player.HeartReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_player.HeartReq} HeartReq
+         */
+        HeartReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_player.HeartReq)
+                return object;
+            var message = new $root.hallserver_player.HeartReq();
+            if (object.time != null)
+                if ($util.Long)
+                    (message.time = $util.Long.fromValue(object.time)).unsigned = false;
+                else if (typeof object.time === "string")
+                    message.time = parseInt(object.time, 10);
+                else if (typeof object.time === "number")
+                    message.time = object.time;
+                else if (typeof object.time === "object")
+                    message.time = new $util.LongBits(object.time.low >>> 0, object.time.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a HeartReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_player.HeartReq
+         * @static
+         * @param {hallserver_player.HeartReq} message HeartReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        HeartReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.time = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.time = options.longs === String ? "0" : 0;
+            if (message.time != null && message.hasOwnProperty("time"))
+                if (typeof message.time === "number")
+                    object.time = options.longs === String ? String(message.time) : message.time;
+                else
+                    object.time = options.longs === String ? $util.Long.prototype.toString.call(message.time) : options.longs === Number ? new $util.LongBits(message.time.low >>> 0, message.time.high >>> 0).toNumber() : message.time;
+            return object;
+        };
+
+        /**
+         * Converts this HeartReq to JSON.
+         * @function toJSON
+         * @memberof hallserver_player.HeartReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        HeartReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for HeartReq
+         * @function getTypeUrl
+         * @memberof hallserver_player.HeartReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        HeartReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_player.HeartReq";
+        };
+
+        return HeartReq;
+    })();
+
+    return hallserver_player;
 })();
 
 module.exports = $root;
