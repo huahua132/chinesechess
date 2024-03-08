@@ -4085,7 +4085,7 @@ $root.hallserver_hall = (function() {
          * @memberof hallserver_hall
          * @interface IMatchGameNotice
          * @property {number|null} [gameId] MatchGameNotice gameId
-         * @property {number|null} [sessionId] MatchGameNotice sessionId
+         * @property {string|null} [sessionId] MatchGameNotice sessionId
          * @property {number|null} [remainTime] MatchGameNotice remainTime
          */
 
@@ -4114,11 +4114,11 @@ $root.hallserver_hall = (function() {
 
         /**
          * MatchGameNotice sessionId.
-         * @member {number} sessionId
+         * @member {string} sessionId
          * @memberof hallserver_hall.MatchGameNotice
          * @instance
          */
-        MatchGameNotice.prototype.sessionId = 0;
+        MatchGameNotice.prototype.sessionId = "";
 
         /**
          * MatchGameNotice remainTime.
@@ -4155,7 +4155,7 @@ $root.hallserver_hall = (function() {
             if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
             if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.sessionId);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sessionId);
             if (message.remainTime != null && Object.hasOwnProperty.call(message, "remainTime"))
                 writer.uint32(/* id 3, wireType 0 =*/24).int32(message.remainTime);
             return writer;
@@ -4197,7 +4197,7 @@ $root.hallserver_hall = (function() {
                         break;
                     }
                 case 2: {
-                        message.sessionId = reader.int32();
+                        message.sessionId = reader.string();
                         break;
                     }
                 case 3: {
@@ -4243,8 +4243,8 @@ $root.hallserver_hall = (function() {
                 if (!$util.isInteger(message.gameId))
                     return "gameId: integer expected";
             if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                if (!$util.isInteger(message.sessionId))
-                    return "sessionId: integer expected";
+                if (!$util.isString(message.sessionId))
+                    return "sessionId: string expected";
             if (message.remainTime != null && message.hasOwnProperty("remainTime"))
                 if (!$util.isInteger(message.remainTime))
                     return "remainTime: integer expected";
@@ -4266,7 +4266,7 @@ $root.hallserver_hall = (function() {
             if (object.gameId != null)
                 message.gameId = object.gameId | 0;
             if (object.sessionId != null)
-                message.sessionId = object.sessionId | 0;
+                message.sessionId = String(object.sessionId);
             if (object.remainTime != null)
                 message.remainTime = object.remainTime | 0;
             return message;
@@ -4287,7 +4287,7 @@ $root.hallserver_hall = (function() {
             var object = {};
             if (options.defaults) {
                 object.gameId = 0;
-                object.sessionId = 0;
+                object.sessionId = "";
                 object.remainTime = 0;
             }
             if (message.gameId != null && message.hasOwnProperty("gameId"))
@@ -4334,7 +4334,8 @@ $root.hallserver_hall = (function() {
          * Properties of an AcceptMatchReq.
          * @memberof hallserver_hall
          * @interface IAcceptMatchReq
-         * @property {number|null} [sessionId] AcceptMatchReq sessionId
+         * @property {number|null} [gameId] AcceptMatchReq gameId
+         * @property {string|null} [sessionId] AcceptMatchReq sessionId
          */
 
         /**
@@ -4353,12 +4354,20 @@ $root.hallserver_hall = (function() {
         }
 
         /**
-         * AcceptMatchReq sessionId.
-         * @member {number} sessionId
+         * AcceptMatchReq gameId.
+         * @member {number} gameId
          * @memberof hallserver_hall.AcceptMatchReq
          * @instance
          */
-        AcceptMatchReq.prototype.sessionId = 0;
+        AcceptMatchReq.prototype.gameId = 0;
+
+        /**
+         * AcceptMatchReq sessionId.
+         * @member {string} sessionId
+         * @memberof hallserver_hall.AcceptMatchReq
+         * @instance
+         */
+        AcceptMatchReq.prototype.sessionId = "";
 
         /**
          * Creates a new AcceptMatchReq instance using the specified properties.
@@ -4384,8 +4393,10 @@ $root.hallserver_hall = (function() {
         AcceptMatchReq.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
             if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.sessionId);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sessionId);
             return writer;
         };
 
@@ -4421,7 +4432,11 @@ $root.hallserver_hall = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
-                        message.sessionId = reader.int32();
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                case 2: {
+                        message.sessionId = reader.string();
                         break;
                     }
                 default:
@@ -4459,9 +4474,12 @@ $root.hallserver_hall = (function() {
         AcceptMatchReq.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
             if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                if (!$util.isInteger(message.sessionId))
-                    return "sessionId: integer expected";
+                if (!$util.isString(message.sessionId))
+                    return "sessionId: string expected";
             return null;
         };
 
@@ -4477,8 +4495,10 @@ $root.hallserver_hall = (function() {
             if (object instanceof $root.hallserver_hall.AcceptMatchReq)
                 return object;
             var message = new $root.hallserver_hall.AcceptMatchReq();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
             if (object.sessionId != null)
-                message.sessionId = object.sessionId | 0;
+                message.sessionId = String(object.sessionId);
             return message;
         };
 
@@ -4495,8 +4515,12 @@ $root.hallserver_hall = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
-                object.sessionId = 0;
+            if (options.defaults) {
+                object.gameId = 0;
+                object.sessionId = "";
+            }
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
             if (message.sessionId != null && message.hasOwnProperty("sessionId"))
                 object.sessionId = message.sessionId;
             return object;
@@ -4537,7 +4561,8 @@ $root.hallserver_hall = (function() {
          * Properties of an AcceptMatchRes.
          * @memberof hallserver_hall
          * @interface IAcceptMatchRes
-         * @property {number|null} [sessionId] AcceptMatchRes sessionId
+         * @property {number|null} [gameId] AcceptMatchRes gameId
+         * @property {string|null} [sessionId] AcceptMatchRes sessionId
          */
 
         /**
@@ -4556,12 +4581,20 @@ $root.hallserver_hall = (function() {
         }
 
         /**
-         * AcceptMatchRes sessionId.
-         * @member {number} sessionId
+         * AcceptMatchRes gameId.
+         * @member {number} gameId
          * @memberof hallserver_hall.AcceptMatchRes
          * @instance
          */
-        AcceptMatchRes.prototype.sessionId = 0;
+        AcceptMatchRes.prototype.gameId = 0;
+
+        /**
+         * AcceptMatchRes sessionId.
+         * @member {string} sessionId
+         * @memberof hallserver_hall.AcceptMatchRes
+         * @instance
+         */
+        AcceptMatchRes.prototype.sessionId = "";
 
         /**
          * Creates a new AcceptMatchRes instance using the specified properties.
@@ -4587,8 +4620,10 @@ $root.hallserver_hall = (function() {
         AcceptMatchRes.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
             if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.sessionId);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.sessionId);
             return writer;
         };
 
@@ -4624,7 +4659,11 @@ $root.hallserver_hall = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
-                        message.sessionId = reader.int32();
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                case 2: {
+                        message.sessionId = reader.string();
                         break;
                     }
                 default:
@@ -4662,9 +4701,12 @@ $root.hallserver_hall = (function() {
         AcceptMatchRes.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
             if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                if (!$util.isInteger(message.sessionId))
-                    return "sessionId: integer expected";
+                if (!$util.isString(message.sessionId))
+                    return "sessionId: string expected";
             return null;
         };
 
@@ -4680,8 +4722,10 @@ $root.hallserver_hall = (function() {
             if (object instanceof $root.hallserver_hall.AcceptMatchRes)
                 return object;
             var message = new $root.hallserver_hall.AcceptMatchRes();
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
             if (object.sessionId != null)
-                message.sessionId = object.sessionId | 0;
+                message.sessionId = String(object.sessionId);
             return message;
         };
 
@@ -4698,8 +4742,12 @@ $root.hallserver_hall = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
-                object.sessionId = 0;
+            if (options.defaults) {
+                object.gameId = 0;
+                object.sessionId = "";
+            }
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
             if (message.sessionId != null && message.hasOwnProperty("sessionId"))
                 object.sessionId = message.sessionId;
             return object;
@@ -4732,412 +4780,6 @@ $root.hallserver_hall = (function() {
         };
 
         return AcceptMatchRes;
-    })();
-
-    hallserver_hall.CancelMatchReq = (function() {
-
-        /**
-         * Properties of a CancelMatchReq.
-         * @memberof hallserver_hall
-         * @interface ICancelMatchReq
-         * @property {number|null} [sessionId] CancelMatchReq sessionId
-         */
-
-        /**
-         * Constructs a new CancelMatchReq.
-         * @memberof hallserver_hall
-         * @classdesc Represents a CancelMatchReq.
-         * @implements ICancelMatchReq
-         * @constructor
-         * @param {hallserver_hall.ICancelMatchReq=} [properties] Properties to set
-         */
-        function CancelMatchReq(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * CancelMatchReq sessionId.
-         * @member {number} sessionId
-         * @memberof hallserver_hall.CancelMatchReq
-         * @instance
-         */
-        CancelMatchReq.prototype.sessionId = 0;
-
-        /**
-         * Creates a new CancelMatchReq instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.CancelMatchReq
-         * @static
-         * @param {hallserver_hall.ICancelMatchReq=} [properties] Properties to set
-         * @returns {hallserver_hall.CancelMatchReq} CancelMatchReq instance
-         */
-        CancelMatchReq.create = function create(properties) {
-            return new CancelMatchReq(properties);
-        };
-
-        /**
-         * Encodes the specified CancelMatchReq message. Does not implicitly {@link hallserver_hall.CancelMatchReq.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.CancelMatchReq
-         * @static
-         * @param {hallserver_hall.ICancelMatchReq} message CancelMatchReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CancelMatchReq.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.sessionId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified CancelMatchReq message, length delimited. Does not implicitly {@link hallserver_hall.CancelMatchReq.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.CancelMatchReq
-         * @static
-         * @param {hallserver_hall.ICancelMatchReq} message CancelMatchReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CancelMatchReq.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a CancelMatchReq message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.CancelMatchReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.CancelMatchReq} CancelMatchReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CancelMatchReq.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.CancelMatchReq();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.sessionId = reader.int32();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a CancelMatchReq message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.CancelMatchReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.CancelMatchReq} CancelMatchReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CancelMatchReq.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a CancelMatchReq message.
-         * @function verify
-         * @memberof hallserver_hall.CancelMatchReq
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        CancelMatchReq.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                if (!$util.isInteger(message.sessionId))
-                    return "sessionId: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a CancelMatchReq message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.CancelMatchReq
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.CancelMatchReq} CancelMatchReq
-         */
-        CancelMatchReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.CancelMatchReq)
-                return object;
-            var message = new $root.hallserver_hall.CancelMatchReq();
-            if (object.sessionId != null)
-                message.sessionId = object.sessionId | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a CancelMatchReq message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.CancelMatchReq
-         * @static
-         * @param {hallserver_hall.CancelMatchReq} message CancelMatchReq
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        CancelMatchReq.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.sessionId = 0;
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                object.sessionId = message.sessionId;
-            return object;
-        };
-
-        /**
-         * Converts this CancelMatchReq to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.CancelMatchReq
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        CancelMatchReq.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for CancelMatchReq
-         * @function getTypeUrl
-         * @memberof hallserver_hall.CancelMatchReq
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        CancelMatchReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.CancelMatchReq";
-        };
-
-        return CancelMatchReq;
-    })();
-
-    hallserver_hall.CancelMatchRes = (function() {
-
-        /**
-         * Properties of a CancelMatchRes.
-         * @memberof hallserver_hall
-         * @interface ICancelMatchRes
-         * @property {number|null} [sessionId] CancelMatchRes sessionId
-         */
-
-        /**
-         * Constructs a new CancelMatchRes.
-         * @memberof hallserver_hall
-         * @classdesc Represents a CancelMatchRes.
-         * @implements ICancelMatchRes
-         * @constructor
-         * @param {hallserver_hall.ICancelMatchRes=} [properties] Properties to set
-         */
-        function CancelMatchRes(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * CancelMatchRes sessionId.
-         * @member {number} sessionId
-         * @memberof hallserver_hall.CancelMatchRes
-         * @instance
-         */
-        CancelMatchRes.prototype.sessionId = 0;
-
-        /**
-         * Creates a new CancelMatchRes instance using the specified properties.
-         * @function create
-         * @memberof hallserver_hall.CancelMatchRes
-         * @static
-         * @param {hallserver_hall.ICancelMatchRes=} [properties] Properties to set
-         * @returns {hallserver_hall.CancelMatchRes} CancelMatchRes instance
-         */
-        CancelMatchRes.create = function create(properties) {
-            return new CancelMatchRes(properties);
-        };
-
-        /**
-         * Encodes the specified CancelMatchRes message. Does not implicitly {@link hallserver_hall.CancelMatchRes.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_hall.CancelMatchRes
-         * @static
-         * @param {hallserver_hall.ICancelMatchRes} message CancelMatchRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CancelMatchRes.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.sessionId != null && Object.hasOwnProperty.call(message, "sessionId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.sessionId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified CancelMatchRes message, length delimited. Does not implicitly {@link hallserver_hall.CancelMatchRes.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_hall.CancelMatchRes
-         * @static
-         * @param {hallserver_hall.ICancelMatchRes} message CancelMatchRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        CancelMatchRes.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a CancelMatchRes message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_hall.CancelMatchRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_hall.CancelMatchRes} CancelMatchRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CancelMatchRes.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_hall.CancelMatchRes();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.sessionId = reader.int32();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a CancelMatchRes message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_hall.CancelMatchRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_hall.CancelMatchRes} CancelMatchRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        CancelMatchRes.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a CancelMatchRes message.
-         * @function verify
-         * @memberof hallserver_hall.CancelMatchRes
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        CancelMatchRes.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                if (!$util.isInteger(message.sessionId))
-                    return "sessionId: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a CancelMatchRes message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_hall.CancelMatchRes
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_hall.CancelMatchRes} CancelMatchRes
-         */
-        CancelMatchRes.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_hall.CancelMatchRes)
-                return object;
-            var message = new $root.hallserver_hall.CancelMatchRes();
-            if (object.sessionId != null)
-                message.sessionId = object.sessionId | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a CancelMatchRes message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_hall.CancelMatchRes
-         * @static
-         * @param {hallserver_hall.CancelMatchRes} message CancelMatchRes
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        CancelMatchRes.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.sessionId = 0;
-            if (message.sessionId != null && message.hasOwnProperty("sessionId"))
-                object.sessionId = message.sessionId;
-            return object;
-        };
-
-        /**
-         * Converts this CancelMatchRes to JSON.
-         * @function toJSON
-         * @memberof hallserver_hall.CancelMatchRes
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        CancelMatchRes.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for CancelMatchRes
-         * @function getTypeUrl
-         * @memberof hallserver_hall.CancelMatchRes
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        CancelMatchRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_hall.CancelMatchRes";
-        };
-
-        return CancelMatchRes;
     })();
 
     hallserver_hall.JoinGameNotice = (function() {
