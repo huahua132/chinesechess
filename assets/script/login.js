@@ -89,23 +89,28 @@ cc.Class({
         
         xhr.open("POST", url, false)
         xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.send(JSON.stringify({
-            account : account_editBox.string,
-            password : password_editBox.string
-        }));
 
-        //成功
-        if (code == 20000) {
-            if (this.mtype == "login") {
-                //进入大厅
-                global.hallhost = data.host
-                global.halltoken = data.token
-                global.player_id = data.player_id
-                cc.director.loadScene("hall");
+        try {
+            xhr.send(JSON.stringify({
+                account : account_editBox.string,
+                password : password_editBox.string
+            }));
+        } catch(error) {
+
+        } finally {
+            //成功
+            if (code == 20000) {
+                if (this.mtype == "login") {
+                    //进入大厅
+                    global.hallhost = data.host
+                    global.halltoken = data.token
+                    global.player_id = data.player_id
+                    cc.director.loadScene("hall");
+                }
+            } else {
+                //失败
+
             }
-        } else {
-            //失败
-
         }
     },
     // update (dt) {},
