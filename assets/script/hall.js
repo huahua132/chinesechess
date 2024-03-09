@@ -117,6 +117,10 @@ cc.Class({
     //通知进去对局
     JoinGameNotice(msg) {
         console.log("AcceptMatchRes >>>>>>> ", msg)
+        global.gamehost = msg.gamehost
+        global.gametoken = msg.gametoken
+        global.gametableid = msg.tableId
+        cc.director.loadScene("game");
     },
     // LIFE-CYCLE CALLBACKS:
     dispatch(packname, packbuffer) {

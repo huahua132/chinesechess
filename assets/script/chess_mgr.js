@@ -9,6 +9,7 @@ import {TEAM_TYPE} from '../jslib/enum/TEAM'
 import proto from '../proto.js/proto.js'
 import netpack from '../jslib/net/netpack.js'
 import {GAME_STATE} from '../jslib/enum/GAME_STATE.js'
+var global = require("global")
 
 var sprite_index_map = {
     [CHESS_TYPE.BLACK_C] : 0,
@@ -163,13 +164,21 @@ cc.Class({
     },
 
     LoginRes(msg) {
-        let match_req = {
-            playerId : msg.playerId,
+        if (msg.isreconnect == 0) {
+            let match_req = {
+                tableId : global.gametableid
+            }
+    
+            console.log("LoginRes:",msg)
+            let buffer = netpack.pack(".chinese_chess_hall.JoinReq",proto.chinese_chess_hall.JoinReq.encode(match_req).finish())
+            this.wsSocket.send(buffer)
+        } else {
+            let game_state_req = {
+                playerId : global.player_id
+            }
+            let buffer = netpack.pack(".chinese_chess_game.gameStateReq",proto.chinese_chess_game.gameStateReq.encode(game_state_req).finish())
+            this.wsSocket.send(buffer)
         }
-
-        console.log("LoginRes:",msg)
-        let buffer = netpack.pack(".chinese_chess_hall.matchReq",proto.chinese_chess_hall.matchReq.encode(match_req).finish())
-        this.wsSocket.send(buffer)
     },
 
     nextDoing(msg) {
@@ -257,6 +266,9 @@ cc.Class({
 
     matchRes(msg) {
         console.log("matchRes:",msg)
+        let game_state_req = {
+            playerId : global.player_id
+        }
         let buffer = netpack.pack(".chinese_chess_game.gameStateReq",proto.chinese_chess_game.gameStateReq.encode(game_state_req).finish())
         this.wsSocket.send(buffer)
     },
@@ -334,17 +346,18 @@ cc.Class({
     },
 
     onLoad () {
-        let ws = new WebSocket("ws://127.0.0.1:9012")
+        console.log("global >>>>> ",global)
+        let ws = new WebSocket("ws://" + global.gamehost)
 
         let chess_mgr = this
         this.m_player_info = {}
-        this.m_player_info.player_id = Math.floor(Math.random() * 10000)
+        this.m_player_info.player_id = global.player_id
         this.m_player_info.seat_id = 0
         this.m_player_info.team_type = 0
         ws.onopen = function (event) {
             console.log("Send Text WS was opened.",this.m_player_info);
             let login_req = {
-                token: "ddd",
+                token: global.gametoken,
                 playerId:  chess_mgr.m_player_info.player_id,
             };
             

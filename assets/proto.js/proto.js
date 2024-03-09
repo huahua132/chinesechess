@@ -24,7 +24,7 @@ $root.chinese_chess_game = (function() {
          * Properties of a gameStateReq.
          * @memberof chinese_chess_game
          * @interface IgameStateReq
-         * @property {number|null} [playerId] gameStateReq playerId
+         * @property {number|Long|null} [playerId] gameStateReq playerId
          */
 
         /**
@@ -44,11 +44,11 @@ $root.chinese_chess_game = (function() {
 
         /**
          * gameStateReq playerId.
-         * @member {number} playerId
+         * @member {number|Long} playerId
          * @memberof chinese_chess_game.gameStateReq
          * @instance
          */
-        gameStateReq.prototype.playerId = 0;
+        gameStateReq.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Creates a new gameStateReq instance using the specified properties.
@@ -75,7 +75,7 @@ $root.chinese_chess_game = (function() {
             if (!writer)
                 writer = $Writer.create();
             if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.playerId);
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.playerId);
             return writer;
         };
 
@@ -111,7 +111,7 @@ $root.chinese_chess_game = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
-                        message.playerId = reader.int32();
+                        message.playerId = reader.int64();
                         break;
                     }
                 default:
@@ -150,8 +150,8 @@ $root.chinese_chess_game = (function() {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (!$util.isInteger(message.playerId))
-                    return "playerId: integer expected";
+                if (!$util.isInteger(message.playerId) && !(message.playerId && $util.isInteger(message.playerId.low) && $util.isInteger(message.playerId.high)))
+                    return "playerId: integer|Long expected";
             return null;
         };
 
@@ -168,7 +168,14 @@ $root.chinese_chess_game = (function() {
                 return object;
             var message = new $root.chinese_chess_game.gameStateReq();
             if (object.playerId != null)
-                message.playerId = object.playerId | 0;
+                if ($util.Long)
+                    (message.playerId = $util.Long.fromValue(object.playerId)).unsigned = false;
+                else if (typeof object.playerId === "string")
+                    message.playerId = parseInt(object.playerId, 10);
+                else if (typeof object.playerId === "number")
+                    message.playerId = object.playerId;
+                else if (typeof object.playerId === "object")
+                    message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
             return message;
         };
 
@@ -186,9 +193,16 @@ $root.chinese_chess_game = (function() {
                 options = {};
             var object = {};
             if (options.defaults)
-                object.playerId = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.playerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.playerId = options.longs === String ? "0" : 0;
             if (message.playerId != null && message.hasOwnProperty("playerId"))
-                object.playerId = message.playerId;
+                if (typeof message.playerId === "number")
+                    object.playerId = options.longs === String ? String(message.playerId) : message.playerId;
+                else
+                    object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
             return object;
         };
 
@@ -228,7 +242,7 @@ $root.chinese_chess_game = (function() {
          * @memberof chinese_chess_game
          * @interface IplayerInfo
          * @property {number|null} [seatId] playerInfo seatId
-         * @property {number|null} [playerId] playerInfo playerId
+         * @property {number|Long|null} [playerId] playerInfo playerId
          * @property {number|null} [teamType] playerInfo teamType
          */
 
@@ -257,11 +271,11 @@ $root.chinese_chess_game = (function() {
 
         /**
          * playerInfo playerId.
-         * @member {number} playerId
+         * @member {number|Long} playerId
          * @memberof chinese_chess_game.playerInfo
          * @instance
          */
-        playerInfo.prototype.playerId = 0;
+        playerInfo.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * playerInfo teamType.
@@ -298,7 +312,7 @@ $root.chinese_chess_game = (function() {
             if (message.seatId != null && Object.hasOwnProperty.call(message, "seatId"))
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.seatId);
             if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.playerId);
+                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.playerId);
             if (message.teamType != null && Object.hasOwnProperty.call(message, "teamType"))
                 writer.uint32(/* id 3, wireType 0 =*/24).int32(message.teamType);
             return writer;
@@ -340,7 +354,7 @@ $root.chinese_chess_game = (function() {
                         break;
                     }
                 case 2: {
-                        message.playerId = reader.int32();
+                        message.playerId = reader.int64();
                         break;
                     }
                 case 3: {
@@ -386,8 +400,8 @@ $root.chinese_chess_game = (function() {
                 if (!$util.isInteger(message.seatId))
                     return "seatId: integer expected";
             if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (!$util.isInteger(message.playerId))
-                    return "playerId: integer expected";
+                if (!$util.isInteger(message.playerId) && !(message.playerId && $util.isInteger(message.playerId.low) && $util.isInteger(message.playerId.high)))
+                    return "playerId: integer|Long expected";
             if (message.teamType != null && message.hasOwnProperty("teamType"))
                 if (!$util.isInteger(message.teamType))
                     return "teamType: integer expected";
@@ -409,7 +423,14 @@ $root.chinese_chess_game = (function() {
             if (object.seatId != null)
                 message.seatId = object.seatId | 0;
             if (object.playerId != null)
-                message.playerId = object.playerId | 0;
+                if ($util.Long)
+                    (message.playerId = $util.Long.fromValue(object.playerId)).unsigned = false;
+                else if (typeof object.playerId === "string")
+                    message.playerId = parseInt(object.playerId, 10);
+                else if (typeof object.playerId === "number")
+                    message.playerId = object.playerId;
+                else if (typeof object.playerId === "object")
+                    message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
             if (object.teamType != null)
                 message.teamType = object.teamType | 0;
             return message;
@@ -430,13 +451,20 @@ $root.chinese_chess_game = (function() {
             var object = {};
             if (options.defaults) {
                 object.seatId = 0;
-                object.playerId = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.playerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.playerId = options.longs === String ? "0" : 0;
                 object.teamType = 0;
             }
             if (message.seatId != null && message.hasOwnProperty("seatId"))
                 object.seatId = message.seatId;
             if (message.playerId != null && message.hasOwnProperty("playerId"))
-                object.playerId = message.playerId;
+                if (typeof message.playerId === "number")
+                    object.playerId = options.longs === String ? String(message.playerId) : message.playerId;
+                else
+                    object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
             if (message.teamType != null && message.hasOwnProperty("teamType"))
                 object.teamType = message.teamType;
             return object;
@@ -1067,7 +1095,7 @@ $root.chinese_chess_game = (function() {
          * @memberof chinese_chess_game
          * @interface InextDoing
          * @property {number|null} [seatId] nextDoing seatId
-         * @property {number|null} [playerId] nextDoing playerId
+         * @property {number|Long|null} [playerId] nextDoing playerId
          * @property {number|null} [teamType] nextDoing teamType
          * @property {Array.<chinese_chess_game.IchessCanMove>|null} [canMoveList] nextDoing canMoveList
          */
@@ -1098,11 +1126,11 @@ $root.chinese_chess_game = (function() {
 
         /**
          * nextDoing playerId.
-         * @member {number} playerId
+         * @member {number|Long} playerId
          * @memberof chinese_chess_game.nextDoing
          * @instance
          */
-        nextDoing.prototype.playerId = 0;
+        nextDoing.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * nextDoing teamType.
@@ -1147,7 +1175,7 @@ $root.chinese_chess_game = (function() {
             if (message.seatId != null && Object.hasOwnProperty.call(message, "seatId"))
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.seatId);
             if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.playerId);
+                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.playerId);
             if (message.teamType != null && Object.hasOwnProperty.call(message, "teamType"))
                 writer.uint32(/* id 3, wireType 0 =*/24).int32(message.teamType);
             if (message.canMoveList != null && message.canMoveList.length)
@@ -1192,7 +1220,7 @@ $root.chinese_chess_game = (function() {
                         break;
                     }
                 case 2: {
-                        message.playerId = reader.int32();
+                        message.playerId = reader.int64();
                         break;
                     }
                 case 3: {
@@ -1244,8 +1272,8 @@ $root.chinese_chess_game = (function() {
                 if (!$util.isInteger(message.seatId))
                     return "seatId: integer expected";
             if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (!$util.isInteger(message.playerId))
-                    return "playerId: integer expected";
+                if (!$util.isInteger(message.playerId) && !(message.playerId && $util.isInteger(message.playerId.low) && $util.isInteger(message.playerId.high)))
+                    return "playerId: integer|Long expected";
             if (message.teamType != null && message.hasOwnProperty("teamType"))
                 if (!$util.isInteger(message.teamType))
                     return "teamType: integer expected";
@@ -1276,7 +1304,14 @@ $root.chinese_chess_game = (function() {
             if (object.seatId != null)
                 message.seatId = object.seatId | 0;
             if (object.playerId != null)
-                message.playerId = object.playerId | 0;
+                if ($util.Long)
+                    (message.playerId = $util.Long.fromValue(object.playerId)).unsigned = false;
+                else if (typeof object.playerId === "string")
+                    message.playerId = parseInt(object.playerId, 10);
+                else if (typeof object.playerId === "number")
+                    message.playerId = object.playerId;
+                else if (typeof object.playerId === "object")
+                    message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
             if (object.teamType != null)
                 message.teamType = object.teamType | 0;
             if (object.canMoveList) {
@@ -1309,13 +1344,20 @@ $root.chinese_chess_game = (function() {
                 object.canMoveList = [];
             if (options.defaults) {
                 object.seatId = 0;
-                object.playerId = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.playerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.playerId = options.longs === String ? "0" : 0;
                 object.teamType = 0;
             }
             if (message.seatId != null && message.hasOwnProperty("seatId"))
                 object.seatId = message.seatId;
             if (message.playerId != null && message.hasOwnProperty("playerId"))
-                object.playerId = message.playerId;
+                if (typeof message.playerId === "number")
+                    object.playerId = options.longs === String ? String(message.playerId) : message.playerId;
+                else
+                    object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
             if (message.teamType != null && message.hasOwnProperty("teamType"))
                 object.teamType = message.teamType;
             if (message.canMoveList && message.canMoveList.length) {
@@ -1365,6 +1407,7 @@ $root.chinese_chess_game = (function() {
          * @property {Array.<chinese_chess_game.IplayerInfo>|null} [playerList] gameStateRes playerList
          * @property {Array.<chinese_chess_game.IoneChess>|null} [chessList] gameStateRes chessList
          * @property {chinese_chess_game.InextDoing|null} [nextDoing] gameStateRes nextDoing
+         * @property {number|Long|null} [winPlayerId] gameStateRes winPlayerId
          */
 
         /**
@@ -1417,6 +1460,14 @@ $root.chinese_chess_game = (function() {
         gameStateRes.prototype.nextDoing = null;
 
         /**
+         * gameStateRes winPlayerId.
+         * @member {number|Long} winPlayerId
+         * @memberof chinese_chess_game.gameStateRes
+         * @instance
+         */
+        gameStateRes.prototype.winPlayerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
          * Creates a new gameStateRes instance using the specified properties.
          * @function create
          * @memberof chinese_chess_game.gameStateRes
@@ -1450,6 +1501,8 @@ $root.chinese_chess_game = (function() {
                     $root.chinese_chess_game.oneChess.encode(message.chessList[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             if (message.nextDoing != null && Object.hasOwnProperty.call(message, "nextDoing"))
                 $root.chinese_chess_game.nextDoing.encode(message.nextDoing, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.winPlayerId != null && Object.hasOwnProperty.call(message, "winPlayerId"))
+                writer.uint32(/* id 5, wireType 0 =*/40).int64(message.winPlayerId);
             return writer;
         };
 
@@ -1502,6 +1555,10 @@ $root.chinese_chess_game = (function() {
                     }
                 case 4: {
                         message.nextDoing = $root.chinese_chess_game.nextDoing.decode(reader, reader.uint32());
+                        break;
+                    }
+                case 5: {
+                        message.winPlayerId = reader.int64();
                         break;
                     }
                 default:
@@ -1565,6 +1622,9 @@ $root.chinese_chess_game = (function() {
                 if (error)
                     return "nextDoing." + error;
             }
+            if (message.winPlayerId != null && message.hasOwnProperty("winPlayerId"))
+                if (!$util.isInteger(message.winPlayerId) && !(message.winPlayerId && $util.isInteger(message.winPlayerId.low) && $util.isInteger(message.winPlayerId.high)))
+                    return "winPlayerId: integer|Long expected";
             return null;
         };
 
@@ -1607,6 +1667,15 @@ $root.chinese_chess_game = (function() {
                     throw TypeError(".chinese_chess_game.gameStateRes.nextDoing: object expected");
                 message.nextDoing = $root.chinese_chess_game.nextDoing.fromObject(object.nextDoing);
             }
+            if (object.winPlayerId != null)
+                if ($util.Long)
+                    (message.winPlayerId = $util.Long.fromValue(object.winPlayerId)).unsigned = false;
+                else if (typeof object.winPlayerId === "string")
+                    message.winPlayerId = parseInt(object.winPlayerId, 10);
+                else if (typeof object.winPlayerId === "number")
+                    message.winPlayerId = object.winPlayerId;
+                else if (typeof object.winPlayerId === "object")
+                    message.winPlayerId = new $util.LongBits(object.winPlayerId.low >>> 0, object.winPlayerId.high >>> 0).toNumber();
             return message;
         };
 
@@ -1630,6 +1699,11 @@ $root.chinese_chess_game = (function() {
             if (options.defaults) {
                 object.state = 0;
                 object.nextDoing = null;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.winPlayerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.winPlayerId = options.longs === String ? "0" : 0;
             }
             if (message.state != null && message.hasOwnProperty("state"))
                 object.state = message.state;
@@ -1645,6 +1719,11 @@ $root.chinese_chess_game = (function() {
             }
             if (message.nextDoing != null && message.hasOwnProperty("nextDoing"))
                 object.nextDoing = $root.chinese_chess_game.nextDoing.toObject(message.nextDoing, options);
+            if (message.winPlayerId != null && message.hasOwnProperty("winPlayerId"))
+                if (typeof message.winPlayerId === "number")
+                    object.winPlayerId = options.longs === String ? String(message.winPlayerId) : message.winPlayerId;
+                else
+                    object.winPlayerId = options.longs === String ? $util.Long.prototype.toString.call(message.winPlayerId) : options.longs === Number ? new $util.LongBits(message.winPlayerId.low >>> 0, message.winPlayerId.high >>> 0).toNumber() : message.winPlayerId;
             return object;
         };
 
@@ -2189,24 +2268,24 @@ $root.chinese_chess_hall = (function() {
      */
     var chinese_chess_hall = {};
 
-    chinese_chess_hall.matchReq = (function() {
+    chinese_chess_hall.JoinReq = (function() {
 
         /**
-         * Properties of a matchReq.
+         * Properties of a JoinReq.
          * @memberof chinese_chess_hall
-         * @interface ImatchReq
-         * @property {number|null} [playerId] matchReq playerId
+         * @interface IJoinReq
+         * @property {string|null} [tableId] JoinReq tableId
          */
 
         /**
-         * Constructs a new matchReq.
+         * Constructs a new JoinReq.
          * @memberof chinese_chess_hall
-         * @classdesc Represents a matchReq.
-         * @implements ImatchReq
+         * @classdesc Represents a JoinReq.
+         * @implements IJoinReq
          * @constructor
-         * @param {chinese_chess_hall.ImatchReq=} [properties] Properties to set
+         * @param {chinese_chess_hall.IJoinReq=} [properties] Properties to set
          */
-        function matchReq(properties) {
+        function JoinReq(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -2214,278 +2293,75 @@ $root.chinese_chess_hall = (function() {
         }
 
         /**
-         * matchReq playerId.
-         * @member {number} playerId
-         * @memberof chinese_chess_hall.matchReq
+         * JoinReq tableId.
+         * @member {string} tableId
+         * @memberof chinese_chess_hall.JoinReq
          * @instance
          */
-        matchReq.prototype.playerId = 0;
+        JoinReq.prototype.tableId = "";
 
         /**
-         * Creates a new matchReq instance using the specified properties.
+         * Creates a new JoinReq instance using the specified properties.
          * @function create
-         * @memberof chinese_chess_hall.matchReq
+         * @memberof chinese_chess_hall.JoinReq
          * @static
-         * @param {chinese_chess_hall.ImatchReq=} [properties] Properties to set
-         * @returns {chinese_chess_hall.matchReq} matchReq instance
+         * @param {chinese_chess_hall.IJoinReq=} [properties] Properties to set
+         * @returns {chinese_chess_hall.JoinReq} JoinReq instance
          */
-        matchReq.create = function create(properties) {
-            return new matchReq(properties);
+        JoinReq.create = function create(properties) {
+            return new JoinReq(properties);
         };
 
         /**
-         * Encodes the specified matchReq message. Does not implicitly {@link chinese_chess_hall.matchReq.verify|verify} messages.
+         * Encodes the specified JoinReq message. Does not implicitly {@link chinese_chess_hall.JoinReq.verify|verify} messages.
          * @function encode
-         * @memberof chinese_chess_hall.matchReq
+         * @memberof chinese_chess_hall.JoinReq
          * @static
-         * @param {chinese_chess_hall.ImatchReq} message matchReq message or plain object to encode
+         * @param {chinese_chess_hall.IJoinReq} message JoinReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        matchReq.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.playerId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified matchReq message, length delimited. Does not implicitly {@link chinese_chess_hall.matchReq.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof chinese_chess_hall.matchReq
-         * @static
-         * @param {chinese_chess_hall.ImatchReq} message matchReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        matchReq.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a matchReq message from the specified reader or buffer.
-         * @function decode
-         * @memberof chinese_chess_hall.matchReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {chinese_chess_hall.matchReq} matchReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        matchReq.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_hall.matchReq();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.playerId = reader.int32();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a matchReq message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof chinese_chess_hall.matchReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {chinese_chess_hall.matchReq} matchReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        matchReq.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a matchReq message.
-         * @function verify
-         * @memberof chinese_chess_hall.matchReq
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        matchReq.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (!$util.isInteger(message.playerId))
-                    return "playerId: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a matchReq message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof chinese_chess_hall.matchReq
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {chinese_chess_hall.matchReq} matchReq
-         */
-        matchReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.chinese_chess_hall.matchReq)
-                return object;
-            var message = new $root.chinese_chess_hall.matchReq();
-            if (object.playerId != null)
-                message.playerId = object.playerId | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a matchReq message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof chinese_chess_hall.matchReq
-         * @static
-         * @param {chinese_chess_hall.matchReq} message matchReq
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        matchReq.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                object.playerId = 0;
-            if (message.playerId != null && message.hasOwnProperty("playerId"))
-                object.playerId = message.playerId;
-            return object;
-        };
-
-        /**
-         * Converts this matchReq to JSON.
-         * @function toJSON
-         * @memberof chinese_chess_hall.matchReq
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        matchReq.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for matchReq
-         * @function getTypeUrl
-         * @memberof chinese_chess_hall.matchReq
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        matchReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/chinese_chess_hall.matchReq";
-        };
-
-        return matchReq;
-    })();
-
-    chinese_chess_hall.matchRes = (function() {
-
-        /**
-         * Properties of a matchRes.
-         * @memberof chinese_chess_hall
-         * @interface ImatchRes
-         * @property {number|null} [tableId] matchRes tableId
-         */
-
-        /**
-         * Constructs a new matchRes.
-         * @memberof chinese_chess_hall
-         * @classdesc Represents a matchRes.
-         * @implements ImatchRes
-         * @constructor
-         * @param {chinese_chess_hall.ImatchRes=} [properties] Properties to set
-         */
-        function matchRes(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * matchRes tableId.
-         * @member {number} tableId
-         * @memberof chinese_chess_hall.matchRes
-         * @instance
-         */
-        matchRes.prototype.tableId = 0;
-
-        /**
-         * Creates a new matchRes instance using the specified properties.
-         * @function create
-         * @memberof chinese_chess_hall.matchRes
-         * @static
-         * @param {chinese_chess_hall.ImatchRes=} [properties] Properties to set
-         * @returns {chinese_chess_hall.matchRes} matchRes instance
-         */
-        matchRes.create = function create(properties) {
-            return new matchRes(properties);
-        };
-
-        /**
-         * Encodes the specified matchRes message. Does not implicitly {@link chinese_chess_hall.matchRes.verify|verify} messages.
-         * @function encode
-         * @memberof chinese_chess_hall.matchRes
-         * @static
-         * @param {chinese_chess_hall.ImatchRes} message matchRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        matchRes.encode = function encode(message, writer) {
+        JoinReq.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
             if (message.tableId != null && Object.hasOwnProperty.call(message, "tableId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.tableId);
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.tableId);
             return writer;
         };
 
         /**
-         * Encodes the specified matchRes message, length delimited. Does not implicitly {@link chinese_chess_hall.matchRes.verify|verify} messages.
+         * Encodes the specified JoinReq message, length delimited. Does not implicitly {@link chinese_chess_hall.JoinReq.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof chinese_chess_hall.matchRes
+         * @memberof chinese_chess_hall.JoinReq
          * @static
-         * @param {chinese_chess_hall.ImatchRes} message matchRes message or plain object to encode
+         * @param {chinese_chess_hall.IJoinReq} message JoinReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        matchRes.encodeDelimited = function encodeDelimited(message, writer) {
+        JoinReq.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a matchRes message from the specified reader or buffer.
+         * Decodes a JoinReq message from the specified reader or buffer.
          * @function decode
-         * @memberof chinese_chess_hall.matchRes
+         * @memberof chinese_chess_hall.JoinReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {chinese_chess_hall.matchRes} matchRes
+         * @returns {chinese_chess_hall.JoinReq} JoinReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        matchRes.decode = function decode(reader, length) {
+        JoinReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_hall.matchRes();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_hall.JoinReq();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
-                        message.tableId = reader.int32();
+                        message.tableId = reader.string();
                         break;
                     }
                 default:
@@ -2497,102 +2373,305 @@ $root.chinese_chess_hall = (function() {
         };
 
         /**
-         * Decodes a matchRes message from the specified reader or buffer, length delimited.
+         * Decodes a JoinReq message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof chinese_chess_hall.matchRes
+         * @memberof chinese_chess_hall.JoinReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {chinese_chess_hall.matchRes} matchRes
+         * @returns {chinese_chess_hall.JoinReq} JoinReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        matchRes.decodeDelimited = function decodeDelimited(reader) {
+        JoinReq.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a matchRes message.
+         * Verifies a JoinReq message.
          * @function verify
-         * @memberof chinese_chess_hall.matchRes
+         * @memberof chinese_chess_hall.JoinReq
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        matchRes.verify = function verify(message) {
+        JoinReq.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
             if (message.tableId != null && message.hasOwnProperty("tableId"))
-                if (!$util.isInteger(message.tableId))
-                    return "tableId: integer expected";
+                if (!$util.isString(message.tableId))
+                    return "tableId: string expected";
             return null;
         };
 
         /**
-         * Creates a matchRes message from a plain object. Also converts values to their respective internal types.
+         * Creates a JoinReq message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof chinese_chess_hall.matchRes
+         * @memberof chinese_chess_hall.JoinReq
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {chinese_chess_hall.matchRes} matchRes
+         * @returns {chinese_chess_hall.JoinReq} JoinReq
          */
-        matchRes.fromObject = function fromObject(object) {
-            if (object instanceof $root.chinese_chess_hall.matchRes)
+        JoinReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.chinese_chess_hall.JoinReq)
                 return object;
-            var message = new $root.chinese_chess_hall.matchRes();
+            var message = new $root.chinese_chess_hall.JoinReq();
             if (object.tableId != null)
-                message.tableId = object.tableId | 0;
+                message.tableId = String(object.tableId);
             return message;
         };
 
         /**
-         * Creates a plain object from a matchRes message. Also converts values to other types if specified.
+         * Creates a plain object from a JoinReq message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof chinese_chess_hall.matchRes
+         * @memberof chinese_chess_hall.JoinReq
          * @static
-         * @param {chinese_chess_hall.matchRes} message matchRes
+         * @param {chinese_chess_hall.JoinReq} message JoinReq
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        matchRes.toObject = function toObject(message, options) {
+        JoinReq.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
             if (options.defaults)
-                object.tableId = 0;
+                object.tableId = "";
             if (message.tableId != null && message.hasOwnProperty("tableId"))
                 object.tableId = message.tableId;
             return object;
         };
 
         /**
-         * Converts this matchRes to JSON.
+         * Converts this JoinReq to JSON.
          * @function toJSON
-         * @memberof chinese_chess_hall.matchRes
+         * @memberof chinese_chess_hall.JoinReq
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        matchRes.prototype.toJSON = function toJSON() {
+        JoinReq.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
         /**
-         * Gets the default type url for matchRes
+         * Gets the default type url for JoinReq
          * @function getTypeUrl
-         * @memberof chinese_chess_hall.matchRes
+         * @memberof chinese_chess_hall.JoinReq
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
          */
-        matchRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        JoinReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/chinese_chess_hall.matchRes";
+            return typeUrlPrefix + "/chinese_chess_hall.JoinReq";
         };
 
-        return matchRes;
+        return JoinReq;
+    })();
+
+    chinese_chess_hall.JoinRes = (function() {
+
+        /**
+         * Properties of a JoinRes.
+         * @memberof chinese_chess_hall
+         * @interface IJoinRes
+         * @property {string|null} [tableId] JoinRes tableId
+         */
+
+        /**
+         * Constructs a new JoinRes.
+         * @memberof chinese_chess_hall
+         * @classdesc Represents a JoinRes.
+         * @implements IJoinRes
+         * @constructor
+         * @param {chinese_chess_hall.IJoinRes=} [properties] Properties to set
+         */
+        function JoinRes(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * JoinRes tableId.
+         * @member {string} tableId
+         * @memberof chinese_chess_hall.JoinRes
+         * @instance
+         */
+        JoinRes.prototype.tableId = "";
+
+        /**
+         * Creates a new JoinRes instance using the specified properties.
+         * @function create
+         * @memberof chinese_chess_hall.JoinRes
+         * @static
+         * @param {chinese_chess_hall.IJoinRes=} [properties] Properties to set
+         * @returns {chinese_chess_hall.JoinRes} JoinRes instance
+         */
+        JoinRes.create = function create(properties) {
+            return new JoinRes(properties);
+        };
+
+        /**
+         * Encodes the specified JoinRes message. Does not implicitly {@link chinese_chess_hall.JoinRes.verify|verify} messages.
+         * @function encode
+         * @memberof chinese_chess_hall.JoinRes
+         * @static
+         * @param {chinese_chess_hall.IJoinRes} message JoinRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        JoinRes.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.tableId != null && Object.hasOwnProperty.call(message, "tableId"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.tableId);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified JoinRes message, length delimited. Does not implicitly {@link chinese_chess_hall.JoinRes.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof chinese_chess_hall.JoinRes
+         * @static
+         * @param {chinese_chess_hall.IJoinRes} message JoinRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        JoinRes.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a JoinRes message from the specified reader or buffer.
+         * @function decode
+         * @memberof chinese_chess_hall.JoinRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {chinese_chess_hall.JoinRes} JoinRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        JoinRes.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_hall.JoinRes();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.tableId = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a JoinRes message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof chinese_chess_hall.JoinRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {chinese_chess_hall.JoinRes} JoinRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        JoinRes.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a JoinRes message.
+         * @function verify
+         * @memberof chinese_chess_hall.JoinRes
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        JoinRes.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.tableId != null && message.hasOwnProperty("tableId"))
+                if (!$util.isString(message.tableId))
+                    return "tableId: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a JoinRes message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof chinese_chess_hall.JoinRes
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {chinese_chess_hall.JoinRes} JoinRes
+         */
+        JoinRes.fromObject = function fromObject(object) {
+            if (object instanceof $root.chinese_chess_hall.JoinRes)
+                return object;
+            var message = new $root.chinese_chess_hall.JoinRes();
+            if (object.tableId != null)
+                message.tableId = String(object.tableId);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a JoinRes message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof chinese_chess_hall.JoinRes
+         * @static
+         * @param {chinese_chess_hall.JoinRes} message JoinRes
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        JoinRes.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.tableId = "";
+            if (message.tableId != null && message.hasOwnProperty("tableId"))
+                object.tableId = message.tableId;
+            return object;
+        };
+
+        /**
+         * Converts this JoinRes to JSON.
+         * @function toJSON
+         * @memberof chinese_chess_hall.JoinRes
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        JoinRes.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for JoinRes
+         * @function getTypeUrl
+         * @memberof chinese_chess_hall.JoinRes
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        JoinRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/chinese_chess_hall.JoinRes";
+        };
+
+        return JoinRes;
     })();
 
     return chinese_chess_hall;
@@ -2614,7 +2693,7 @@ $root.chinese_chess_login = (function() {
          * @memberof chinese_chess_login
          * @interface ILoginReq
          * @property {string|null} [token] LoginReq token
-         * @property {number|null} [playerId] LoginReq playerId
+         * @property {number|Long|null} [playerId] LoginReq playerId
          */
 
         /**
@@ -2642,11 +2721,11 @@ $root.chinese_chess_login = (function() {
 
         /**
          * LoginReq playerId.
-         * @member {number} playerId
+         * @member {number|Long} playerId
          * @memberof chinese_chess_login.LoginReq
          * @instance
          */
-        LoginReq.prototype.playerId = 0;
+        LoginReq.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
 
         /**
          * Creates a new LoginReq instance using the specified properties.
@@ -2675,7 +2754,7 @@ $root.chinese_chess_login = (function() {
             if (message.token != null && Object.hasOwnProperty.call(message, "token"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.token);
             if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.playerId);
+                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.playerId);
             return writer;
         };
 
@@ -2715,7 +2794,7 @@ $root.chinese_chess_login = (function() {
                         break;
                     }
                 case 2: {
-                        message.playerId = reader.int32();
+                        message.playerId = reader.int64();
                         break;
                     }
                 default:
@@ -2757,8 +2836,8 @@ $root.chinese_chess_login = (function() {
                 if (!$util.isString(message.token))
                     return "token: string expected";
             if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (!$util.isInteger(message.playerId))
-                    return "playerId: integer expected";
+                if (!$util.isInteger(message.playerId) && !(message.playerId && $util.isInteger(message.playerId.low) && $util.isInteger(message.playerId.high)))
+                    return "playerId: integer|Long expected";
             return null;
         };
 
@@ -2777,7 +2856,14 @@ $root.chinese_chess_login = (function() {
             if (object.token != null)
                 message.token = String(object.token);
             if (object.playerId != null)
-                message.playerId = object.playerId | 0;
+                if ($util.Long)
+                    (message.playerId = $util.Long.fromValue(object.playerId)).unsigned = false;
+                else if (typeof object.playerId === "string")
+                    message.playerId = parseInt(object.playerId, 10);
+                else if (typeof object.playerId === "number")
+                    message.playerId = object.playerId;
+                else if (typeof object.playerId === "object")
+                    message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
             return message;
         };
 
@@ -2796,12 +2882,19 @@ $root.chinese_chess_login = (function() {
             var object = {};
             if (options.defaults) {
                 object.token = "";
-                object.playerId = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.playerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.playerId = options.longs === String ? "0" : 0;
             }
             if (message.token != null && message.hasOwnProperty("token"))
                 object.token = message.token;
             if (message.playerId != null && message.hasOwnProperty("playerId"))
-                object.playerId = message.playerId;
+                if (typeof message.playerId === "number")
+                    object.playerId = options.longs === String ? String(message.playerId) : message.playerId;
+                else
+                    object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
             return object;
         };
 
@@ -2840,7 +2933,7 @@ $root.chinese_chess_login = (function() {
          * Properties of a LoginRes.
          * @memberof chinese_chess_login
          * @interface ILoginRes
-         * @property {number|null} [playerId] LoginRes playerId
+         * @property {number|null} [isreconnect] LoginRes isreconnect
          */
 
         /**
@@ -2859,12 +2952,12 @@ $root.chinese_chess_login = (function() {
         }
 
         /**
-         * LoginRes playerId.
-         * @member {number} playerId
+         * LoginRes isreconnect.
+         * @member {number} isreconnect
          * @memberof chinese_chess_login.LoginRes
          * @instance
          */
-        LoginRes.prototype.playerId = 0;
+        LoginRes.prototype.isreconnect = 0;
 
         /**
          * Creates a new LoginRes instance using the specified properties.
@@ -2890,8 +2983,8 @@ $root.chinese_chess_login = (function() {
         LoginRes.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.playerId);
+            if (message.isreconnect != null && Object.hasOwnProperty.call(message, "isreconnect"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.isreconnect);
             return writer;
         };
 
@@ -2927,7 +3020,7 @@ $root.chinese_chess_login = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
-                        message.playerId = reader.int32();
+                        message.isreconnect = reader.int32();
                         break;
                     }
                 default:
@@ -2965,9 +3058,9 @@ $root.chinese_chess_login = (function() {
         LoginRes.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (!$util.isInteger(message.playerId))
-                    return "playerId: integer expected";
+            if (message.isreconnect != null && message.hasOwnProperty("isreconnect"))
+                if (!$util.isInteger(message.isreconnect))
+                    return "isreconnect: integer expected";
             return null;
         };
 
@@ -2983,8 +3076,8 @@ $root.chinese_chess_login = (function() {
             if (object instanceof $root.chinese_chess_login.LoginRes)
                 return object;
             var message = new $root.chinese_chess_login.LoginRes();
-            if (object.playerId != null)
-                message.playerId = object.playerId | 0;
+            if (object.isreconnect != null)
+                message.isreconnect = object.isreconnect | 0;
             return message;
         };
 
@@ -3002,9 +3095,9 @@ $root.chinese_chess_login = (function() {
                 options = {};
             var object = {};
             if (options.defaults)
-                object.playerId = 0;
-            if (message.playerId != null && message.hasOwnProperty("playerId"))
-                object.playerId = message.playerId;
+                object.isreconnect = 0;
+            if (message.isreconnect != null && message.hasOwnProperty("isreconnect"))
+                object.isreconnect = message.isreconnect;
             return object;
         };
 
