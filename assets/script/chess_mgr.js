@@ -58,6 +58,21 @@ cc.Class({
             type : cc.Node,
         },
 
+        result : {
+            default: null,
+            type : cc.Node,
+        },
+
+        win : {
+            default: null,
+            type : cc.Node,
+        },
+
+        lose : {
+            default: null,
+            type : cc.Node,
+        },
+
         touch_chess : null,      //拿起的棋子
     },
 
@@ -164,12 +179,11 @@ cc.Class({
     },
 
     LoginRes(msg) {
+        console.log("LoginRes:",msg)
         if (msg.isreconnect == 0) {
             let match_req = {
                 tableId : global.gametableid
             }
-    
-            console.log("LoginRes:",msg)
             let buffer = netpack.pack(".chinese_chess_hall.JoinReq",proto.chinese_chess_hall.JoinReq.encode(match_req).finish())
             this.wsSocket.send(buffer)
         } else {
@@ -179,6 +193,18 @@ cc.Class({
             let buffer = netpack.pack(".chinese_chess_game.gameStateReq",proto.chinese_chess_game.gameStateReq.encode(game_state_req).finish())
             this.wsSocket.send(buffer)
         }
+
+        // 以秒为单位的时间间隔
+        var interval = 5;
+        this.schedule(function() {
+            // 这里的 this 指向 component
+            let heart_req = {
+                time: Date.now()
+            };
+            
+            let send_buffer = netpack.pack(".chinese_chess_hall.HeartReq",proto.chinese_chess_hall.HeartReq.encode(heart_req).finish())
+            this.wsSocket.send(send_buffer)
+        }, interval);
     },
 
     nextDoing(msg) {
@@ -233,6 +259,15 @@ cc.Class({
             this.init_chess_borad()
         }
         this.nextDoing(msg.nextDoing)
+
+        if (this.m_state == GAME_STATE.over) {
+            this.result.active = true
+            if (msg.winPlayerId == global.player_id) {
+                this.lose.active = false
+            } else {
+                this.win.active = false
+            }
+        }
     },
 
     moveRes(msg) {
@@ -304,6 +339,11 @@ cc.Class({
         }
     },
 
+    onBackHallClick(event) {
+        console.log("onBackHallClick >>> ")
+        cc.director.loadScene("hall");
+    },
+
     init_chess_borad() {
         //生成棋子
         this.chess_map = {}
@@ -346,6 +386,7 @@ cc.Class({
     },
 
     onLoad () {
+        this.result.active = false
         console.log("global >>>>> ",global)
         let ws = new WebSocket("ws://" + global.gamehost)
 

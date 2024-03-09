@@ -2674,6 +2674,223 @@ $root.chinese_chess_hall = (function() {
         return JoinRes;
     })();
 
+    chinese_chess_hall.HeartReq = (function() {
+
+        /**
+         * Properties of a HeartReq.
+         * @memberof chinese_chess_hall
+         * @interface IHeartReq
+         * @property {number|Long|null} [time] HeartReq time
+         */
+
+        /**
+         * Constructs a new HeartReq.
+         * @memberof chinese_chess_hall
+         * @classdesc Represents a HeartReq.
+         * @implements IHeartReq
+         * @constructor
+         * @param {chinese_chess_hall.IHeartReq=} [properties] Properties to set
+         */
+        function HeartReq(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * HeartReq time.
+         * @member {number|Long} time
+         * @memberof chinese_chess_hall.HeartReq
+         * @instance
+         */
+        HeartReq.prototype.time = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new HeartReq instance using the specified properties.
+         * @function create
+         * @memberof chinese_chess_hall.HeartReq
+         * @static
+         * @param {chinese_chess_hall.IHeartReq=} [properties] Properties to set
+         * @returns {chinese_chess_hall.HeartReq} HeartReq instance
+         */
+        HeartReq.create = function create(properties) {
+            return new HeartReq(properties);
+        };
+
+        /**
+         * Encodes the specified HeartReq message. Does not implicitly {@link chinese_chess_hall.HeartReq.verify|verify} messages.
+         * @function encode
+         * @memberof chinese_chess_hall.HeartReq
+         * @static
+         * @param {chinese_chess_hall.IHeartReq} message HeartReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        HeartReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.time != null && Object.hasOwnProperty.call(message, "time"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.time);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified HeartReq message, length delimited. Does not implicitly {@link chinese_chess_hall.HeartReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof chinese_chess_hall.HeartReq
+         * @static
+         * @param {chinese_chess_hall.IHeartReq} message HeartReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        HeartReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a HeartReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof chinese_chess_hall.HeartReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {chinese_chess_hall.HeartReq} HeartReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        HeartReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_hall.HeartReq();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.time = reader.int64();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a HeartReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof chinese_chess_hall.HeartReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {chinese_chess_hall.HeartReq} HeartReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        HeartReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a HeartReq message.
+         * @function verify
+         * @memberof chinese_chess_hall.HeartReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        HeartReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.time != null && message.hasOwnProperty("time"))
+                if (!$util.isInteger(message.time) && !(message.time && $util.isInteger(message.time.low) && $util.isInteger(message.time.high)))
+                    return "time: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a HeartReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof chinese_chess_hall.HeartReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {chinese_chess_hall.HeartReq} HeartReq
+         */
+        HeartReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.chinese_chess_hall.HeartReq)
+                return object;
+            var message = new $root.chinese_chess_hall.HeartReq();
+            if (object.time != null)
+                if ($util.Long)
+                    (message.time = $util.Long.fromValue(object.time)).unsigned = false;
+                else if (typeof object.time === "string")
+                    message.time = parseInt(object.time, 10);
+                else if (typeof object.time === "number")
+                    message.time = object.time;
+                else if (typeof object.time === "object")
+                    message.time = new $util.LongBits(object.time.low >>> 0, object.time.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a HeartReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof chinese_chess_hall.HeartReq
+         * @static
+         * @param {chinese_chess_hall.HeartReq} message HeartReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        HeartReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.time = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.time = options.longs === String ? "0" : 0;
+            if (message.time != null && message.hasOwnProperty("time"))
+                if (typeof message.time === "number")
+                    object.time = options.longs === String ? String(message.time) : message.time;
+                else
+                    object.time = options.longs === String ? $util.Long.prototype.toString.call(message.time) : options.longs === Number ? new $util.LongBits(message.time.low >>> 0, message.time.high >>> 0).toNumber() : message.time;
+            return object;
+        };
+
+        /**
+         * Converts this HeartReq to JSON.
+         * @function toJSON
+         * @memberof chinese_chess_hall.HeartReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        HeartReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for HeartReq
+         * @function getTypeUrl
+         * @memberof chinese_chess_hall.HeartReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        HeartReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/chinese_chess_hall.HeartReq";
+        };
+
+        return HeartReq;
+    })();
+
     return chinese_chess_hall;
 })();
 
