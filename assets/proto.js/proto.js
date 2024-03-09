@@ -5824,6 +5824,209 @@ $root.hallserver_player = (function() {
         return HeartReq;
     })();
 
+    hallserver_player.PlayerInfoNotice = (function() {
+
+        /**
+         * Properties of a PlayerInfoNotice.
+         * @memberof hallserver_player
+         * @interface IPlayerInfoNotice
+         * @property {string|null} [nickname] PlayerInfoNotice nickname
+         */
+
+        /**
+         * Constructs a new PlayerInfoNotice.
+         * @memberof hallserver_player
+         * @classdesc Represents a PlayerInfoNotice.
+         * @implements IPlayerInfoNotice
+         * @constructor
+         * @param {hallserver_player.IPlayerInfoNotice=} [properties] Properties to set
+         */
+        function PlayerInfoNotice(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * PlayerInfoNotice nickname.
+         * @member {string} nickname
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @instance
+         */
+        PlayerInfoNotice.prototype.nickname = "";
+
+        /**
+         * Creates a new PlayerInfoNotice instance using the specified properties.
+         * @function create
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @static
+         * @param {hallserver_player.IPlayerInfoNotice=} [properties] Properties to set
+         * @returns {hallserver_player.PlayerInfoNotice} PlayerInfoNotice instance
+         */
+        PlayerInfoNotice.create = function create(properties) {
+            return new PlayerInfoNotice(properties);
+        };
+
+        /**
+         * Encodes the specified PlayerInfoNotice message. Does not implicitly {@link hallserver_player.PlayerInfoNotice.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @static
+         * @param {hallserver_player.IPlayerInfoNotice} message PlayerInfoNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerInfoNotice.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.nickname != null && Object.hasOwnProperty.call(message, "nickname"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.nickname);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified PlayerInfoNotice message, length delimited. Does not implicitly {@link hallserver_player.PlayerInfoNotice.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @static
+         * @param {hallserver_player.IPlayerInfoNotice} message PlayerInfoNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerInfoNotice.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a PlayerInfoNotice message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_player.PlayerInfoNotice} PlayerInfoNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerInfoNotice.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_player.PlayerInfoNotice();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.nickname = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a PlayerInfoNotice message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_player.PlayerInfoNotice} PlayerInfoNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerInfoNotice.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a PlayerInfoNotice message.
+         * @function verify
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        PlayerInfoNotice.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                if (!$util.isString(message.nickname))
+                    return "nickname: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a PlayerInfoNotice message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_player.PlayerInfoNotice} PlayerInfoNotice
+         */
+        PlayerInfoNotice.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_player.PlayerInfoNotice)
+                return object;
+            var message = new $root.hallserver_player.PlayerInfoNotice();
+            if (object.nickname != null)
+                message.nickname = String(object.nickname);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a PlayerInfoNotice message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @static
+         * @param {hallserver_player.PlayerInfoNotice} message PlayerInfoNotice
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        PlayerInfoNotice.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.nickname = "";
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                object.nickname = message.nickname;
+            return object;
+        };
+
+        /**
+         * Converts this PlayerInfoNotice to JSON.
+         * @function toJSON
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        PlayerInfoNotice.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for PlayerInfoNotice
+         * @function getTypeUrl
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        PlayerInfoNotice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_player.PlayerInfoNotice";
+        };
+
+        return PlayerInfoNotice;
+    })();
+
     return hallserver_player;
 })();
 

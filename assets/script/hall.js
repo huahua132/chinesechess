@@ -44,9 +44,6 @@ cc.Class({
 
     LoginRes(msg) {
         console.log("LoginRes >>>>>>> ", msg)
-        let label = this.nickname.getComponent(cc.Label)
-        label.string = msg.playerId
-
         // 以秒为单位的时间间隔
         var interval = 5;
         this.schedule(function() {
@@ -122,6 +119,13 @@ cc.Class({
         global.gametableid = msg.tableId
         cc.director.loadScene("game");
     },
+
+    //玩家信息推送
+    PlayerInfoNotice(msg) {
+        console.log("PlayerInfoNotice >>>>>>> ", msg)
+        let label = this.nickname.getComponent(cc.Label)
+        label.string = msg.nickname
+    },
     // LIFE-CYCLE CALLBACKS:
     dispatch(packname, packbuffer) {
         console.log("dispatch >>> ",packname)
@@ -154,6 +158,11 @@ cc.Class({
             case ".hallserver_match.JoinGameNotice":{
                 let msg = proto.hallserver_match.JoinGameNotice.decode(packbuffer);
                 this.JoinGameNotice(msg)
+                break
+            }
+            case ".hallserver_player.PlayerInfoNotice":{
+                let msg = proto.hallserver_player.PlayerInfoNotice.decode(packbuffer);
+                this.PlayerInfoNotice(msg)
                 break
             }
             default:
