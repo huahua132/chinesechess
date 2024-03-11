@@ -73,6 +73,16 @@ cc.Class({
             type : cc.Node,
         },
 
+        self_player : {
+            default: null,
+            type : cc.Node,
+        },
+
+        rival_player : {
+            default: null,
+            type : cc.Node,
+        },
+
         touch_chess : null,      //拿起的棋子
     },
 
@@ -230,18 +240,46 @@ cc.Class({
         console.log("next doing:",this.m_next_doing)
     },
 
+    showBaseInfo() {
+        console.log("showBaseInfo >>>>>>>>>>>>>>>>>", this.m_rival_player, this.m_player_info)
+        let nickname = this.rival_player.getChildByName("nickname")
+        let content = nickname.getChildByName("content")
+        let label = content.getComponent(cc.Label)
+        label.string = this.m_rival_player.nickname
+
+        let score = this.rival_player.getChildByName("score")
+        content = score.getChildByName("content")
+        label = content.getComponent(cc.Label)
+        label.string = this.m_rival_player.score
+
+        nickname = this.self_player.getChildByName("nickname")
+        content = nickname.getChildByName("content")
+        label = content.getComponent(cc.Label)
+        label.string = this.m_player_info.nickname
+
+        score = this.self_player.getChildByName("score")
+        content = score.getChildByName("content")
+        label = content.getComponent(cc.Label)
+        label.string = this.m_player_info.score
+    },
+
     gameStateRes(msg) {
         console.log("gameStateRes:",msg)
         this.m_player_list = msg.playerList
         this.m_state = msg.state
-
+        this.m_rival_player = {}
         for(let i = 0; i < msg.playerList.length; i++) {
             let one_player = msg.playerList[i]
             if ( one_player.playerId == this.m_player_info.player_id ) {
                 this.m_player_info.team_type = one_player.teamType
+                this.m_player_info.nickname = one_player.nickname
+                this.m_player_info.score = one_player.score
+            } else {
+                this.m_rival_player.nickname = one_player.nickname
+                this.m_rival_player.score = one_player.score
             }
         }
-
+        this.showBaseInfo()
         console.log("m_team_type :",this.m_player_info)
 
         if (!this.m_chess_list && msg.chessList && msg.chessList.length > 0) {

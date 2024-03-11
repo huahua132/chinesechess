@@ -244,6 +244,8 @@ $root.chinese_chess_game = (function() {
          * @property {number|null} [seatId] playerInfo seatId
          * @property {number|Long|null} [playerId] playerInfo playerId
          * @property {number|null} [teamType] playerInfo teamType
+         * @property {string|null} [nickname] playerInfo nickname
+         * @property {number|null} [score] playerInfo score
          */
 
         /**
@@ -286,6 +288,22 @@ $root.chinese_chess_game = (function() {
         playerInfo.prototype.teamType = 0;
 
         /**
+         * playerInfo nickname.
+         * @member {string} nickname
+         * @memberof chinese_chess_game.playerInfo
+         * @instance
+         */
+        playerInfo.prototype.nickname = "";
+
+        /**
+         * playerInfo score.
+         * @member {number} score
+         * @memberof chinese_chess_game.playerInfo
+         * @instance
+         */
+        playerInfo.prototype.score = 0;
+
+        /**
          * Creates a new playerInfo instance using the specified properties.
          * @function create
          * @memberof chinese_chess_game.playerInfo
@@ -315,6 +333,10 @@ $root.chinese_chess_game = (function() {
                 writer.uint32(/* id 2, wireType 0 =*/16).int64(message.playerId);
             if (message.teamType != null && Object.hasOwnProperty.call(message, "teamType"))
                 writer.uint32(/* id 3, wireType 0 =*/24).int32(message.teamType);
+            if (message.nickname != null && Object.hasOwnProperty.call(message, "nickname"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.nickname);
+            if (message.score != null && Object.hasOwnProperty.call(message, "score"))
+                writer.uint32(/* id 5, wireType 0 =*/40).int32(message.score);
             return writer;
         };
 
@@ -361,6 +383,14 @@ $root.chinese_chess_game = (function() {
                         message.teamType = reader.int32();
                         break;
                     }
+                case 4: {
+                        message.nickname = reader.string();
+                        break;
+                    }
+                case 5: {
+                        message.score = reader.int32();
+                        break;
+                    }
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -405,6 +435,12 @@ $root.chinese_chess_game = (function() {
             if (message.teamType != null && message.hasOwnProperty("teamType"))
                 if (!$util.isInteger(message.teamType))
                     return "teamType: integer expected";
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                if (!$util.isString(message.nickname))
+                    return "nickname: string expected";
+            if (message.score != null && message.hasOwnProperty("score"))
+                if (!$util.isInteger(message.score))
+                    return "score: integer expected";
             return null;
         };
 
@@ -433,6 +469,10 @@ $root.chinese_chess_game = (function() {
                     message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
             if (object.teamType != null)
                 message.teamType = object.teamType | 0;
+            if (object.nickname != null)
+                message.nickname = String(object.nickname);
+            if (object.score != null)
+                message.score = object.score | 0;
             return message;
         };
 
@@ -457,6 +497,8 @@ $root.chinese_chess_game = (function() {
                 } else
                     object.playerId = options.longs === String ? "0" : 0;
                 object.teamType = 0;
+                object.nickname = "";
+                object.score = 0;
             }
             if (message.seatId != null && message.hasOwnProperty("seatId"))
                 object.seatId = message.seatId;
@@ -467,6 +509,10 @@ $root.chinese_chess_game = (function() {
                     object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
             if (message.teamType != null && message.hasOwnProperty("teamType"))
                 object.teamType = message.teamType;
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                object.nickname = message.nickname;
+            if (message.score != null && message.hasOwnProperty("score"))
+                object.score = message.score;
             return object;
         };
 
@@ -1098,6 +1144,8 @@ $root.chinese_chess_game = (function() {
          * @property {number|Long|null} [playerId] nextDoing playerId
          * @property {number|null} [teamType] nextDoing teamType
          * @property {Array.<chinese_chess_game.IchessCanMove>|null} [canMoveList] nextDoing canMoveList
+         * @property {number|null} [remainTotalTime] nextDoing remainTotalTime
+         * @property {number|null} [remainOnceTime] nextDoing remainOnceTime
          */
 
         /**
@@ -1149,6 +1197,22 @@ $root.chinese_chess_game = (function() {
         nextDoing.prototype.canMoveList = $util.emptyArray;
 
         /**
+         * nextDoing remainTotalTime.
+         * @member {number} remainTotalTime
+         * @memberof chinese_chess_game.nextDoing
+         * @instance
+         */
+        nextDoing.prototype.remainTotalTime = 0;
+
+        /**
+         * nextDoing remainOnceTime.
+         * @member {number} remainOnceTime
+         * @memberof chinese_chess_game.nextDoing
+         * @instance
+         */
+        nextDoing.prototype.remainOnceTime = 0;
+
+        /**
          * Creates a new nextDoing instance using the specified properties.
          * @function create
          * @memberof chinese_chess_game.nextDoing
@@ -1181,6 +1245,10 @@ $root.chinese_chess_game = (function() {
             if (message.canMoveList != null && message.canMoveList.length)
                 for (var i = 0; i < message.canMoveList.length; ++i)
                     $root.chinese_chess_game.chessCanMove.encode(message.canMoveList[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.remainTotalTime != null && Object.hasOwnProperty.call(message, "remainTotalTime"))
+                writer.uint32(/* id 5, wireType 0 =*/40).int32(message.remainTotalTime);
+            if (message.remainOnceTime != null && Object.hasOwnProperty.call(message, "remainOnceTime"))
+                writer.uint32(/* id 6, wireType 0 =*/48).int32(message.remainOnceTime);
             return writer;
         };
 
@@ -1231,6 +1299,14 @@ $root.chinese_chess_game = (function() {
                         if (!(message.canMoveList && message.canMoveList.length))
                             message.canMoveList = [];
                         message.canMoveList.push($root.chinese_chess_game.chessCanMove.decode(reader, reader.uint32()));
+                        break;
+                    }
+                case 5: {
+                        message.remainTotalTime = reader.int32();
+                        break;
+                    }
+                case 6: {
+                        message.remainOnceTime = reader.int32();
                         break;
                     }
                 default:
@@ -1286,6 +1362,12 @@ $root.chinese_chess_game = (function() {
                         return "canMoveList." + error;
                 }
             }
+            if (message.remainTotalTime != null && message.hasOwnProperty("remainTotalTime"))
+                if (!$util.isInteger(message.remainTotalTime))
+                    return "remainTotalTime: integer expected";
+            if (message.remainOnceTime != null && message.hasOwnProperty("remainOnceTime"))
+                if (!$util.isInteger(message.remainOnceTime))
+                    return "remainOnceTime: integer expected";
             return null;
         };
 
@@ -1324,6 +1406,10 @@ $root.chinese_chess_game = (function() {
                     message.canMoveList[i] = $root.chinese_chess_game.chessCanMove.fromObject(object.canMoveList[i]);
                 }
             }
+            if (object.remainTotalTime != null)
+                message.remainTotalTime = object.remainTotalTime | 0;
+            if (object.remainOnceTime != null)
+                message.remainOnceTime = object.remainOnceTime | 0;
             return message;
         };
 
@@ -1350,6 +1436,8 @@ $root.chinese_chess_game = (function() {
                 } else
                     object.playerId = options.longs === String ? "0" : 0;
                 object.teamType = 0;
+                object.remainTotalTime = 0;
+                object.remainOnceTime = 0;
             }
             if (message.seatId != null && message.hasOwnProperty("seatId"))
                 object.seatId = message.seatId;
@@ -1365,6 +1453,10 @@ $root.chinese_chess_game = (function() {
                 for (var j = 0; j < message.canMoveList.length; ++j)
                     object.canMoveList[j] = $root.chinese_chess_game.chessCanMove.toObject(message.canMoveList[j], options);
             }
+            if (message.remainTotalTime != null && message.hasOwnProperty("remainTotalTime"))
+                object.remainTotalTime = message.remainTotalTime;
+            if (message.remainOnceTime != null && message.hasOwnProperty("remainOnceTime"))
+                object.remainOnceTime = message.remainOnceTime;
             return object;
         };
 

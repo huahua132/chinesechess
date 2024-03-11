@@ -718,6 +718,12 @@
     "lose": {
       "__id__": 16
     },
+    "self_player": {
+      "__id__": 23
+    },
+    "rival_player": {
+      "__id__": 41
+    },
     "touch_chess": null,
     "_id": "0eWNqP/mJMTZh6GLJ7AhKK"
   },
