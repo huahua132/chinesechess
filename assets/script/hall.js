@@ -7,6 +7,7 @@
 var global = require("global")
 import proto from '../proto.js/proto.js'
 import netpack from '../jslib/net/netpack.js'
+import ITEM from '../jslib/enum/ITEM.js'
 
 cc.Class({
     extends: cc.Component,
@@ -37,6 +38,11 @@ cc.Class({
             type : cc.Node,
         },
         accept : {
+            default : null,
+            type : cc.Node,
+        },
+
+        score : {
             default : null,
             type : cc.Node,
         },
@@ -126,6 +132,27 @@ cc.Class({
         let label = this.nickname.getComponent(cc.Label)
         label.string = msg.nickname
     },
+
+    //道具信息推送
+    ItemListNotice(msg) {
+        console.log("ItemListNotice >>>>>>> ", msg)
+        let item_list = msg.itemList
+        for (let i = 0; i < item_list.length; i++) {
+            let one_item = item_list[i]
+            let id = one_item.id
+            let count = one_item.count
+            this.m_item_map[id] = count
+        }
+
+        let label = this.score.getComponent(cc.Label)
+        if (this.m_item_map[ITEM.score]) {
+            label.string = this.m_item_map[ITEM.score]
+        } else {
+            label.string = 0
+        }
+
+        console.log("ItemListNotice >>>> ", this.m_item_map)
+    },
     // LIFE-CYCLE CALLBACKS:
     dispatch(packname, packbuffer) {
         console.log("dispatch >>> ",packname)
@@ -165,6 +192,11 @@ cc.Class({
                 this.PlayerInfoNotice(msg)
                 break
             }
+            case ".hallserver_item.ItemListNotice": {
+                let msg = proto.hallserver_item.ItemListNotice.decode(packbuffer);
+                this.ItemListNotice(msg)
+                break
+            }
             default:
                 console.log("unkown packname ",packname)
         }
@@ -172,6 +204,7 @@ cc.Class({
 
     onLoad () {
         this.matchsucc.active = false
+        this.m_item_map = {}
         console.log("global >>>>> ",global)
         let ws = new WebSocket("ws://" + global.hallhost)
 

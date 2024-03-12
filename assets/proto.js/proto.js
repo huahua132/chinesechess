@@ -3442,6 +3442,497 @@ $root.chinese_chess_login = (function() {
     return chinese_chess_login;
 })();
 
+$root.hallserver_item = (function() {
+
+    /**
+     * Namespace hallserver_item.
+     * @exports hallserver_item
+     * @namespace
+     */
+    var hallserver_item = {};
+
+    hallserver_item.Item = (function() {
+
+        /**
+         * Properties of an Item.
+         * @memberof hallserver_item
+         * @interface IItem
+         * @property {number|Long|null} [id] Item id
+         * @property {number|Long|null} [count] Item count
+         */
+
+        /**
+         * Constructs a new Item.
+         * @memberof hallserver_item
+         * @classdesc Represents an Item.
+         * @implements IItem
+         * @constructor
+         * @param {hallserver_item.IItem=} [properties] Properties to set
+         */
+        function Item(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Item id.
+         * @member {number|Long} id
+         * @memberof hallserver_item.Item
+         * @instance
+         */
+        Item.prototype.id = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Item count.
+         * @member {number|Long} count
+         * @memberof hallserver_item.Item
+         * @instance
+         */
+        Item.prototype.count = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new Item instance using the specified properties.
+         * @function create
+         * @memberof hallserver_item.Item
+         * @static
+         * @param {hallserver_item.IItem=} [properties] Properties to set
+         * @returns {hallserver_item.Item} Item instance
+         */
+        Item.create = function create(properties) {
+            return new Item(properties);
+        };
+
+        /**
+         * Encodes the specified Item message. Does not implicitly {@link hallserver_item.Item.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_item.Item
+         * @static
+         * @param {hallserver_item.IItem} message Item message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Item.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.id);
+            if (message.count != null && Object.hasOwnProperty.call(message, "count"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.count);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Item message, length delimited. Does not implicitly {@link hallserver_item.Item.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_item.Item
+         * @static
+         * @param {hallserver_item.IItem} message Item message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Item.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an Item message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_item.Item
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_item.Item} Item
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Item.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_item.Item();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.id = reader.int64();
+                        break;
+                    }
+                case 2: {
+                        message.count = reader.int64();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an Item message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_item.Item
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_item.Item} Item
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Item.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an Item message.
+         * @function verify
+         * @memberof hallserver_item.Item
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Item.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id) && !(message.id && $util.isInteger(message.id.low) && $util.isInteger(message.id.high)))
+                    return "id: integer|Long expected";
+            if (message.count != null && message.hasOwnProperty("count"))
+                if (!$util.isInteger(message.count) && !(message.count && $util.isInteger(message.count.low) && $util.isInteger(message.count.high)))
+                    return "count: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates an Item message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_item.Item
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_item.Item} Item
+         */
+        Item.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_item.Item)
+                return object;
+            var message = new $root.hallserver_item.Item();
+            if (object.id != null)
+                if ($util.Long)
+                    (message.id = $util.Long.fromValue(object.id)).unsigned = false;
+                else if (typeof object.id === "string")
+                    message.id = parseInt(object.id, 10);
+                else if (typeof object.id === "number")
+                    message.id = object.id;
+                else if (typeof object.id === "object")
+                    message.id = new $util.LongBits(object.id.low >>> 0, object.id.high >>> 0).toNumber();
+            if (object.count != null)
+                if ($util.Long)
+                    (message.count = $util.Long.fromValue(object.count)).unsigned = false;
+                else if (typeof object.count === "string")
+                    message.count = parseInt(object.count, 10);
+                else if (typeof object.count === "number")
+                    message.count = object.count;
+                else if (typeof object.count === "object")
+                    message.count = new $util.LongBits(object.count.low >>> 0, object.count.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an Item message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_item.Item
+         * @static
+         * @param {hallserver_item.Item} message Item
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Item.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.id = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.id = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.count = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.count = options.longs === String ? "0" : 0;
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (typeof message.id === "number")
+                    object.id = options.longs === String ? String(message.id) : message.id;
+                else
+                    object.id = options.longs === String ? $util.Long.prototype.toString.call(message.id) : options.longs === Number ? new $util.LongBits(message.id.low >>> 0, message.id.high >>> 0).toNumber() : message.id;
+            if (message.count != null && message.hasOwnProperty("count"))
+                if (typeof message.count === "number")
+                    object.count = options.longs === String ? String(message.count) : message.count;
+                else
+                    object.count = options.longs === String ? $util.Long.prototype.toString.call(message.count) : options.longs === Number ? new $util.LongBits(message.count.low >>> 0, message.count.high >>> 0).toNumber() : message.count;
+            return object;
+        };
+
+        /**
+         * Converts this Item to JSON.
+         * @function toJSON
+         * @memberof hallserver_item.Item
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Item.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for Item
+         * @function getTypeUrl
+         * @memberof hallserver_item.Item
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Item.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_item.Item";
+        };
+
+        return Item;
+    })();
+
+    hallserver_item.ItemListNotice = (function() {
+
+        /**
+         * Properties of an ItemListNotice.
+         * @memberof hallserver_item
+         * @interface IItemListNotice
+         * @property {Array.<hallserver_item.IItem>|null} [itemList] ItemListNotice itemList
+         */
+
+        /**
+         * Constructs a new ItemListNotice.
+         * @memberof hallserver_item
+         * @classdesc Represents an ItemListNotice.
+         * @implements IItemListNotice
+         * @constructor
+         * @param {hallserver_item.IItemListNotice=} [properties] Properties to set
+         */
+        function ItemListNotice(properties) {
+            this.itemList = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ItemListNotice itemList.
+         * @member {Array.<hallserver_item.IItem>} itemList
+         * @memberof hallserver_item.ItemListNotice
+         * @instance
+         */
+        ItemListNotice.prototype.itemList = $util.emptyArray;
+
+        /**
+         * Creates a new ItemListNotice instance using the specified properties.
+         * @function create
+         * @memberof hallserver_item.ItemListNotice
+         * @static
+         * @param {hallserver_item.IItemListNotice=} [properties] Properties to set
+         * @returns {hallserver_item.ItemListNotice} ItemListNotice instance
+         */
+        ItemListNotice.create = function create(properties) {
+            return new ItemListNotice(properties);
+        };
+
+        /**
+         * Encodes the specified ItemListNotice message. Does not implicitly {@link hallserver_item.ItemListNotice.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_item.ItemListNotice
+         * @static
+         * @param {hallserver_item.IItemListNotice} message ItemListNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ItemListNotice.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.itemList != null && message.itemList.length)
+                for (var i = 0; i < message.itemList.length; ++i)
+                    $root.hallserver_item.Item.encode(message.itemList[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ItemListNotice message, length delimited. Does not implicitly {@link hallserver_item.ItemListNotice.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_item.ItemListNotice
+         * @static
+         * @param {hallserver_item.IItemListNotice} message ItemListNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ItemListNotice.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an ItemListNotice message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_item.ItemListNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_item.ItemListNotice} ItemListNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ItemListNotice.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_item.ItemListNotice();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        if (!(message.itemList && message.itemList.length))
+                            message.itemList = [];
+                        message.itemList.push($root.hallserver_item.Item.decode(reader, reader.uint32()));
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an ItemListNotice message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_item.ItemListNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_item.ItemListNotice} ItemListNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ItemListNotice.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an ItemListNotice message.
+         * @function verify
+         * @memberof hallserver_item.ItemListNotice
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ItemListNotice.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.itemList != null && message.hasOwnProperty("itemList")) {
+                if (!Array.isArray(message.itemList))
+                    return "itemList: array expected";
+                for (var i = 0; i < message.itemList.length; ++i) {
+                    var error = $root.hallserver_item.Item.verify(message.itemList[i]);
+                    if (error)
+                        return "itemList." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates an ItemListNotice message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_item.ItemListNotice
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_item.ItemListNotice} ItemListNotice
+         */
+        ItemListNotice.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_item.ItemListNotice)
+                return object;
+            var message = new $root.hallserver_item.ItemListNotice();
+            if (object.itemList) {
+                if (!Array.isArray(object.itemList))
+                    throw TypeError(".hallserver_item.ItemListNotice.itemList: array expected");
+                message.itemList = [];
+                for (var i = 0; i < object.itemList.length; ++i) {
+                    if (typeof object.itemList[i] !== "object")
+                        throw TypeError(".hallserver_item.ItemListNotice.itemList: object expected");
+                    message.itemList[i] = $root.hallserver_item.Item.fromObject(object.itemList[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an ItemListNotice message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_item.ItemListNotice
+         * @static
+         * @param {hallserver_item.ItemListNotice} message ItemListNotice
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ItemListNotice.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.itemList = [];
+            if (message.itemList && message.itemList.length) {
+                object.itemList = [];
+                for (var j = 0; j < message.itemList.length; ++j)
+                    object.itemList[j] = $root.hallserver_item.Item.toObject(message.itemList[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this ItemListNotice to JSON.
+         * @function toJSON
+         * @memberof hallserver_item.ItemListNotice
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ItemListNotice.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for ItemListNotice
+         * @function getTypeUrl
+         * @memberof hallserver_item.ItemListNotice
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        ItemListNotice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_item.ItemListNotice";
+        };
+
+        return ItemListNotice;
+    })();
+
+    return hallserver_item;
+})();
+
 $root.hallserver_login = (function() {
 
     /**

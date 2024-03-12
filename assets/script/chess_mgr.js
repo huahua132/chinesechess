@@ -223,6 +223,8 @@ cc.Class({
             player_id : msg.playerId,
             team_type : msg.teamType,
             can_move_list_map : {},
+            remain_total_time : msg.remainTotalTime,
+            remain_once_time : msg.remainOnceTime,
         }
 
         let pos_map = this.pos_map
@@ -236,7 +238,7 @@ cc.Class({
                 this.m_next_doing.can_move_list_map[chess_id].push(pos_map[row][col])
             }
         }
-
+        this.m_doing_time = 0
         console.log("next doing:",this.m_next_doing)
     },
 
@@ -505,5 +507,27 @@ cc.Class({
 
     },
 
-    // update (dt) {},
+    update (dt) {
+        if (this.m_state == GAME_STATE.playing) {
+            this.m_doing_time += dt
+
+            let doing_player_id = this.m_next_doing.player_id
+            let change_player = null
+            if (doing_player_id == this.m_player_info.player_id) {
+                change_player = this.self_player
+            } else {
+                change_player = this.rival_player
+            }
+
+            let total_time = change_player.getChildByName("total_time")
+            let content = total_time.getChildByName("content")
+            let label = content.getComponent(cc.Label)
+            label.string = Math.floor((this.m_next_doing.remain_total_time - (this.m_doing_time * 100)) / 100)
+    
+            let doing_time = change_player.getChildByName("doing_time")
+            content = doing_time.getChildByName("content")
+            label = content.getComponent(cc.Label)
+            label.string = Math.floor((this.m_next_doing.remain_once_time - (this.m_doing_time * 100)) / 100)
+        }
+    },
 });
