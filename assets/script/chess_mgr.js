@@ -339,8 +339,8 @@ cc.Class({
         }
     },
 
-    matchRes(msg) {
-        console.log("matchRes:",msg)
+    JoinRes(msg) {
+        console.log("JoinRes:",msg)
         let game_state_req = {
             playerId : global.player_id
         }
@@ -370,9 +370,9 @@ cc.Class({
                 let msg = proto.chinese_chess_game.moveRes.decode(packbuffer);
                 this.moveRes(msg)
             }
-            case ".chinese_chess_hall.matchRes":{
-                let msg = proto.chinese_chess_hall.matchRes.decode(packbuffer);
-                this.matchRes(msg)
+            case ".chinese_chess_hall.JoinRes":{
+                let msg = proto.chinese_chess_hall.JoinRes.decode(packbuffer);
+                this.JoinRes(msg)
             }
             default:
                 console.log("unkown packname ",packname)

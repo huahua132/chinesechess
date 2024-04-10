@@ -93,7 +93,8 @@ cc.Class({
         try {
             xhr.send(JSON.stringify({
                 account : account_editBox.string,
-                password : password_editBox.string
+                password : password_editBox.string,
+                channel : 1,
             }));
         } catch(error) {
 
