@@ -194,7 +194,7 @@ cc.Class({
             let match_req = {
                 tableId : global.gametableid
             }
-            let buffer = netpack.pack(".chinese_chess_hall.JoinReq",proto.chinese_chess_hall.JoinReq.encode(match_req).finish())
+            let buffer = netpack.pack(".game_hall.JoinReq",proto.game_hall.JoinReq.encode(match_req).finish())
             this.wsSocket.send(buffer)
         } else {
             let game_state_req = {
@@ -212,7 +212,7 @@ cc.Class({
                 time: Date.now()
             };
             
-            let send_buffer = netpack.pack(".chinese_chess_hall.HeartReq",proto.chinese_chess_hall.HeartReq.encode(heart_req).finish())
+            let send_buffer = netpack.pack(".game_hall.HeartReq",proto.game_hall.HeartReq.encode(heart_req).finish())
             this.wsSocket.send(send_buffer)
         }, interval);
     },
@@ -350,9 +350,9 @@ cc.Class({
 
     dispatch(packname,packbuffer) {
         switch(packname) {
-            case ".chinese_chess_login.LoginRes":{
+            case ".game_login.LoginRes":{
                 console.log("packbuffer",packbuffer)
-                let msg = proto.chinese_chess_login.LoginRes.decode(packbuffer);
+                let msg = proto.game_login.LoginRes.decode(packbuffer);
                 this.LoginRes(msg)
                 break
             }
@@ -370,8 +370,8 @@ cc.Class({
                 let msg = proto.chinese_chess_game.moveRes.decode(packbuffer);
                 this.moveRes(msg)
             }
-            case ".chinese_chess_hall.JoinRes":{
-                let msg = proto.chinese_chess_hall.JoinRes.decode(packbuffer);
+            case ".game_hall.JoinRes":{
+                let msg = proto.game_hall.JoinRes.decode(packbuffer);
                 this.JoinRes(msg)
             }
             default:
@@ -442,7 +442,7 @@ cc.Class({
                 playerId:  chess_mgr.m_player_info.player_id,
             };
             
-            let send_buffer = netpack.pack(".chinese_chess_login.LoginReq",proto.chinese_chess_login.LoginReq.encode(login_req).finish())
+            let send_buffer = netpack.pack(".game_login.LoginReq",proto.game_login.LoginReq.encode(login_req).finish())
             ws.send(send_buffer)
         };
         ws.onmessage = function (event) {

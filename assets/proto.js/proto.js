@@ -2351,31 +2351,293 @@ $root.chinese_chess_game = (function() {
     return chinese_chess_game;
 })();
 
-$root.chinese_chess_hall = (function() {
+$root.errors = (function() {
 
     /**
-     * Namespace chinese_chess_hall.
-     * @exports chinese_chess_hall
+     * Namespace errors.
+     * @exports errors
      * @namespace
      */
-    var chinese_chess_hall = {};
+    var errors = {};
 
-    chinese_chess_hall.JoinReq = (function() {
+    errors.Error = (function() {
+
+        /**
+         * Properties of an Error.
+         * @memberof errors
+         * @interface IError
+         * @property {number|null} [code] Error code
+         * @property {string|null} [msg] Error msg
+         * @property {string|null} [packname] Error packname
+         */
+
+        /**
+         * Constructs a new Error.
+         * @memberof errors
+         * @classdesc Represents an Error.
+         * @implements IError
+         * @constructor
+         * @param {errors.IError=} [properties] Properties to set
+         */
+        function Error(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Error code.
+         * @member {number} code
+         * @memberof errors.Error
+         * @instance
+         */
+        Error.prototype.code = 0;
+
+        /**
+         * Error msg.
+         * @member {string} msg
+         * @memberof errors.Error
+         * @instance
+         */
+        Error.prototype.msg = "";
+
+        /**
+         * Error packname.
+         * @member {string} packname
+         * @memberof errors.Error
+         * @instance
+         */
+        Error.prototype.packname = "";
+
+        /**
+         * Creates a new Error instance using the specified properties.
+         * @function create
+         * @memberof errors.Error
+         * @static
+         * @param {errors.IError=} [properties] Properties to set
+         * @returns {errors.Error} Error instance
+         */
+        Error.create = function create(properties) {
+            return new Error(properties);
+        };
+
+        /**
+         * Encodes the specified Error message. Does not implicitly {@link errors.Error.verify|verify} messages.
+         * @function encode
+         * @memberof errors.Error
+         * @static
+         * @param {errors.IError} message Error message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Error.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.code != null && Object.hasOwnProperty.call(message, "code"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.code);
+            if (message.msg != null && Object.hasOwnProperty.call(message, "msg"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.msg);
+            if (message.packname != null && Object.hasOwnProperty.call(message, "packname"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.packname);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Error message, length delimited. Does not implicitly {@link errors.Error.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof errors.Error
+         * @static
+         * @param {errors.IError} message Error message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Error.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an Error message from the specified reader or buffer.
+         * @function decode
+         * @memberof errors.Error
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {errors.Error} Error
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Error.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.errors.Error();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.code = reader.int32();
+                        break;
+                    }
+                case 2: {
+                        message.msg = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.packname = reader.string();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an Error message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof errors.Error
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {errors.Error} Error
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Error.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an Error message.
+         * @function verify
+         * @memberof errors.Error
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Error.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.code != null && message.hasOwnProperty("code"))
+                if (!$util.isInteger(message.code))
+                    return "code: integer expected";
+            if (message.msg != null && message.hasOwnProperty("msg"))
+                if (!$util.isString(message.msg))
+                    return "msg: string expected";
+            if (message.packname != null && message.hasOwnProperty("packname"))
+                if (!$util.isString(message.packname))
+                    return "packname: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an Error message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof errors.Error
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {errors.Error} Error
+         */
+        Error.fromObject = function fromObject(object) {
+            if (object instanceof $root.errors.Error)
+                return object;
+            var message = new $root.errors.Error();
+            if (object.code != null)
+                message.code = object.code | 0;
+            if (object.msg != null)
+                message.msg = String(object.msg);
+            if (object.packname != null)
+                message.packname = String(object.packname);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an Error message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof errors.Error
+         * @static
+         * @param {errors.Error} message Error
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Error.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.code = 0;
+                object.msg = "";
+                object.packname = "";
+            }
+            if (message.code != null && message.hasOwnProperty("code"))
+                object.code = message.code;
+            if (message.msg != null && message.hasOwnProperty("msg"))
+                object.msg = message.msg;
+            if (message.packname != null && message.hasOwnProperty("packname"))
+                object.packname = message.packname;
+            return object;
+        };
+
+        /**
+         * Converts this Error to JSON.
+         * @function toJSON
+         * @memberof errors.Error
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Error.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for Error
+         * @function getTypeUrl
+         * @memberof errors.Error
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        Error.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/errors.Error";
+        };
+
+        return Error;
+    })();
+
+    return errors;
+})();
+
+$root.game_hall = (function() {
+
+    /**
+     * Namespace game_hall.
+     * @exports game_hall
+     * @namespace
+     */
+    var game_hall = {};
+
+    game_hall.JoinReq = (function() {
 
         /**
          * Properties of a JoinReq.
-         * @memberof chinese_chess_hall
+         * @memberof game_hall
          * @interface IJoinReq
          * @property {string|null} [tableId] JoinReq tableId
          */
 
         /**
          * Constructs a new JoinReq.
-         * @memberof chinese_chess_hall
+         * @memberof game_hall
          * @classdesc Represents a JoinReq.
          * @implements IJoinReq
          * @constructor
-         * @param {chinese_chess_hall.IJoinReq=} [properties] Properties to set
+         * @param {game_hall.IJoinReq=} [properties] Properties to set
          */
         function JoinReq(properties) {
             if (properties)
@@ -2387,7 +2649,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * JoinReq tableId.
          * @member {string} tableId
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @instance
          */
         JoinReq.prototype.tableId = "";
@@ -2395,21 +2657,21 @@ $root.chinese_chess_hall = (function() {
         /**
          * Creates a new JoinReq instance using the specified properties.
          * @function create
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @static
-         * @param {chinese_chess_hall.IJoinReq=} [properties] Properties to set
-         * @returns {chinese_chess_hall.JoinReq} JoinReq instance
+         * @param {game_hall.IJoinReq=} [properties] Properties to set
+         * @returns {game_hall.JoinReq} JoinReq instance
          */
         JoinReq.create = function create(properties) {
             return new JoinReq(properties);
         };
 
         /**
-         * Encodes the specified JoinReq message. Does not implicitly {@link chinese_chess_hall.JoinReq.verify|verify} messages.
+         * Encodes the specified JoinReq message. Does not implicitly {@link game_hall.JoinReq.verify|verify} messages.
          * @function encode
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @static
-         * @param {chinese_chess_hall.IJoinReq} message JoinReq message or plain object to encode
+         * @param {game_hall.IJoinReq} message JoinReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -2422,11 +2684,11 @@ $root.chinese_chess_hall = (function() {
         };
 
         /**
-         * Encodes the specified JoinReq message, length delimited. Does not implicitly {@link chinese_chess_hall.JoinReq.verify|verify} messages.
+         * Encodes the specified JoinReq message, length delimited. Does not implicitly {@link game_hall.JoinReq.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @static
-         * @param {chinese_chess_hall.IJoinReq} message JoinReq message or plain object to encode
+         * @param {game_hall.IJoinReq} message JoinReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -2437,18 +2699,18 @@ $root.chinese_chess_hall = (function() {
         /**
          * Decodes a JoinReq message from the specified reader or buffer.
          * @function decode
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {chinese_chess_hall.JoinReq} JoinReq
+         * @returns {game_hall.JoinReq} JoinReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         JoinReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_hall.JoinReq();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game_hall.JoinReq();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
@@ -2467,10 +2729,10 @@ $root.chinese_chess_hall = (function() {
         /**
          * Decodes a JoinReq message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {chinese_chess_hall.JoinReq} JoinReq
+         * @returns {game_hall.JoinReq} JoinReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
@@ -2483,7 +2745,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * Verifies a JoinReq message.
          * @function verify
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
@@ -2500,15 +2762,15 @@ $root.chinese_chess_hall = (function() {
         /**
          * Creates a JoinReq message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {chinese_chess_hall.JoinReq} JoinReq
+         * @returns {game_hall.JoinReq} JoinReq
          */
         JoinReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.chinese_chess_hall.JoinReq)
+            if (object instanceof $root.game_hall.JoinReq)
                 return object;
-            var message = new $root.chinese_chess_hall.JoinReq();
+            var message = new $root.game_hall.JoinReq();
             if (object.tableId != null)
                 message.tableId = String(object.tableId);
             return message;
@@ -2517,9 +2779,9 @@ $root.chinese_chess_hall = (function() {
         /**
          * Creates a plain object from a JoinReq message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @static
-         * @param {chinese_chess_hall.JoinReq} message JoinReq
+         * @param {game_hall.JoinReq} message JoinReq
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
@@ -2537,7 +2799,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * Converts this JoinReq to JSON.
          * @function toJSON
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
@@ -2548,7 +2810,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * Gets the default type url for JoinReq
          * @function getTypeUrl
-         * @memberof chinese_chess_hall.JoinReq
+         * @memberof game_hall.JoinReq
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
@@ -2557,28 +2819,28 @@ $root.chinese_chess_hall = (function() {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/chinese_chess_hall.JoinReq";
+            return typeUrlPrefix + "/game_hall.JoinReq";
         };
 
         return JoinReq;
     })();
 
-    chinese_chess_hall.JoinRes = (function() {
+    game_hall.JoinRes = (function() {
 
         /**
          * Properties of a JoinRes.
-         * @memberof chinese_chess_hall
+         * @memberof game_hall
          * @interface IJoinRes
          * @property {string|null} [tableId] JoinRes tableId
          */
 
         /**
          * Constructs a new JoinRes.
-         * @memberof chinese_chess_hall
+         * @memberof game_hall
          * @classdesc Represents a JoinRes.
          * @implements IJoinRes
          * @constructor
-         * @param {chinese_chess_hall.IJoinRes=} [properties] Properties to set
+         * @param {game_hall.IJoinRes=} [properties] Properties to set
          */
         function JoinRes(properties) {
             if (properties)
@@ -2590,7 +2852,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * JoinRes tableId.
          * @member {string} tableId
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @instance
          */
         JoinRes.prototype.tableId = "";
@@ -2598,21 +2860,21 @@ $root.chinese_chess_hall = (function() {
         /**
          * Creates a new JoinRes instance using the specified properties.
          * @function create
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @static
-         * @param {chinese_chess_hall.IJoinRes=} [properties] Properties to set
-         * @returns {chinese_chess_hall.JoinRes} JoinRes instance
+         * @param {game_hall.IJoinRes=} [properties] Properties to set
+         * @returns {game_hall.JoinRes} JoinRes instance
          */
         JoinRes.create = function create(properties) {
             return new JoinRes(properties);
         };
 
         /**
-         * Encodes the specified JoinRes message. Does not implicitly {@link chinese_chess_hall.JoinRes.verify|verify} messages.
+         * Encodes the specified JoinRes message. Does not implicitly {@link game_hall.JoinRes.verify|verify} messages.
          * @function encode
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @static
-         * @param {chinese_chess_hall.IJoinRes} message JoinRes message or plain object to encode
+         * @param {game_hall.IJoinRes} message JoinRes message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -2625,11 +2887,11 @@ $root.chinese_chess_hall = (function() {
         };
 
         /**
-         * Encodes the specified JoinRes message, length delimited. Does not implicitly {@link chinese_chess_hall.JoinRes.verify|verify} messages.
+         * Encodes the specified JoinRes message, length delimited. Does not implicitly {@link game_hall.JoinRes.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @static
-         * @param {chinese_chess_hall.IJoinRes} message JoinRes message or plain object to encode
+         * @param {game_hall.IJoinRes} message JoinRes message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -2640,18 +2902,18 @@ $root.chinese_chess_hall = (function() {
         /**
          * Decodes a JoinRes message from the specified reader or buffer.
          * @function decode
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {chinese_chess_hall.JoinRes} JoinRes
+         * @returns {game_hall.JoinRes} JoinRes
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         JoinRes.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_hall.JoinRes();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game_hall.JoinRes();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
@@ -2670,10 +2932,10 @@ $root.chinese_chess_hall = (function() {
         /**
          * Decodes a JoinRes message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {chinese_chess_hall.JoinRes} JoinRes
+         * @returns {game_hall.JoinRes} JoinRes
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
@@ -2686,7 +2948,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * Verifies a JoinRes message.
          * @function verify
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
@@ -2703,15 +2965,15 @@ $root.chinese_chess_hall = (function() {
         /**
          * Creates a JoinRes message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {chinese_chess_hall.JoinRes} JoinRes
+         * @returns {game_hall.JoinRes} JoinRes
          */
         JoinRes.fromObject = function fromObject(object) {
-            if (object instanceof $root.chinese_chess_hall.JoinRes)
+            if (object instanceof $root.game_hall.JoinRes)
                 return object;
-            var message = new $root.chinese_chess_hall.JoinRes();
+            var message = new $root.game_hall.JoinRes();
             if (object.tableId != null)
                 message.tableId = String(object.tableId);
             return message;
@@ -2720,9 +2982,9 @@ $root.chinese_chess_hall = (function() {
         /**
          * Creates a plain object from a JoinRes message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @static
-         * @param {chinese_chess_hall.JoinRes} message JoinRes
+         * @param {game_hall.JoinRes} message JoinRes
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
@@ -2740,7 +3002,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * Converts this JoinRes to JSON.
          * @function toJSON
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
@@ -2751,7 +3013,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * Gets the default type url for JoinRes
          * @function getTypeUrl
-         * @memberof chinese_chess_hall.JoinRes
+         * @memberof game_hall.JoinRes
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
@@ -2760,28 +3022,28 @@ $root.chinese_chess_hall = (function() {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/chinese_chess_hall.JoinRes";
+            return typeUrlPrefix + "/game_hall.JoinRes";
         };
 
         return JoinRes;
     })();
 
-    chinese_chess_hall.HeartReq = (function() {
+    game_hall.HeartReq = (function() {
 
         /**
          * Properties of a HeartReq.
-         * @memberof chinese_chess_hall
+         * @memberof game_hall
          * @interface IHeartReq
          * @property {number|Long|null} [time] HeartReq time
          */
 
         /**
          * Constructs a new HeartReq.
-         * @memberof chinese_chess_hall
+         * @memberof game_hall
          * @classdesc Represents a HeartReq.
          * @implements IHeartReq
          * @constructor
-         * @param {chinese_chess_hall.IHeartReq=} [properties] Properties to set
+         * @param {game_hall.IHeartReq=} [properties] Properties to set
          */
         function HeartReq(properties) {
             if (properties)
@@ -2793,7 +3055,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * HeartReq time.
          * @member {number|Long} time
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @instance
          */
         HeartReq.prototype.time = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
@@ -2801,21 +3063,21 @@ $root.chinese_chess_hall = (function() {
         /**
          * Creates a new HeartReq instance using the specified properties.
          * @function create
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @static
-         * @param {chinese_chess_hall.IHeartReq=} [properties] Properties to set
-         * @returns {chinese_chess_hall.HeartReq} HeartReq instance
+         * @param {game_hall.IHeartReq=} [properties] Properties to set
+         * @returns {game_hall.HeartReq} HeartReq instance
          */
         HeartReq.create = function create(properties) {
             return new HeartReq(properties);
         };
 
         /**
-         * Encodes the specified HeartReq message. Does not implicitly {@link chinese_chess_hall.HeartReq.verify|verify} messages.
+         * Encodes the specified HeartReq message. Does not implicitly {@link game_hall.HeartReq.verify|verify} messages.
          * @function encode
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @static
-         * @param {chinese_chess_hall.IHeartReq} message HeartReq message or plain object to encode
+         * @param {game_hall.IHeartReq} message HeartReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -2828,11 +3090,11 @@ $root.chinese_chess_hall = (function() {
         };
 
         /**
-         * Encodes the specified HeartReq message, length delimited. Does not implicitly {@link chinese_chess_hall.HeartReq.verify|verify} messages.
+         * Encodes the specified HeartReq message, length delimited. Does not implicitly {@link game_hall.HeartReq.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @static
-         * @param {chinese_chess_hall.IHeartReq} message HeartReq message or plain object to encode
+         * @param {game_hall.IHeartReq} message HeartReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -2843,18 +3105,18 @@ $root.chinese_chess_hall = (function() {
         /**
          * Decodes a HeartReq message from the specified reader or buffer.
          * @function decode
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {chinese_chess_hall.HeartReq} HeartReq
+         * @returns {game_hall.HeartReq} HeartReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         HeartReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_hall.HeartReq();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game_hall.HeartReq();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
@@ -2873,10 +3135,10 @@ $root.chinese_chess_hall = (function() {
         /**
          * Decodes a HeartReq message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {chinese_chess_hall.HeartReq} HeartReq
+         * @returns {game_hall.HeartReq} HeartReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
@@ -2889,7 +3151,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * Verifies a HeartReq message.
          * @function verify
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
@@ -2906,15 +3168,15 @@ $root.chinese_chess_hall = (function() {
         /**
          * Creates a HeartReq message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {chinese_chess_hall.HeartReq} HeartReq
+         * @returns {game_hall.HeartReq} HeartReq
          */
         HeartReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.chinese_chess_hall.HeartReq)
+            if (object instanceof $root.game_hall.HeartReq)
                 return object;
-            var message = new $root.chinese_chess_hall.HeartReq();
+            var message = new $root.game_hall.HeartReq();
             if (object.time != null)
                 if ($util.Long)
                     (message.time = $util.Long.fromValue(object.time)).unsigned = false;
@@ -2930,9 +3192,9 @@ $root.chinese_chess_hall = (function() {
         /**
          * Creates a plain object from a HeartReq message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @static
-         * @param {chinese_chess_hall.HeartReq} message HeartReq
+         * @param {game_hall.HeartReq} message HeartReq
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
@@ -2957,7 +3219,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * Converts this HeartReq to JSON.
          * @function toJSON
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
@@ -2968,7 +3230,7 @@ $root.chinese_chess_hall = (function() {
         /**
          * Gets the default type url for HeartReq
          * @function getTypeUrl
-         * @memberof chinese_chess_hall.HeartReq
+         * @memberof game_hall.HeartReq
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
@@ -2977,29 +3239,29 @@ $root.chinese_chess_hall = (function() {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/chinese_chess_hall.HeartReq";
+            return typeUrlPrefix + "/game_hall.HeartReq";
         };
 
         return HeartReq;
     })();
 
-    return chinese_chess_hall;
+    return game_hall;
 })();
 
-$root.chinese_chess_login = (function() {
+$root.game_login = (function() {
 
     /**
-     * Namespace chinese_chess_login.
-     * @exports chinese_chess_login
+     * Namespace game_login.
+     * @exports game_login
      * @namespace
      */
-    var chinese_chess_login = {};
+    var game_login = {};
 
-    chinese_chess_login.LoginReq = (function() {
+    game_login.LoginReq = (function() {
 
         /**
          * Properties of a LoginReq.
-         * @memberof chinese_chess_login
+         * @memberof game_login
          * @interface ILoginReq
          * @property {string|null} [token] LoginReq token
          * @property {number|Long|null} [playerId] LoginReq playerId
@@ -3007,11 +3269,11 @@ $root.chinese_chess_login = (function() {
 
         /**
          * Constructs a new LoginReq.
-         * @memberof chinese_chess_login
+         * @memberof game_login
          * @classdesc Represents a LoginReq.
          * @implements ILoginReq
          * @constructor
-         * @param {chinese_chess_login.ILoginReq=} [properties] Properties to set
+         * @param {game_login.ILoginReq=} [properties] Properties to set
          */
         function LoginReq(properties) {
             if (properties)
@@ -3023,7 +3285,7 @@ $root.chinese_chess_login = (function() {
         /**
          * LoginReq token.
          * @member {string} token
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @instance
          */
         LoginReq.prototype.token = "";
@@ -3031,7 +3293,7 @@ $root.chinese_chess_login = (function() {
         /**
          * LoginReq playerId.
          * @member {number|Long} playerId
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @instance
          */
         LoginReq.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
@@ -3039,21 +3301,21 @@ $root.chinese_chess_login = (function() {
         /**
          * Creates a new LoginReq instance using the specified properties.
          * @function create
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @static
-         * @param {chinese_chess_login.ILoginReq=} [properties] Properties to set
-         * @returns {chinese_chess_login.LoginReq} LoginReq instance
+         * @param {game_login.ILoginReq=} [properties] Properties to set
+         * @returns {game_login.LoginReq} LoginReq instance
          */
         LoginReq.create = function create(properties) {
             return new LoginReq(properties);
         };
 
         /**
-         * Encodes the specified LoginReq message. Does not implicitly {@link chinese_chess_login.LoginReq.verify|verify} messages.
+         * Encodes the specified LoginReq message. Does not implicitly {@link game_login.LoginReq.verify|verify} messages.
          * @function encode
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @static
-         * @param {chinese_chess_login.ILoginReq} message LoginReq message or plain object to encode
+         * @param {game_login.ILoginReq} message LoginReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -3068,11 +3330,11 @@ $root.chinese_chess_login = (function() {
         };
 
         /**
-         * Encodes the specified LoginReq message, length delimited. Does not implicitly {@link chinese_chess_login.LoginReq.verify|verify} messages.
+         * Encodes the specified LoginReq message, length delimited. Does not implicitly {@link game_login.LoginReq.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @static
-         * @param {chinese_chess_login.ILoginReq} message LoginReq message or plain object to encode
+         * @param {game_login.ILoginReq} message LoginReq message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -3083,18 +3345,18 @@ $root.chinese_chess_login = (function() {
         /**
          * Decodes a LoginReq message from the specified reader or buffer.
          * @function decode
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {chinese_chess_login.LoginReq} LoginReq
+         * @returns {game_login.LoginReq} LoginReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         LoginReq.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_login.LoginReq();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game_login.LoginReq();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
@@ -3117,10 +3379,10 @@ $root.chinese_chess_login = (function() {
         /**
          * Decodes a LoginReq message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {chinese_chess_login.LoginReq} LoginReq
+         * @returns {game_login.LoginReq} LoginReq
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
@@ -3133,7 +3395,7 @@ $root.chinese_chess_login = (function() {
         /**
          * Verifies a LoginReq message.
          * @function verify
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
@@ -3153,15 +3415,15 @@ $root.chinese_chess_login = (function() {
         /**
          * Creates a LoginReq message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {chinese_chess_login.LoginReq} LoginReq
+         * @returns {game_login.LoginReq} LoginReq
          */
         LoginReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.chinese_chess_login.LoginReq)
+            if (object instanceof $root.game_login.LoginReq)
                 return object;
-            var message = new $root.chinese_chess_login.LoginReq();
+            var message = new $root.game_login.LoginReq();
             if (object.token != null)
                 message.token = String(object.token);
             if (object.playerId != null)
@@ -3179,9 +3441,9 @@ $root.chinese_chess_login = (function() {
         /**
          * Creates a plain object from a LoginReq message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @static
-         * @param {chinese_chess_login.LoginReq} message LoginReq
+         * @param {game_login.LoginReq} message LoginReq
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
@@ -3210,7 +3472,7 @@ $root.chinese_chess_login = (function() {
         /**
          * Converts this LoginReq to JSON.
          * @function toJSON
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
@@ -3221,7 +3483,7 @@ $root.chinese_chess_login = (function() {
         /**
          * Gets the default type url for LoginReq
          * @function getTypeUrl
-         * @memberof chinese_chess_login.LoginReq
+         * @memberof game_login.LoginReq
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
@@ -3230,28 +3492,28 @@ $root.chinese_chess_login = (function() {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/chinese_chess_login.LoginReq";
+            return typeUrlPrefix + "/game_login.LoginReq";
         };
 
         return LoginReq;
     })();
 
-    chinese_chess_login.LoginRes = (function() {
+    game_login.LoginRes = (function() {
 
         /**
          * Properties of a LoginRes.
-         * @memberof chinese_chess_login
+         * @memberof game_login
          * @interface ILoginRes
          * @property {number|null} [isreconnect] LoginRes isreconnect
          */
 
         /**
          * Constructs a new LoginRes.
-         * @memberof chinese_chess_login
+         * @memberof game_login
          * @classdesc Represents a LoginRes.
          * @implements ILoginRes
          * @constructor
-         * @param {chinese_chess_login.ILoginRes=} [properties] Properties to set
+         * @param {game_login.ILoginRes=} [properties] Properties to set
          */
         function LoginRes(properties) {
             if (properties)
@@ -3263,7 +3525,7 @@ $root.chinese_chess_login = (function() {
         /**
          * LoginRes isreconnect.
          * @member {number} isreconnect
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @instance
          */
         LoginRes.prototype.isreconnect = 0;
@@ -3271,21 +3533,21 @@ $root.chinese_chess_login = (function() {
         /**
          * Creates a new LoginRes instance using the specified properties.
          * @function create
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @static
-         * @param {chinese_chess_login.ILoginRes=} [properties] Properties to set
-         * @returns {chinese_chess_login.LoginRes} LoginRes instance
+         * @param {game_login.ILoginRes=} [properties] Properties to set
+         * @returns {game_login.LoginRes} LoginRes instance
          */
         LoginRes.create = function create(properties) {
             return new LoginRes(properties);
         };
 
         /**
-         * Encodes the specified LoginRes message. Does not implicitly {@link chinese_chess_login.LoginRes.verify|verify} messages.
+         * Encodes the specified LoginRes message. Does not implicitly {@link game_login.LoginRes.verify|verify} messages.
          * @function encode
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @static
-         * @param {chinese_chess_login.ILoginRes} message LoginRes message or plain object to encode
+         * @param {game_login.ILoginRes} message LoginRes message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -3298,11 +3560,11 @@ $root.chinese_chess_login = (function() {
         };
 
         /**
-         * Encodes the specified LoginRes message, length delimited. Does not implicitly {@link chinese_chess_login.LoginRes.verify|verify} messages.
+         * Encodes the specified LoginRes message, length delimited. Does not implicitly {@link game_login.LoginRes.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @static
-         * @param {chinese_chess_login.ILoginRes} message LoginRes message or plain object to encode
+         * @param {game_login.ILoginRes} message LoginRes message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
@@ -3313,18 +3575,18 @@ $root.chinese_chess_login = (function() {
         /**
          * Decodes a LoginRes message from the specified reader or buffer.
          * @function decode
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {chinese_chess_login.LoginRes} LoginRes
+         * @returns {game_login.LoginRes} LoginRes
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
         LoginRes.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.chinese_chess_login.LoginRes();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.game_login.LoginRes();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
@@ -3343,10 +3605,10 @@ $root.chinese_chess_login = (function() {
         /**
          * Decodes a LoginRes message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {chinese_chess_login.LoginRes} LoginRes
+         * @returns {game_login.LoginRes} LoginRes
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
@@ -3359,7 +3621,7 @@ $root.chinese_chess_login = (function() {
         /**
          * Verifies a LoginRes message.
          * @function verify
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
@@ -3376,15 +3638,15 @@ $root.chinese_chess_login = (function() {
         /**
          * Creates a LoginRes message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {chinese_chess_login.LoginRes} LoginRes
+         * @returns {game_login.LoginRes} LoginRes
          */
         LoginRes.fromObject = function fromObject(object) {
-            if (object instanceof $root.chinese_chess_login.LoginRes)
+            if (object instanceof $root.game_login.LoginRes)
                 return object;
-            var message = new $root.chinese_chess_login.LoginRes();
+            var message = new $root.game_login.LoginRes();
             if (object.isreconnect != null)
                 message.isreconnect = object.isreconnect | 0;
             return message;
@@ -3393,9 +3655,9 @@ $root.chinese_chess_login = (function() {
         /**
          * Creates a plain object from a LoginRes message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @static
-         * @param {chinese_chess_login.LoginRes} message LoginRes
+         * @param {game_login.LoginRes} message LoginRes
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
@@ -3413,7 +3675,7 @@ $root.chinese_chess_login = (function() {
         /**
          * Converts this LoginRes to JSON.
          * @function toJSON
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
@@ -3424,7 +3686,7 @@ $root.chinese_chess_login = (function() {
         /**
          * Gets the default type url for LoginRes
          * @function getTypeUrl
-         * @memberof chinese_chess_login.LoginRes
+         * @memberof game_login.LoginRes
          * @static
          * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
          * @returns {string} The default type url
@@ -3433,13 +3695,13 @@ $root.chinese_chess_login = (function() {
             if (typeUrlPrefix === undefined) {
                 typeUrlPrefix = "type.googleapis.com";
             }
-            return typeUrlPrefix + "/chinese_chess_login.LoginRes";
+            return typeUrlPrefix + "/game_login.LoginRes";
         };
 
         return LoginRes;
     })();
 
-    return chinese_chess_login;
+    return game_login;
 })();
 
 $root.hallserver_item = (function() {
@@ -3931,476 +4193,6 @@ $root.hallserver_item = (function() {
     })();
 
     return hallserver_item;
-})();
-
-$root.hallserver_login = (function() {
-
-    /**
-     * Namespace hallserver_login.
-     * @exports hallserver_login
-     * @namespace
-     */
-    var hallserver_login = {};
-
-    hallserver_login.LoginReq = (function() {
-
-        /**
-         * Properties of a LoginReq.
-         * @memberof hallserver_login
-         * @interface ILoginReq
-         * @property {string|null} [token] LoginReq token
-         * @property {number|Long|null} [playerId] LoginReq playerId
-         */
-
-        /**
-         * Constructs a new LoginReq.
-         * @memberof hallserver_login
-         * @classdesc Represents a LoginReq.
-         * @implements ILoginReq
-         * @constructor
-         * @param {hallserver_login.ILoginReq=} [properties] Properties to set
-         */
-        function LoginReq(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * LoginReq token.
-         * @member {string} token
-         * @memberof hallserver_login.LoginReq
-         * @instance
-         */
-        LoginReq.prototype.token = "";
-
-        /**
-         * LoginReq playerId.
-         * @member {number|Long} playerId
-         * @memberof hallserver_login.LoginReq
-         * @instance
-         */
-        LoginReq.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * Creates a new LoginReq instance using the specified properties.
-         * @function create
-         * @memberof hallserver_login.LoginReq
-         * @static
-         * @param {hallserver_login.ILoginReq=} [properties] Properties to set
-         * @returns {hallserver_login.LoginReq} LoginReq instance
-         */
-        LoginReq.create = function create(properties) {
-            return new LoginReq(properties);
-        };
-
-        /**
-         * Encodes the specified LoginReq message. Does not implicitly {@link hallserver_login.LoginReq.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_login.LoginReq
-         * @static
-         * @param {hallserver_login.ILoginReq} message LoginReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        LoginReq.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.token != null && Object.hasOwnProperty.call(message, "token"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.token);
-            if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.playerId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified LoginReq message, length delimited. Does not implicitly {@link hallserver_login.LoginReq.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_login.LoginReq
-         * @static
-         * @param {hallserver_login.ILoginReq} message LoginReq message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        LoginReq.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a LoginReq message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_login.LoginReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_login.LoginReq} LoginReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        LoginReq.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_login.LoginReq();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.token = reader.string();
-                        break;
-                    }
-                case 2: {
-                        message.playerId = reader.int64();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a LoginReq message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_login.LoginReq
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_login.LoginReq} LoginReq
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        LoginReq.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a LoginReq message.
-         * @function verify
-         * @memberof hallserver_login.LoginReq
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        LoginReq.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.token != null && message.hasOwnProperty("token"))
-                if (!$util.isString(message.token))
-                    return "token: string expected";
-            if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (!$util.isInteger(message.playerId) && !(message.playerId && $util.isInteger(message.playerId.low) && $util.isInteger(message.playerId.high)))
-                    return "playerId: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a LoginReq message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_login.LoginReq
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_login.LoginReq} LoginReq
-         */
-        LoginReq.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_login.LoginReq)
-                return object;
-            var message = new $root.hallserver_login.LoginReq();
-            if (object.token != null)
-                message.token = String(object.token);
-            if (object.playerId != null)
-                if ($util.Long)
-                    (message.playerId = $util.Long.fromValue(object.playerId)).unsigned = false;
-                else if (typeof object.playerId === "string")
-                    message.playerId = parseInt(object.playerId, 10);
-                else if (typeof object.playerId === "number")
-                    message.playerId = object.playerId;
-                else if (typeof object.playerId === "object")
-                    message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a LoginReq message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_login.LoginReq
-         * @static
-         * @param {hallserver_login.LoginReq} message LoginReq
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        LoginReq.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.token = "";
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.playerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.playerId = options.longs === String ? "0" : 0;
-            }
-            if (message.token != null && message.hasOwnProperty("token"))
-                object.token = message.token;
-            if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (typeof message.playerId === "number")
-                    object.playerId = options.longs === String ? String(message.playerId) : message.playerId;
-                else
-                    object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
-            return object;
-        };
-
-        /**
-         * Converts this LoginReq to JSON.
-         * @function toJSON
-         * @memberof hallserver_login.LoginReq
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        LoginReq.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for LoginReq
-         * @function getTypeUrl
-         * @memberof hallserver_login.LoginReq
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        LoginReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_login.LoginReq";
-        };
-
-        return LoginReq;
-    })();
-
-    hallserver_login.LoginRes = (function() {
-
-        /**
-         * Properties of a LoginRes.
-         * @memberof hallserver_login
-         * @interface ILoginRes
-         * @property {number|Long|null} [playerId] LoginRes playerId
-         */
-
-        /**
-         * Constructs a new LoginRes.
-         * @memberof hallserver_login
-         * @classdesc Represents a LoginRes.
-         * @implements ILoginRes
-         * @constructor
-         * @param {hallserver_login.ILoginRes=} [properties] Properties to set
-         */
-        function LoginRes(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * LoginRes playerId.
-         * @member {number|Long} playerId
-         * @memberof hallserver_login.LoginRes
-         * @instance
-         */
-        LoginRes.prototype.playerId = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * Creates a new LoginRes instance using the specified properties.
-         * @function create
-         * @memberof hallserver_login.LoginRes
-         * @static
-         * @param {hallserver_login.ILoginRes=} [properties] Properties to set
-         * @returns {hallserver_login.LoginRes} LoginRes instance
-         */
-        LoginRes.create = function create(properties) {
-            return new LoginRes(properties);
-        };
-
-        /**
-         * Encodes the specified LoginRes message. Does not implicitly {@link hallserver_login.LoginRes.verify|verify} messages.
-         * @function encode
-         * @memberof hallserver_login.LoginRes
-         * @static
-         * @param {hallserver_login.ILoginRes} message LoginRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        LoginRes.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.playerId != null && Object.hasOwnProperty.call(message, "playerId"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.playerId);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified LoginRes message, length delimited. Does not implicitly {@link hallserver_login.LoginRes.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof hallserver_login.LoginRes
-         * @static
-         * @param {hallserver_login.ILoginRes} message LoginRes message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        LoginRes.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a LoginRes message from the specified reader or buffer.
-         * @function decode
-         * @memberof hallserver_login.LoginRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {hallserver_login.LoginRes} LoginRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        LoginRes.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_login.LoginRes();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1: {
-                        message.playerId = reader.int64();
-                        break;
-                    }
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a LoginRes message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof hallserver_login.LoginRes
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {hallserver_login.LoginRes} LoginRes
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        LoginRes.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a LoginRes message.
-         * @function verify
-         * @memberof hallserver_login.LoginRes
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        LoginRes.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (!$util.isInteger(message.playerId) && !(message.playerId && $util.isInteger(message.playerId.low) && $util.isInteger(message.playerId.high)))
-                    return "playerId: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a LoginRes message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof hallserver_login.LoginRes
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {hallserver_login.LoginRes} LoginRes
-         */
-        LoginRes.fromObject = function fromObject(object) {
-            if (object instanceof $root.hallserver_login.LoginRes)
-                return object;
-            var message = new $root.hallserver_login.LoginRes();
-            if (object.playerId != null)
-                if ($util.Long)
-                    (message.playerId = $util.Long.fromValue(object.playerId)).unsigned = false;
-                else if (typeof object.playerId === "string")
-                    message.playerId = parseInt(object.playerId, 10);
-                else if (typeof object.playerId === "number")
-                    message.playerId = object.playerId;
-                else if (typeof object.playerId === "object")
-                    message.playerId = new $util.LongBits(object.playerId.low >>> 0, object.playerId.high >>> 0).toNumber();
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a LoginRes message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof hallserver_login.LoginRes
-         * @static
-         * @param {hallserver_login.LoginRes} message LoginRes
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        LoginRes.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.playerId = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.playerId = options.longs === String ? "0" : 0;
-            if (message.playerId != null && message.hasOwnProperty("playerId"))
-                if (typeof message.playerId === "number")
-                    object.playerId = options.longs === String ? String(message.playerId) : message.playerId;
-                else
-                    object.playerId = options.longs === String ? $util.Long.prototype.toString.call(message.playerId) : options.longs === Number ? new $util.LongBits(message.playerId.low >>> 0, message.playerId.high >>> 0).toNumber() : message.playerId;
-            return object;
-        };
-
-        /**
-         * Converts this LoginRes to JSON.
-         * @function toJSON
-         * @memberof hallserver_login.LoginRes
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        LoginRes.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Gets the default type url for LoginRes
-         * @function getTypeUrl
-         * @memberof hallserver_login.LoginRes
-         * @static
-         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-         * @returns {string} The default type url
-         */
-        LoginRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-            if (typeUrlPrefix === undefined) {
-                typeUrlPrefix = "type.googleapis.com";
-            }
-            return typeUrlPrefix + "/hallserver_login.LoginRes";
-        };
-
-        return LoginRes;
-    })();
-
-    return hallserver_login;
 })();
 
 $root.hallserver_match = (function() {

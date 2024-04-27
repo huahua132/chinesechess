@@ -157,8 +157,8 @@ cc.Class({
     dispatch(packname, packbuffer) {
         console.log("dispatch >>> ",packname)
         switch(packname) {
-            case ".hallserver_login.LoginRes":{
-                let msg = proto.hallserver_login.LoginRes.decode(packbuffer);
+            case ".game_login.LoginRes":{
+                let msg = proto.game_login.LoginRes.decode(packbuffer);
                 this.LoginRes(msg)
                 break
             }
@@ -217,7 +217,7 @@ cc.Class({
                 playerId: global.player_id,
             };
             
-            let send_buffer = netpack.pack(".hallserver_login.LoginReq",proto.hallserver_login.LoginReq.encode(login_req).finish())
+            let send_buffer = netpack.pack(".game_login.LoginReq",proto.game_login.LoginReq.encode(login_req).finish())
             ws.send(send_buffer)
         };
         ws.onmessage = function (event) {

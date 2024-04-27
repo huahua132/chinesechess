@@ -888,8 +888,8 @@ export namespace chinese_chess_game {
     }
 }
 
-/** Namespace chinese_chess_hall. */
-export namespace chinese_chess_hall {
+/** Namespace game_hall. */
+export namespace game_hall {
 
     /** Properties of a matchReq. */
     interface ImatchReq {
@@ -905,7 +905,7 @@ export namespace chinese_chess_hall {
          * Constructs a new matchReq.
          * @param [properties] Properties to set
          */
-        constructor(properties?: chinese_chess_hall.ImatchReq);
+        constructor(properties?: game_hall.ImatchReq);
 
         /** matchReq playerId. */
         public playerId: number;
@@ -915,23 +915,23 @@ export namespace chinese_chess_hall {
          * @param [properties] Properties to set
          * @returns matchReq instance
          */
-        public static create(properties?: chinese_chess_hall.ImatchReq): chinese_chess_hall.matchReq;
+        public static create(properties?: game_hall.ImatchReq): game_hall.matchReq;
 
         /**
-         * Encodes the specified matchReq message. Does not implicitly {@link chinese_chess_hall.matchReq.verify|verify} messages.
+         * Encodes the specified matchReq message. Does not implicitly {@link game_hall.matchReq.verify|verify} messages.
          * @param message matchReq message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: chinese_chess_hall.ImatchReq, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game_hall.ImatchReq, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified matchReq message, length delimited. Does not implicitly {@link chinese_chess_hall.matchReq.verify|verify} messages.
+         * Encodes the specified matchReq message, length delimited. Does not implicitly {@link game_hall.matchReq.verify|verify} messages.
          * @param message matchReq message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: chinese_chess_hall.ImatchReq, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game_hall.ImatchReq, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
          * Decodes a matchReq message from the specified reader or buffer.
@@ -941,7 +941,7 @@ export namespace chinese_chess_hall {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): chinese_chess_hall.matchReq;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game_hall.matchReq;
 
         /**
          * Decodes a matchReq message from the specified reader or buffer, length delimited.
@@ -950,7 +950,7 @@ export namespace chinese_chess_hall {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): chinese_chess_hall.matchReq;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game_hall.matchReq;
 
         /**
          * Verifies a matchReq message.
@@ -964,7 +964,7 @@ export namespace chinese_chess_hall {
          * @param object Plain object
          * @returns matchReq
          */
-        public static fromObject(object: { [k: string]: any }): chinese_chess_hall.matchReq;
+        public static fromObject(object: { [k: string]: any }): game_hall.matchReq;
 
         /**
          * Creates a plain object from a matchReq message. Also converts values to other types if specified.
@@ -972,7 +972,7 @@ export namespace chinese_chess_hall {
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: chinese_chess_hall.matchReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game_hall.matchReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
          * Converts this matchReq to JSON.
@@ -1002,7 +1002,7 @@ export namespace chinese_chess_hall {
          * Constructs a new matchRes.
          * @param [properties] Properties to set
          */
-        constructor(properties?: chinese_chess_hall.ImatchRes);
+        constructor(properties?: game_hall.ImatchRes);
 
         /** matchRes tableId. */
         public tableId: number;
@@ -1012,23 +1012,23 @@ export namespace chinese_chess_hall {
          * @param [properties] Properties to set
          * @returns matchRes instance
          */
-        public static create(properties?: chinese_chess_hall.ImatchRes): chinese_chess_hall.matchRes;
+        public static create(properties?: game_hall.ImatchRes): game_hall.matchRes;
 
         /**
-         * Encodes the specified matchRes message. Does not implicitly {@link chinese_chess_hall.matchRes.verify|verify} messages.
+         * Encodes the specified matchRes message. Does not implicitly {@link game_hall.matchRes.verify|verify} messages.
          * @param message matchRes message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: chinese_chess_hall.ImatchRes, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game_hall.ImatchRes, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified matchRes message, length delimited. Does not implicitly {@link chinese_chess_hall.matchRes.verify|verify} messages.
+         * Encodes the specified matchRes message, length delimited. Does not implicitly {@link game_hall.matchRes.verify|verify} messages.
          * @param message matchRes message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: chinese_chess_hall.ImatchRes, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game_hall.ImatchRes, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
          * Decodes a matchRes message from the specified reader or buffer.
@@ -1038,7 +1038,7 @@ export namespace chinese_chess_hall {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): chinese_chess_hall.matchRes;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game_hall.matchRes;
 
         /**
          * Decodes a matchRes message from the specified reader or buffer, length delimited.
@@ -1047,7 +1047,7 @@ export namespace chinese_chess_hall {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): chinese_chess_hall.matchRes;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game_hall.matchRes;
 
         /**
          * Verifies a matchRes message.
@@ -1061,7 +1061,7 @@ export namespace chinese_chess_hall {
          * @param object Plain object
          * @returns matchRes
          */
-        public static fromObject(object: { [k: string]: any }): chinese_chess_hall.matchRes;
+        public static fromObject(object: { [k: string]: any }): game_hall.matchRes;
 
         /**
          * Creates a plain object from a matchRes message. Also converts values to other types if specified.
@@ -1069,7 +1069,7 @@ export namespace chinese_chess_hall {
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: chinese_chess_hall.matchRes, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game_hall.matchRes, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
          * Converts this matchRes to JSON.
@@ -1086,8 +1086,8 @@ export namespace chinese_chess_hall {
     }
 }
 
-/** Namespace chinese_chess_login. */
-export namespace chinese_chess_login {
+/** Namespace game_login. */
+export namespace game_login {
 
     /** Properties of a LoginReq. */
     interface ILoginReq {
@@ -1106,7 +1106,7 @@ export namespace chinese_chess_login {
          * Constructs a new LoginReq.
          * @param [properties] Properties to set
          */
-        constructor(properties?: chinese_chess_login.ILoginReq);
+        constructor(properties?: game_login.ILoginReq);
 
         /** LoginReq token. */
         public token: string;
@@ -1119,23 +1119,23 @@ export namespace chinese_chess_login {
          * @param [properties] Properties to set
          * @returns LoginReq instance
          */
-        public static create(properties?: chinese_chess_login.ILoginReq): chinese_chess_login.LoginReq;
+        public static create(properties?: game_login.ILoginReq): game_login.LoginReq;
 
         /**
-         * Encodes the specified LoginReq message. Does not implicitly {@link chinese_chess_login.LoginReq.verify|verify} messages.
+         * Encodes the specified LoginReq message. Does not implicitly {@link game_login.LoginReq.verify|verify} messages.
          * @param message LoginReq message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: chinese_chess_login.ILoginReq, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game_login.ILoginReq, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified LoginReq message, length delimited. Does not implicitly {@link chinese_chess_login.LoginReq.verify|verify} messages.
+         * Encodes the specified LoginReq message, length delimited. Does not implicitly {@link game_login.LoginReq.verify|verify} messages.
          * @param message LoginReq message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: chinese_chess_login.ILoginReq, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game_login.ILoginReq, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
          * Decodes a LoginReq message from the specified reader or buffer.
@@ -1145,7 +1145,7 @@ export namespace chinese_chess_login {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): chinese_chess_login.LoginReq;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game_login.LoginReq;
 
         /**
          * Decodes a LoginReq message from the specified reader or buffer, length delimited.
@@ -1154,7 +1154,7 @@ export namespace chinese_chess_login {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): chinese_chess_login.LoginReq;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game_login.LoginReq;
 
         /**
          * Verifies a LoginReq message.
@@ -1168,7 +1168,7 @@ export namespace chinese_chess_login {
          * @param object Plain object
          * @returns LoginReq
          */
-        public static fromObject(object: { [k: string]: any }): chinese_chess_login.LoginReq;
+        public static fromObject(object: { [k: string]: any }): game_login.LoginReq;
 
         /**
          * Creates a plain object from a LoginReq message. Also converts values to other types if specified.
@@ -1176,7 +1176,7 @@ export namespace chinese_chess_login {
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: chinese_chess_login.LoginReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game_login.LoginReq, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
          * Converts this LoginReq to JSON.
@@ -1206,7 +1206,7 @@ export namespace chinese_chess_login {
          * Constructs a new LoginRes.
          * @param [properties] Properties to set
          */
-        constructor(properties?: chinese_chess_login.ILoginRes);
+        constructor(properties?: game_login.ILoginRes);
 
         /** LoginRes playerId. */
         public playerId: number;
@@ -1216,23 +1216,23 @@ export namespace chinese_chess_login {
          * @param [properties] Properties to set
          * @returns LoginRes instance
          */
-        public static create(properties?: chinese_chess_login.ILoginRes): chinese_chess_login.LoginRes;
+        public static create(properties?: game_login.ILoginRes): game_login.LoginRes;
 
         /**
-         * Encodes the specified LoginRes message. Does not implicitly {@link chinese_chess_login.LoginRes.verify|verify} messages.
+         * Encodes the specified LoginRes message. Does not implicitly {@link game_login.LoginRes.verify|verify} messages.
          * @param message LoginRes message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encode(message: chinese_chess_login.ILoginRes, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encode(message: game_login.ILoginRes, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
-         * Encodes the specified LoginRes message, length delimited. Does not implicitly {@link chinese_chess_login.LoginRes.verify|verify} messages.
+         * Encodes the specified LoginRes message, length delimited. Does not implicitly {@link game_login.LoginRes.verify|verify} messages.
          * @param message LoginRes message or plain object to encode
          * @param [writer] Writer to encode to
          * @returns Writer
          */
-        public static encodeDelimited(message: chinese_chess_login.ILoginRes, writer?: $protobuf.Writer): $protobuf.Writer;
+        public static encodeDelimited(message: game_login.ILoginRes, writer?: $protobuf.Writer): $protobuf.Writer;
 
         /**
          * Decodes a LoginRes message from the specified reader or buffer.
@@ -1242,7 +1242,7 @@ export namespace chinese_chess_login {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): chinese_chess_login.LoginRes;
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): game_login.LoginRes;
 
         /**
          * Decodes a LoginRes message from the specified reader or buffer, length delimited.
@@ -1251,7 +1251,7 @@ export namespace chinese_chess_login {
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): chinese_chess_login.LoginRes;
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): game_login.LoginRes;
 
         /**
          * Verifies a LoginRes message.
@@ -1265,7 +1265,7 @@ export namespace chinese_chess_login {
          * @param object Plain object
          * @returns LoginRes
          */
-        public static fromObject(object: { [k: string]: any }): chinese_chess_login.LoginRes;
+        public static fromObject(object: { [k: string]: any }): game_login.LoginRes;
 
         /**
          * Creates a plain object from a LoginRes message. Also converts values to other types if specified.
@@ -1273,7 +1273,7 @@ export namespace chinese_chess_login {
          * @param [options] Conversion options
          * @returns Plain object
          */
-        public static toObject(message: chinese_chess_login.LoginRes, options?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(message: game_login.LoginRes, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
          * Converts this LoginRes to JSON.
