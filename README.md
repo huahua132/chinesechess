@@ -10,4 +10,4 @@ npm install
 ![](https://huahua132.github.io/img/other/chinese_chess_proto.png)
 
 # 协议解析
-![](https://huahua132.github.io/img/other/chinese_chess_proto2.png)
+![](https://huahua132.github.io/img/other/cheese_chess_proto2.png)
