@@ -6,3 +6,8 @@
 # 安装依赖
 npm install
 
+# 协议修改同步
+![](img/skynet_fly_word/other/chinese_chess_proto.png)
+
+# 协议解析
+![](img/skynet_fly_word/other/chinese_chess_proto2.png)
