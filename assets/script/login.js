@@ -20,6 +20,11 @@ cc.Class({
             type : cc.Node,
         },
 
+        ip : {
+            default: null,
+            type : cc.Node,
+        },
+
         account : {
             default: null,
             type : cc.Node,
@@ -60,11 +65,12 @@ cc.Class({
     },
 
     onCommitClick(event) {
+        let ip_editBox = this.ip.getComponent(cc.EditBox)
         let account_editBox = this.account.getComponent(cc.EditBox)
         let password_editBox = this.password.getComponent(cc.EditBox)
-        console.log("onCommitClick >>> ", account_editBox.string, password_editBox.string)
+        console.log("onCommitClick >>> ", account_editBox.string, password_editBox.string, ip_editBox.string)
 
-        let host = "http://127.0.0.1:11014"
+        let host = "http://" + ip_editBox.string + ":11014"
         let xhr = new XMLHttpRequest()
         let data = {}
         let code = 0
