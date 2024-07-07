@@ -197,6 +197,11 @@ cc.Class({
                 this.ItemListNotice(msg)
                 break
             }
+            case ".errors.Error": {
+                let msg = proto.errors.Error.decode(packbuffer);
+                console.log("err msg ", msg)
+				break
+            }
             default:
                 console.log("unkown packname ",packname)
         }

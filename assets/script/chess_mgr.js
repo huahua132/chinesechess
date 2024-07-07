@@ -369,10 +369,17 @@ cc.Class({
             case ".chinese_chess_game.moveRes":{
                 let msg = proto.chinese_chess_game.moveRes.decode(packbuffer);
                 this.moveRes(msg)
+                break
             }
             case ".game_hall.JoinRes":{
                 let msg = proto.game_hall.JoinRes.decode(packbuffer);
                 this.JoinRes(msg)
+                break
+            }
+            case ".errors.Error": {
+                let msg = proto.errors.Error.decode(packbuffer);
+                console.log("err msg ", msg)
+                break
             }
             default:
                 console.log("unkown packname ",packname)
