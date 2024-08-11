@@ -350,9 +350,8 @@ cc.Class({
 
     dispatch(packname,packbuffer) {
         switch(packname) {
-            case ".game_login.LoginRes":{
-                console.log("packbuffer",packbuffer)
-                let msg = proto.game_login.LoginRes.decode(packbuffer);
+            case ".login.LoginRes":{
+                let msg = proto.login.LoginRes.decode(packbuffer);
                 this.LoginRes(msg)
                 break
             }
@@ -449,7 +448,7 @@ cc.Class({
                 playerId:  chess_mgr.m_player_info.player_id,
             };
             
-            let send_buffer = netpack.pack(".game_login.LoginReq",proto.game_login.LoginReq.encode(login_req).finish())
+            let send_buffer = netpack.pack(".login.LoginReq",proto.login.LoginReq.encode(login_req).finish())
             ws.send(send_buffer)
         };
         ws.onmessage = function (event) {
