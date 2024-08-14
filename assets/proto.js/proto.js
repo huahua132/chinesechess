@@ -2368,7 +2368,7 @@ $root.errors = (function() {
          * @interface IError
          * @property {number|null} [code] Error code
          * @property {string|null} [msg] Error msg
-         * @property {string|null} [packname] Error packname
+         * @property {string|null} [packid] Error packid
          */
 
         /**
@@ -2403,12 +2403,12 @@ $root.errors = (function() {
         Error.prototype.msg = "";
 
         /**
-         * Error packname.
-         * @member {string} packname
+         * Error packid.
+         * @member {string} packid
          * @memberof errors.Error
          * @instance
          */
-        Error.prototype.packname = "";
+        Error.prototype.packid = "";
 
         /**
          * Creates a new Error instance using the specified properties.
@@ -2438,8 +2438,8 @@ $root.errors = (function() {
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.code);
             if (message.msg != null && Object.hasOwnProperty.call(message, "msg"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.msg);
-            if (message.packname != null && Object.hasOwnProperty.call(message, "packname"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.packname);
+            if (message.packid != null && Object.hasOwnProperty.call(message, "packid"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.packid);
             return writer;
         };
 
@@ -2483,7 +2483,7 @@ $root.errors = (function() {
                         break;
                     }
                 case 3: {
-                        message.packname = reader.string();
+                        message.packid = reader.string();
                         break;
                     }
                 default:
@@ -2527,9 +2527,9 @@ $root.errors = (function() {
             if (message.msg != null && message.hasOwnProperty("msg"))
                 if (!$util.isString(message.msg))
                     return "msg: string expected";
-            if (message.packname != null && message.hasOwnProperty("packname"))
-                if (!$util.isString(message.packname))
-                    return "packname: string expected";
+            if (message.packid != null && message.hasOwnProperty("packid"))
+                if (!$util.isString(message.packid))
+                    return "packid: string expected";
             return null;
         };
 
@@ -2549,8 +2549,8 @@ $root.errors = (function() {
                 message.code = object.code | 0;
             if (object.msg != null)
                 message.msg = String(object.msg);
-            if (object.packname != null)
-                message.packname = String(object.packname);
+            if (object.packid != null)
+                message.packid = String(object.packid);
             return message;
         };
 
@@ -2570,14 +2570,14 @@ $root.errors = (function() {
             if (options.defaults) {
                 object.code = 0;
                 object.msg = "";
-                object.packname = "";
+                object.packid = "";
             }
             if (message.code != null && message.hasOwnProperty("code"))
                 object.code = message.code;
             if (message.msg != null && message.hasOwnProperty("msg"))
                 object.msg = message.msg;
-            if (message.packname != null && message.hasOwnProperty("packname"))
-                object.packname = message.packname;
+            if (message.packid != null && message.hasOwnProperty("packid"))
+                object.packid = message.packid;
             return object;
         };
 

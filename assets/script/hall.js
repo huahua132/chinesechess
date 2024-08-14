@@ -8,6 +8,15 @@ var global = require("global")
 import proto from '../proto.js/proto.js'
 import netpack from '../jslib/net/netpack.js'
 import ITEM from '../jslib/enum/ITEM.js'
+import pack_helper from '../jslib/pack_helper.js'
+
+import COMMON_PACK from '../jslib/pack/COMMON_PACK.js'
+import GAME_COMMON_PACK from '../jslib/pack/GAME_COMMON_PACK.js'
+import HALL_PACK from '../jslib/pack/HALL_PACK.js'
+
+var PACK = pack_helper.new([COMMON_PACK, GAME_COMMON_PACK, HALL_PACK])
+
+console.log(">>>>>>>>>>>>>>>>>>>PACK>>>>>>>>>>>>>>>", PACK)
 
 cc.Class({
     extends: cc.Component,
@@ -58,7 +67,7 @@ cc.Class({
                 time: Date.now()
             };
             
-            let send_buffer = netpack.pack(".hallserver_player.HeartReq",proto.hallserver_player.HeartReq.encode(heart_req).finish())
+            let send_buffer = netpack.pack(PACK.hallserver_player.HeartReq,proto.hallserver_player.HeartReq.encode(heart_req).finish())
             this.ws.send(send_buffer)
         }, interval);
     },
@@ -90,7 +99,7 @@ cc.Class({
         this.m_match_succ_remain_time = msg.remainTime
         this.m_match_succ_session_id = msg.sessionId
         this.m_match_succ_time = 0
-
+        
         this.m_time_callback = function() {
             console.log("MatchGameNotice remain time over >>>>>> ")
             // 这里的 this 指向 component
@@ -101,7 +110,7 @@ cc.Class({
                     gameId : 1,
                 }
                 this.is_clickReqMatch = false
-                let send_buffer = netpack.pack(".hallserver_match.MatchGameReq", proto.hallserver_match.MatchGameReq.encode(match_game_req).finish())
+                let send_buffer = netpack.pack(PACK.hallserver_match.MatchGameReq, proto.hallserver_match.MatchGameReq.encode(match_game_req).finish())
                 this.ws.send(send_buffer)
             }
 
@@ -154,56 +163,56 @@ cc.Class({
         console.log("ItemListNotice >>>> ", this.m_item_map)
     },
     // LIFE-CYCLE CALLBACKS:
-    dispatch(packname, packbuffer) {
-        console.log("dispatch >>> ",packname)
-        switch(packname) {
-            case ".login.LoginRes":{
+    dispatch(packid, packbuffer) {
+        console.log("dispatch >>> ",packid)
+        switch(packid) {
+            case PACK.login.LoginRes:{
                 let msg = proto.login.LoginRes.decode(packbuffer);
                 this.LoginRes(msg)
                 break
             }
-            case ".hallserver_match.MatchGameRes":{
+            case PACK.hallserver_match.MatchGameRes:{
                 let msg = proto.hallserver_match.MatchGameRes.decode(packbuffer);
                 this.MatchGameRes(msg)
                 break
             }
-            case ".hallserver_match.CancelMatchGameRes":{
+            case PACK.hallserver_match.CancelMatchGameRes:{
                 let msg = proto.hallserver_match.CancelMatchGameRes.decode(packbuffer);
                 this.CancelMatchGameRes(msg)
                 break
             }
-            case ".hallserver_match.MatchGameNotice":{
+            case PACK.hallserver_match.MatchGameNotice:{
                 let msg = proto.hallserver_match.MatchGameNotice.decode(packbuffer);
                 this.MatchGameNotice(msg)
                 break
             }
-            case ".hallserver_match.AcceptMatchRes":{
+            case PACK.hallserver_match.AcceptMatchRes:{
                 let msg = proto.hallserver_match.AcceptMatchRes.decode(packbuffer);
                 this.AcceptMatchRes(msg)
                 break
             }
-            case ".hallserver_match.JoinGameNotice":{
+            case PACK.hallserver_match.JoinGameNotice:{
                 let msg = proto.hallserver_match.JoinGameNotice.decode(packbuffer);
                 this.JoinGameNotice(msg)
                 break
             }
-            case ".hallserver_player.PlayerInfoNotice":{
+            case PACK.hallserver_player.PlayerInfoNotice:{
                 let msg = proto.hallserver_player.PlayerInfoNotice.decode(packbuffer);
                 this.PlayerInfoNotice(msg)
                 break
             }
-            case ".hallserver_item.ItemListNotice": {
+            case PACK.hallserver_item.ItemListNotice: {
                 let msg = proto.hallserver_item.ItemListNotice.decode(packbuffer);
                 this.ItemListNotice(msg)
                 break
             }
-            case ".errors.Error": {
+            case PACK.errors.Error: {
                 let msg = proto.errors.Error.decode(packbuffer);
                 console.log("err msg ", msg)
 				break
             }
             default:
-                console.log("unkown packname ",packname)
+                console.log("unkown packid ",packid)
         }
     },
 
@@ -222,14 +231,14 @@ cc.Class({
                 playerId: global.player_id,
             };
             
-            let send_buffer = netpack.pack(".login.LoginReq",proto.login.LoginReq.encode(login_req).finish())
+            let send_buffer = netpack.pack(PACK.login.LoginReq,proto.login.LoginReq.encode(login_req).finish())
             ws.send(send_buffer)
         };
         ws.onmessage = function (event) {
             console.log("onmessage:",event.data)
-            const reblob = netpack.unpack(event.data).then(({ packname, packbuffer }) => {
-                console.log("包名:", packname);
-                hall_mgr.dispatch(packname, packbuffer)
+            const reblob = netpack.unpack(event.data).then(({ packid, packbuffer }) => {
+                console.log("包名:", packid);
+                hall_mgr.dispatch(packid, packbuffer)
             })
             .catch((error) => {
                 console.error("解包错误:", error.message);
@@ -261,14 +270,14 @@ cc.Class({
             let match_game_req = {
                 gameId : 1,
             }
-            let send_buffer = netpack.pack(".hallserver_match.MatchGameReq", proto.hallserver_match.MatchGameReq.encode(match_game_req).finish())
+            let send_buffer = netpack.pack(PACK.hallserver_match.MatchGameReq, proto.hallserver_match.MatchGameReq.encode(match_game_req).finish())
             this.ws.send(send_buffer)
             this.is_clickReqMatch = true
         } else {
             let cancel_match_req = {
                 gameId : 1,
             }
-            let send_buffer = netpack.pack(".hallserver_match.CancelMatchGameReq", proto.hallserver_match.CancelMatchGameReq.encode(cancel_match_req).finish())
+            let send_buffer = netpack.pack(PACK.hallserver_match.CancelMatchGameReq, proto.hallserver_match.CancelMatchGameReq.encode(cancel_match_req).finish())
             this.ws.send(send_buffer)
         }
     },
@@ -280,7 +289,7 @@ cc.Class({
             gameId : 1,
             sessionId : this.m_match_succ_session_id
         }
-        let send_buffer = netpack.pack(".hallserver_match.AcceptMatchReq", proto.hallserver_match.AcceptMatchReq.encode(accept_match_req).finish())
+        let send_buffer = netpack.pack(PACK.hallserver_match.AcceptMatchReq, proto.hallserver_match.AcceptMatchReq.encode(accept_match_req).finish())
         this.ws.send(send_buffer)
     },
 
@@ -301,7 +310,7 @@ cc.Class({
         } else {
             this.matching.active = false
 
-            label = this.matchgame.getComponent(cc.Label)
+            let label = this.matchgame.getComponent(cc.Label)
             label.string = "开始匹配"
         }
 

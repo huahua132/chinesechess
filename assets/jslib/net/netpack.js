@@ -16,27 +16,20 @@ function bigEndianToInt(byteArray) {
 }
 
 var M = {
-    pack(packname, buffer) {
-        let namesz_buffer = intToBigEndian(packname.length, 2);
+    pack(packid, buffer) {
+        let packid_buffer = intToBigEndian(packid, 2);
             
         // 创建一个Uint8Array来容纳所有数据
-        let send_buffer = new Uint8Array(namesz_buffer.length + packname.length + buffer.length);
+        let send_buffer = new Uint8Array(4 + buffer.length);
         
-        // 将namesz_buffer，packname和buffer依次写入send_buffer
-        send_buffer.set(namesz_buffer, 0);
-        send_buffer.set(Array.from(packname, c => c.charCodeAt(0)), namesz_buffer.length); // 注意将packname转换为字节
-        send_buffer.set(buffer, namesz_buffer.length + packname.length);
-        
-        // 计算send_buffer的总长度，并编码为2字节的大端格式
-        let szbuffer = intToBigEndian(send_buffer.length, 2);
-        
-        // 创建一个Uint8Array来容纳szbuffer和send_buffer
-        let sends_buffer = new Uint8Array(szbuffer.length + send_buffer.length);
-        
-        // 将szbuffer和send_buffer依次写入sends_buffer
-        sends_buffer.set(szbuffer, 0);
-        sends_buffer.set(send_buffer, szbuffer.length);
-        return sends_buffer
+        //包长度
+        let szbuffer = intToBigEndian(2 + buffer.length, 2);
+
+        send_buffer.set(szbuffer, 0);
+        send_buffer.set(packid_buffer, 2);
+        send_buffer.set(buffer, 4);
+       
+        return send_buffer
     },
 
     unpack(blob) {
@@ -56,17 +49,14 @@ var M = {
                     return;
                 }
                 
-                // 解析包名的长度（2字节的大端格式）
-                const nameLength = (new DataView(arrayBuffer, 2, 2)).getUint16(0, false);
-    
-                // 使用解析出的包名长度来截取包名
-                const packname = new TextDecoder().decode(new Uint8Array(arrayBuffer.slice(4, 4 + nameLength)));
+                // 解析协议号的长度（2字节的大端格式）
+                const packid = (new DataView(arrayBuffer, 2, 2)).getUint16(0, false);
     
                 // 截取包内容
 
-               console.log("packname:",packname)
-                const packbuffer = new Uint8Array(arrayBuffer.slice(4 + nameLength, arrayBuffer.byteLength));
-                resolve({ packname, packbuffer });
+               console.log("packid:",packid)
+                const packbuffer = new Uint8Array(arrayBuffer.slice(4, arrayBuffer.byteLength));
+                resolve({ packid, packbuffer });
             };
     
             reader.onerror = (event) => {

@@ -9,7 +9,16 @@ import {TEAM_TYPE} from '../jslib/enum/TEAM'
 import proto from '../proto.js/proto.js'
 import netpack from '../jslib/net/netpack.js'
 import {GAME_STATE} from '../jslib/enum/GAME_STATE.js'
+import pack_helper from '../jslib/pack_helper.js'
 var global = require("global")
+
+import COMMON_PACK from '../jslib/pack/COMMON_PACK.js'
+import GAME_COMMON_PACK from '../jslib/pack/GAME_COMMON_PACK.js'
+import CHESS_PACK from '../jslib/pack/CHESS_PACK.js'
+
+var PACK = pack_helper.new([COMMON_PACK, GAME_COMMON_PACK, CHESS_PACK])
+
+console.log(">>>>>>>>>>>>>>>>>>>PACK>>>>>>>>>>>>>>>", PACK)
 
 var sprite_index_map = {
     [CHESS_TYPE.BLACK_C] : 0,
@@ -170,7 +179,7 @@ cc.Class({
                     moveRow : target.m_row,
                     moveCol : target.m_col,
                 }
-                let buffer = netpack.pack(".chinese_chess_game.moveReq",proto.chinese_chess_game.moveReq.encode(move_req).finish())
+                let buffer = netpack.pack(PACK.chinese_chess_game.moveReq,proto.chinese_chess_game.moveReq.encode(move_req).finish())
                 this.wsSocket.send(buffer)
             }
         } 
@@ -194,13 +203,13 @@ cc.Class({
             let match_req = {
                 tableId : global.gametableid
             }
-            let buffer = netpack.pack(".game_hall.JoinReq",proto.game_hall.JoinReq.encode(match_req).finish())
+            let buffer = netpack.pack(PACK.game_hall.JoinReq,proto.game_hall.JoinReq.encode(match_req).finish())
             this.wsSocket.send(buffer)
         } else {
             let game_state_req = {
                 playerId : global.player_id
             }
-            let buffer = netpack.pack(".chinese_chess_game.gameStateReq",proto.chinese_chess_game.gameStateReq.encode(game_state_req).finish())
+            let buffer = netpack.pack(PACK.chinese_chess_game.gameStateReq,proto.chinese_chess_game.gameStateReq.encode(game_state_req).finish())
             this.wsSocket.send(buffer)
         }
 
@@ -212,7 +221,7 @@ cc.Class({
                 time: Date.now()
             };
             
-            let send_buffer = netpack.pack(".game_hall.HeartReq",proto.game_hall.HeartReq.encode(heart_req).finish())
+            let send_buffer = netpack.pack(PACK.game_hall.HeartReq,proto.game_hall.HeartReq.encode(heart_req).finish())
             this.wsSocket.send(send_buffer)
         }, interval);
     },
@@ -344,44 +353,44 @@ cc.Class({
         let game_state_req = {
             playerId : global.player_id
         }
-        let buffer = netpack.pack(".chinese_chess_game.gameStateReq",proto.chinese_chess_game.gameStateReq.encode(game_state_req).finish())
+        let buffer = netpack.pack(PACK.chinese_chess_game.gameStateReq,proto.chinese_chess_game.gameStateReq.encode(game_state_req).finish())
         this.wsSocket.send(buffer)
     },
 
-    dispatch(packname,packbuffer) {
-        switch(packname) {
-            case ".login.LoginRes":{
+    dispatch(packid,packbuffer) {
+        switch(packid) {
+            case PACK.login.LoginRes:{
                 let msg = proto.login.LoginRes.decode(packbuffer);
                 this.LoginRes(msg)
                 break
             }
-            case ".chinese_chess_game.gameStateRes":{
+            case PACK.chinese_chess_game.gameStateRes:{
                 let msg = proto.chinese_chess_game.gameStateRes.decode(packbuffer);
                 this.gameStateRes(msg)
                 break
             }
-            case ".chinese_chess_game.nextDoing":{
+            case PACK.chinese_chess_game.nextDoing:{
                 let msg = proto.chinese_chess_game.nextDoing.decode(packbuffer);
                 this.nextDoing(msg)
                 break
             }
-            case ".chinese_chess_game.moveRes":{
+            case PACK.chinese_chess_game.moveRes:{
                 let msg = proto.chinese_chess_game.moveRes.decode(packbuffer);
                 this.moveRes(msg)
                 break
             }
-            case ".game_hall.JoinRes":{
+            case PACK.game_hall.JoinRes:{
                 let msg = proto.game_hall.JoinRes.decode(packbuffer);
                 this.JoinRes(msg)
                 break
             }
-            case ".errors.Error": {
+            case PACK.errors.Error: {
                 let msg = proto.errors.Error.decode(packbuffer);
                 console.log("err msg ", msg)
                 break
             }
             default:
-                console.log("unkown packname ",packname)
+                console.log("unkown packid ",packid)
         }
     },
 
@@ -448,14 +457,14 @@ cc.Class({
                 playerId:  chess_mgr.m_player_info.player_id,
             };
             
-            let send_buffer = netpack.pack(".login.LoginReq",proto.login.LoginReq.encode(login_req).finish())
+            let send_buffer = netpack.pack(PACK.login.LoginReq,proto.login.LoginReq.encode(login_req).finish())
             ws.send(send_buffer)
         };
         ws.onmessage = function (event) {
             console.log("onmessage:",event.data)
-            const reblob = netpack.unpack(event.data).then(({ packname, packbuffer }) => {
-                console.log("包名:", packname);
-                chess_mgr.dispatch(packname, packbuffer)
+            const reblob = netpack.unpack(event.data).then(({ packid, packbuffer }) => {
+                console.log("包名:", packid);
+                chess_mgr.dispatch(packid, packbuffer)
             })
             .catch((error) => {
                 console.error("解包错误:", error.message);

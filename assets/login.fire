@@ -605,7 +605,7 @@
       "__id__": 6
     },
     "component": "",
-    "_componentId": "1be8bqmywVGhqB4kwmwPayC",
+    "_componentId": "59e90IBzSRD8o8BH7PF4p7X",
     "handler": "onLoginClick",
     "customEventData": ""
   },
@@ -850,7 +850,7 @@
       "__id__": 6
     },
     "component": "",
-    "_componentId": "1be8bqmywVGhqB4kwmwPayC",
+    "_componentId": "59e90IBzSRD8o8BH7PF4p7X",
     "handler": "onSignUpClick",
     "customEventData": ""
   },
@@ -2508,7 +2508,7 @@
       "__id__": 6
     },
     "component": "",
-    "_componentId": "1be8bqmywVGhqB4kwmwPayC",
+    "_componentId": "59e90IBzSRD8o8BH7PF4p7X",
     "handler": "onCommitClick",
     "customEventData": ""
   },
@@ -2690,7 +2690,7 @@
       "__id__": 6
     },
     "component": "",
-    "_componentId": "1be8bqmywVGhqB4kwmwPayC",
+    "_componentId": "59e90IBzSRD8o8BH7PF4p7X",
     "handler": "onCancelClick",
     "customEventData": ""
   },
@@ -2792,7 +2792,7 @@
     "_id": "75iXzH0ZBHl5tHNnzP9VQZ"
   },
   {
-    "__type__": "1be8bqmywVGhqB4kwmwPayC",
+    "__type__": "59e90IBzSRD8o8BH7PF4p7X",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -2814,7 +2814,7 @@
     "password": {
       "__id__": 40
     },
-    "_id": "3crr4EnVtMK4UsGhQa9yCh"
+    "_id": "aaojylQItP8p7To8s5L1ZX"
   },
   {
     "__type__": "cc.Camera",
