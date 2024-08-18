@@ -55,6 +55,11 @@ cc.Class({
             default : null,
             type : cc.Node,
         },
+
+        game_record : {
+            default : null,
+            type : cc.Node,
+        },
     },
 
     LoginRes(msg) {
@@ -162,6 +167,33 @@ cc.Class({
 
         console.log("ItemListNotice >>>> ", this.m_item_map)
     },
+
+    //游戏记录
+    RecordListRes(msg) {
+        console.log("RecordListRes >>>> ", msg)
+        if (msg.pageageNum == 1) {
+            this.m_record_list = msg.recordList
+            this.m_record_count = msg.totalCount
+            this.m_record_pageage_total_cnt = Math.ceil(msg.totalCount / this.m_record_pageage_count)
+        } else {
+            for (let i = 0; i < msg.recordList.length; i++) {
+                let oneRecord = msg.recordList[i]
+                this.m_record_list.push(oneRecord)
+            }
+        }
+        this.m_record_cursor = msg.nextCursor
+
+        let mask = this.game_record.getChildByName('mask')
+        let record_list = mask.getChildByName('record_list')
+        let label = record_list.getComponent(cc.Label)
+        
+        label.string = ""
+        let list = this.m_record_list
+        for(let i = 0; i < list.length; i++) {
+            let oneRecord = list[i]
+            label.string += oneRecord.createTime + '   ' + oneRecord.tableId + '  ' + oneRecord.score + '\n'
+        }
+    },
     // LIFE-CYCLE CALLBACKS:
     dispatch(packid, packbuffer) {
         console.log("dispatch >>> ",packid)
@@ -206,6 +238,11 @@ cc.Class({
                 this.ItemListNotice(msg)
                 break
             }
+            case PACK.hallserver_game_record.RecordListRes: {
+                let msg = proto.hallserver_game_record.RecordListRes.decode(packbuffer);
+                this.RecordListRes(msg)
+                break
+            }
             case PACK.errors.Error: {
                 let msg = proto.errors.Error.decode(packbuffer);
                 console.log("err msg ", msg)
@@ -216,7 +253,24 @@ cc.Class({
         }
     },
 
+    scroll_to_bottom(scrollView) {
+        console.log("scrollView >>> ", scrollView, this.m_record_pageage_num, this.m_record_pageage_total_cnt)
+        if (this.m_record_pageage_num < this.m_record_pageage_total_cnt) {
+            this.m_record_pageage_num += 1
+            let record_list_req = {
+                pageageNum : this.m_record_pageage_num,
+                pageageCount : this.m_record_pageage_count,
+                cursor : this.m_record_cursor,
+            }
+            
+            let send_buffer = netpack.pack(PACK.hallserver_game_record.RecordListReq, proto.hallserver_game_record.RecordListReq.encode(record_list_req).finish())
+            this.ws.send(send_buffer)
+        }
+    },
+
     onLoad () {
+        this.m_record_pageage_num = 1
+        this.m_record_pageage_count = 20
         this.matchsucc.active = false
         this.m_item_map = {}
         console.log("global >>>>> ",global)
@@ -260,6 +314,8 @@ cc.Class({
                 console.log("WebSocket instance wasn't ready...");
             }
         }, 3);
+
+        this.game_record.on('scroll-to-bottom', this.scroll_to_bottom, this)
     },
 
     //请求匹配，取消匹配
@@ -291,6 +347,28 @@ cc.Class({
         }
         let send_buffer = netpack.pack(PACK.hallserver_match.AcceptMatchReq, proto.hallserver_match.AcceptMatchReq.encode(accept_match_req).finish())
         this.ws.send(send_buffer)
+    },
+
+    //打开游戏记录
+    OnGameRecordClick(event) {
+         //关闭
+        if (this.m_record_is_open) {
+            this.m_record_is_open = false
+            this.game_record.active = false
+            this.m_record_list = []
+            this.m_record_pageage_num = 1
+        } else {//打开
+            this.m_record_is_open = true
+            this.game_record.active = true
+
+            let record_list_req = {
+                pageageNum : this.m_record_pageage_num,
+                pageageCount : this.m_record_pageage_count,
+            }
+            
+            let send_buffer = netpack.pack(PACK.hallserver_game_record.RecordListReq, proto.hallserver_game_record.RecordListReq.encode(record_list_req).finish())
+            this.ws.send(send_buffer)
+        }
     },
 
     start () {

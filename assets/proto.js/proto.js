@@ -2368,7 +2368,7 @@ $root.errors = (function() {
          * @interface IError
          * @property {number|null} [code] Error code
          * @property {string|null} [msg] Error msg
-         * @property {string|null} [packid] Error packid
+         * @property {number|null} [packId] Error packId
          */
 
         /**
@@ -2403,12 +2403,12 @@ $root.errors = (function() {
         Error.prototype.msg = "";
 
         /**
-         * Error packid.
-         * @member {string} packid
+         * Error packId.
+         * @member {number} packId
          * @memberof errors.Error
          * @instance
          */
-        Error.prototype.packid = "";
+        Error.prototype.packId = 0;
 
         /**
          * Creates a new Error instance using the specified properties.
@@ -2438,8 +2438,8 @@ $root.errors = (function() {
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.code);
             if (message.msg != null && Object.hasOwnProperty.call(message, "msg"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.msg);
-            if (message.packid != null && Object.hasOwnProperty.call(message, "packid"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.packid);
+            if (message.packId != null && Object.hasOwnProperty.call(message, "packId"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.packId);
             return writer;
         };
 
@@ -2483,7 +2483,7 @@ $root.errors = (function() {
                         break;
                     }
                 case 3: {
-                        message.packid = reader.string();
+                        message.packId = reader.int32();
                         break;
                     }
                 default:
@@ -2527,9 +2527,9 @@ $root.errors = (function() {
             if (message.msg != null && message.hasOwnProperty("msg"))
                 if (!$util.isString(message.msg))
                     return "msg: string expected";
-            if (message.packid != null && message.hasOwnProperty("packid"))
-                if (!$util.isString(message.packid))
-                    return "packid: string expected";
+            if (message.packId != null && message.hasOwnProperty("packId"))
+                if (!$util.isInteger(message.packId))
+                    return "packId: integer expected";
             return null;
         };
 
@@ -2549,8 +2549,8 @@ $root.errors = (function() {
                 message.code = object.code | 0;
             if (object.msg != null)
                 message.msg = String(object.msg);
-            if (object.packid != null)
-                message.packid = String(object.packid);
+            if (object.packId != null)
+                message.packId = object.packId | 0;
             return message;
         };
 
@@ -2570,14 +2570,14 @@ $root.errors = (function() {
             if (options.defaults) {
                 object.code = 0;
                 object.msg = "";
-                object.packid = "";
+                object.packId = 0;
             }
             if (message.code != null && message.hasOwnProperty("code"))
                 object.code = message.code;
             if (message.msg != null && message.hasOwnProperty("msg"))
                 object.msg = message.msg;
-            if (message.packid != null && message.hasOwnProperty("packid"))
-                object.packid = message.packid;
+            if (message.packId != null && message.hasOwnProperty("packId"))
+                object.packId = message.packId;
             return object;
         };
 
@@ -3246,6 +3246,873 @@ $root.game_hall = (function() {
     })();
 
     return game_hall;
+})();
+
+$root.hallserver_game_record = (function() {
+
+    /**
+     * Namespace hallserver_game_record.
+     * @exports hallserver_game_record
+     * @namespace
+     */
+    var hallserver_game_record = {};
+
+    hallserver_game_record.OneRecord = (function() {
+
+        /**
+         * Properties of an OneRecord.
+         * @memberof hallserver_game_record
+         * @interface IOneRecord
+         * @property {number|Long|null} [createTime] OneRecord createTime
+         * @property {string|null} [tableId] OneRecord tableId
+         * @property {number|null} [gameId] OneRecord gameId
+         * @property {number|null} [score] OneRecord score
+         */
+
+        /**
+         * Constructs a new OneRecord.
+         * @memberof hallserver_game_record
+         * @classdesc Represents an OneRecord.
+         * @implements IOneRecord
+         * @constructor
+         * @param {hallserver_game_record.IOneRecord=} [properties] Properties to set
+         */
+        function OneRecord(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * OneRecord createTime.
+         * @member {number|Long} createTime
+         * @memberof hallserver_game_record.OneRecord
+         * @instance
+         */
+        OneRecord.prototype.createTime = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * OneRecord tableId.
+         * @member {string} tableId
+         * @memberof hallserver_game_record.OneRecord
+         * @instance
+         */
+        OneRecord.prototype.tableId = "";
+
+        /**
+         * OneRecord gameId.
+         * @member {number} gameId
+         * @memberof hallserver_game_record.OneRecord
+         * @instance
+         */
+        OneRecord.prototype.gameId = 0;
+
+        /**
+         * OneRecord score.
+         * @member {number} score
+         * @memberof hallserver_game_record.OneRecord
+         * @instance
+         */
+        OneRecord.prototype.score = 0;
+
+        /**
+         * Creates a new OneRecord instance using the specified properties.
+         * @function create
+         * @memberof hallserver_game_record.OneRecord
+         * @static
+         * @param {hallserver_game_record.IOneRecord=} [properties] Properties to set
+         * @returns {hallserver_game_record.OneRecord} OneRecord instance
+         */
+        OneRecord.create = function create(properties) {
+            return new OneRecord(properties);
+        };
+
+        /**
+         * Encodes the specified OneRecord message. Does not implicitly {@link hallserver_game_record.OneRecord.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_game_record.OneRecord
+         * @static
+         * @param {hallserver_game_record.IOneRecord} message OneRecord message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        OneRecord.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.createTime != null && Object.hasOwnProperty.call(message, "createTime"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.createTime);
+            if (message.tableId != null && Object.hasOwnProperty.call(message, "tableId"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.tableId);
+            if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.gameId);
+            if (message.score != null && Object.hasOwnProperty.call(message, "score"))
+                writer.uint32(/* id 4, wireType 0 =*/32).int32(message.score);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified OneRecord message, length delimited. Does not implicitly {@link hallserver_game_record.OneRecord.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_game_record.OneRecord
+         * @static
+         * @param {hallserver_game_record.IOneRecord} message OneRecord message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        OneRecord.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an OneRecord message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_game_record.OneRecord
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_game_record.OneRecord} OneRecord
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        OneRecord.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_game_record.OneRecord();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.createTime = reader.int64();
+                        break;
+                    }
+                case 2: {
+                        message.tableId = reader.string();
+                        break;
+                    }
+                case 3: {
+                        message.gameId = reader.int32();
+                        break;
+                    }
+                case 4: {
+                        message.score = reader.int32();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an OneRecord message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_game_record.OneRecord
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_game_record.OneRecord} OneRecord
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        OneRecord.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an OneRecord message.
+         * @function verify
+         * @memberof hallserver_game_record.OneRecord
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        OneRecord.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.createTime != null && message.hasOwnProperty("createTime"))
+                if (!$util.isInteger(message.createTime) && !(message.createTime && $util.isInteger(message.createTime.low) && $util.isInteger(message.createTime.high)))
+                    return "createTime: integer|Long expected";
+            if (message.tableId != null && message.hasOwnProperty("tableId"))
+                if (!$util.isString(message.tableId))
+                    return "tableId: string expected";
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                if (!$util.isInteger(message.gameId))
+                    return "gameId: integer expected";
+            if (message.score != null && message.hasOwnProperty("score"))
+                if (!$util.isInteger(message.score))
+                    return "score: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates an OneRecord message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_game_record.OneRecord
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_game_record.OneRecord} OneRecord
+         */
+        OneRecord.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_game_record.OneRecord)
+                return object;
+            var message = new $root.hallserver_game_record.OneRecord();
+            if (object.createTime != null)
+                if ($util.Long)
+                    (message.createTime = $util.Long.fromValue(object.createTime)).unsigned = false;
+                else if (typeof object.createTime === "string")
+                    message.createTime = parseInt(object.createTime, 10);
+                else if (typeof object.createTime === "number")
+                    message.createTime = object.createTime;
+                else if (typeof object.createTime === "object")
+                    message.createTime = new $util.LongBits(object.createTime.low >>> 0, object.createTime.high >>> 0).toNumber();
+            if (object.tableId != null)
+                message.tableId = String(object.tableId);
+            if (object.gameId != null)
+                message.gameId = object.gameId | 0;
+            if (object.score != null)
+                message.score = object.score | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an OneRecord message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_game_record.OneRecord
+         * @static
+         * @param {hallserver_game_record.OneRecord} message OneRecord
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        OneRecord.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.createTime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.createTime = options.longs === String ? "0" : 0;
+                object.tableId = "";
+                object.gameId = 0;
+                object.score = 0;
+            }
+            if (message.createTime != null && message.hasOwnProperty("createTime"))
+                if (typeof message.createTime === "number")
+                    object.createTime = options.longs === String ? String(message.createTime) : message.createTime;
+                else
+                    object.createTime = options.longs === String ? $util.Long.prototype.toString.call(message.createTime) : options.longs === Number ? new $util.LongBits(message.createTime.low >>> 0, message.createTime.high >>> 0).toNumber() : message.createTime;
+            if (message.tableId != null && message.hasOwnProperty("tableId"))
+                object.tableId = message.tableId;
+            if (message.gameId != null && message.hasOwnProperty("gameId"))
+                object.gameId = message.gameId;
+            if (message.score != null && message.hasOwnProperty("score"))
+                object.score = message.score;
+            return object;
+        };
+
+        /**
+         * Converts this OneRecord to JSON.
+         * @function toJSON
+         * @memberof hallserver_game_record.OneRecord
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        OneRecord.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for OneRecord
+         * @function getTypeUrl
+         * @memberof hallserver_game_record.OneRecord
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        OneRecord.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_game_record.OneRecord";
+        };
+
+        return OneRecord;
+    })();
+
+    hallserver_game_record.RecordListReq = (function() {
+
+        /**
+         * Properties of a RecordListReq.
+         * @memberof hallserver_game_record
+         * @interface IRecordListReq
+         * @property {number|null} [pageageNum] RecordListReq pageageNum
+         * @property {number|null} [pageageCount] RecordListReq pageageCount
+         * @property {number|null} [cursor] RecordListReq cursor
+         */
+
+        /**
+         * Constructs a new RecordListReq.
+         * @memberof hallserver_game_record
+         * @classdesc Represents a RecordListReq.
+         * @implements IRecordListReq
+         * @constructor
+         * @param {hallserver_game_record.IRecordListReq=} [properties] Properties to set
+         */
+        function RecordListReq(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RecordListReq pageageNum.
+         * @member {number} pageageNum
+         * @memberof hallserver_game_record.RecordListReq
+         * @instance
+         */
+        RecordListReq.prototype.pageageNum = 0;
+
+        /**
+         * RecordListReq pageageCount.
+         * @member {number} pageageCount
+         * @memberof hallserver_game_record.RecordListReq
+         * @instance
+         */
+        RecordListReq.prototype.pageageCount = 0;
+
+        /**
+         * RecordListReq cursor.
+         * @member {number} cursor
+         * @memberof hallserver_game_record.RecordListReq
+         * @instance
+         */
+        RecordListReq.prototype.cursor = 0;
+
+        /**
+         * Creates a new RecordListReq instance using the specified properties.
+         * @function create
+         * @memberof hallserver_game_record.RecordListReq
+         * @static
+         * @param {hallserver_game_record.IRecordListReq=} [properties] Properties to set
+         * @returns {hallserver_game_record.RecordListReq} RecordListReq instance
+         */
+        RecordListReq.create = function create(properties) {
+            return new RecordListReq(properties);
+        };
+
+        /**
+         * Encodes the specified RecordListReq message. Does not implicitly {@link hallserver_game_record.RecordListReq.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_game_record.RecordListReq
+         * @static
+         * @param {hallserver_game_record.IRecordListReq} message RecordListReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RecordListReq.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.pageageNum != null && Object.hasOwnProperty.call(message, "pageageNum"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.pageageNum);
+            if (message.pageageCount != null && Object.hasOwnProperty.call(message, "pageageCount"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.pageageCount);
+            if (message.cursor != null && Object.hasOwnProperty.call(message, "cursor"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.cursor);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RecordListReq message, length delimited. Does not implicitly {@link hallserver_game_record.RecordListReq.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_game_record.RecordListReq
+         * @static
+         * @param {hallserver_game_record.IRecordListReq} message RecordListReq message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RecordListReq.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RecordListReq message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_game_record.RecordListReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_game_record.RecordListReq} RecordListReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RecordListReq.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_game_record.RecordListReq();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.pageageNum = reader.uint32();
+                        break;
+                    }
+                case 2: {
+                        message.pageageCount = reader.uint32();
+                        break;
+                    }
+                case 3: {
+                        message.cursor = reader.uint32();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RecordListReq message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_game_record.RecordListReq
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_game_record.RecordListReq} RecordListReq
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RecordListReq.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RecordListReq message.
+         * @function verify
+         * @memberof hallserver_game_record.RecordListReq
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RecordListReq.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.pageageNum != null && message.hasOwnProperty("pageageNum"))
+                if (!$util.isInteger(message.pageageNum))
+                    return "pageageNum: integer expected";
+            if (message.pageageCount != null && message.hasOwnProperty("pageageCount"))
+                if (!$util.isInteger(message.pageageCount))
+                    return "pageageCount: integer expected";
+            if (message.cursor != null && message.hasOwnProperty("cursor"))
+                if (!$util.isInteger(message.cursor))
+                    return "cursor: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a RecordListReq message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_game_record.RecordListReq
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_game_record.RecordListReq} RecordListReq
+         */
+        RecordListReq.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_game_record.RecordListReq)
+                return object;
+            var message = new $root.hallserver_game_record.RecordListReq();
+            if (object.pageageNum != null)
+                message.pageageNum = object.pageageNum >>> 0;
+            if (object.pageageCount != null)
+                message.pageageCount = object.pageageCount >>> 0;
+            if (object.cursor != null)
+                message.cursor = object.cursor >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RecordListReq message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_game_record.RecordListReq
+         * @static
+         * @param {hallserver_game_record.RecordListReq} message RecordListReq
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RecordListReq.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.pageageNum = 0;
+                object.pageageCount = 0;
+                object.cursor = 0;
+            }
+            if (message.pageageNum != null && message.hasOwnProperty("pageageNum"))
+                object.pageageNum = message.pageageNum;
+            if (message.pageageCount != null && message.hasOwnProperty("pageageCount"))
+                object.pageageCount = message.pageageCount;
+            if (message.cursor != null && message.hasOwnProperty("cursor"))
+                object.cursor = message.cursor;
+            return object;
+        };
+
+        /**
+         * Converts this RecordListReq to JSON.
+         * @function toJSON
+         * @memberof hallserver_game_record.RecordListReq
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RecordListReq.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for RecordListReq
+         * @function getTypeUrl
+         * @memberof hallserver_game_record.RecordListReq
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        RecordListReq.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_game_record.RecordListReq";
+        };
+
+        return RecordListReq;
+    })();
+
+    hallserver_game_record.RecordListRes = (function() {
+
+        /**
+         * Properties of a RecordListRes.
+         * @memberof hallserver_game_record
+         * @interface IRecordListRes
+         * @property {number|null} [pageageNum] RecordListRes pageageNum
+         * @property {number|null} [pageageCount] RecordListRes pageageCount
+         * @property {number|null} [totalCount] RecordListRes totalCount
+         * @property {Array.<hallserver_game_record.IOneRecord>|null} [recordList] RecordListRes recordList
+         * @property {number|null} [nextCursor] RecordListRes nextCursor
+         */
+
+        /**
+         * Constructs a new RecordListRes.
+         * @memberof hallserver_game_record
+         * @classdesc Represents a RecordListRes.
+         * @implements IRecordListRes
+         * @constructor
+         * @param {hallserver_game_record.IRecordListRes=} [properties] Properties to set
+         */
+        function RecordListRes(properties) {
+            this.recordList = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RecordListRes pageageNum.
+         * @member {number} pageageNum
+         * @memberof hallserver_game_record.RecordListRes
+         * @instance
+         */
+        RecordListRes.prototype.pageageNum = 0;
+
+        /**
+         * RecordListRes pageageCount.
+         * @member {number} pageageCount
+         * @memberof hallserver_game_record.RecordListRes
+         * @instance
+         */
+        RecordListRes.prototype.pageageCount = 0;
+
+        /**
+         * RecordListRes totalCount.
+         * @member {number} totalCount
+         * @memberof hallserver_game_record.RecordListRes
+         * @instance
+         */
+        RecordListRes.prototype.totalCount = 0;
+
+        /**
+         * RecordListRes recordList.
+         * @member {Array.<hallserver_game_record.IOneRecord>} recordList
+         * @memberof hallserver_game_record.RecordListRes
+         * @instance
+         */
+        RecordListRes.prototype.recordList = $util.emptyArray;
+
+        /**
+         * RecordListRes nextCursor.
+         * @member {number} nextCursor
+         * @memberof hallserver_game_record.RecordListRes
+         * @instance
+         */
+        RecordListRes.prototype.nextCursor = 0;
+
+        /**
+         * Creates a new RecordListRes instance using the specified properties.
+         * @function create
+         * @memberof hallserver_game_record.RecordListRes
+         * @static
+         * @param {hallserver_game_record.IRecordListRes=} [properties] Properties to set
+         * @returns {hallserver_game_record.RecordListRes} RecordListRes instance
+         */
+        RecordListRes.create = function create(properties) {
+            return new RecordListRes(properties);
+        };
+
+        /**
+         * Encodes the specified RecordListRes message. Does not implicitly {@link hallserver_game_record.RecordListRes.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_game_record.RecordListRes
+         * @static
+         * @param {hallserver_game_record.IRecordListRes} message RecordListRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RecordListRes.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.pageageNum != null && Object.hasOwnProperty.call(message, "pageageNum"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.pageageNum);
+            if (message.pageageCount != null && Object.hasOwnProperty.call(message, "pageageCount"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.pageageCount);
+            if (message.totalCount != null && Object.hasOwnProperty.call(message, "totalCount"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.totalCount);
+            if (message.recordList != null && message.recordList.length)
+                for (var i = 0; i < message.recordList.length; ++i)
+                    $root.hallserver_game_record.OneRecord.encode(message.recordList[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.nextCursor != null && Object.hasOwnProperty.call(message, "nextCursor"))
+                writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.nextCursor);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RecordListRes message, length delimited. Does not implicitly {@link hallserver_game_record.RecordListRes.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_game_record.RecordListRes
+         * @static
+         * @param {hallserver_game_record.IRecordListRes} message RecordListRes message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RecordListRes.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RecordListRes message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_game_record.RecordListRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_game_record.RecordListRes} RecordListRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RecordListRes.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_game_record.RecordListRes();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.pageageNum = reader.uint32();
+                        break;
+                    }
+                case 2: {
+                        message.pageageCount = reader.uint32();
+                        break;
+                    }
+                case 3: {
+                        message.totalCount = reader.uint32();
+                        break;
+                    }
+                case 4: {
+                        if (!(message.recordList && message.recordList.length))
+                            message.recordList = [];
+                        message.recordList.push($root.hallserver_game_record.OneRecord.decode(reader, reader.uint32()));
+                        break;
+                    }
+                case 5: {
+                        message.nextCursor = reader.uint32();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RecordListRes message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_game_record.RecordListRes
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_game_record.RecordListRes} RecordListRes
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RecordListRes.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RecordListRes message.
+         * @function verify
+         * @memberof hallserver_game_record.RecordListRes
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RecordListRes.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.pageageNum != null && message.hasOwnProperty("pageageNum"))
+                if (!$util.isInteger(message.pageageNum))
+                    return "pageageNum: integer expected";
+            if (message.pageageCount != null && message.hasOwnProperty("pageageCount"))
+                if (!$util.isInteger(message.pageageCount))
+                    return "pageageCount: integer expected";
+            if (message.totalCount != null && message.hasOwnProperty("totalCount"))
+                if (!$util.isInteger(message.totalCount))
+                    return "totalCount: integer expected";
+            if (message.recordList != null && message.hasOwnProperty("recordList")) {
+                if (!Array.isArray(message.recordList))
+                    return "recordList: array expected";
+                for (var i = 0; i < message.recordList.length; ++i) {
+                    var error = $root.hallserver_game_record.OneRecord.verify(message.recordList[i]);
+                    if (error)
+                        return "recordList." + error;
+                }
+            }
+            if (message.nextCursor != null && message.hasOwnProperty("nextCursor"))
+                if (!$util.isInteger(message.nextCursor))
+                    return "nextCursor: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a RecordListRes message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_game_record.RecordListRes
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_game_record.RecordListRes} RecordListRes
+         */
+        RecordListRes.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_game_record.RecordListRes)
+                return object;
+            var message = new $root.hallserver_game_record.RecordListRes();
+            if (object.pageageNum != null)
+                message.pageageNum = object.pageageNum >>> 0;
+            if (object.pageageCount != null)
+                message.pageageCount = object.pageageCount >>> 0;
+            if (object.totalCount != null)
+                message.totalCount = object.totalCount >>> 0;
+            if (object.recordList) {
+                if (!Array.isArray(object.recordList))
+                    throw TypeError(".hallserver_game_record.RecordListRes.recordList: array expected");
+                message.recordList = [];
+                for (var i = 0; i < object.recordList.length; ++i) {
+                    if (typeof object.recordList[i] !== "object")
+                        throw TypeError(".hallserver_game_record.RecordListRes.recordList: object expected");
+                    message.recordList[i] = $root.hallserver_game_record.OneRecord.fromObject(object.recordList[i]);
+                }
+            }
+            if (object.nextCursor != null)
+                message.nextCursor = object.nextCursor >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RecordListRes message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_game_record.RecordListRes
+         * @static
+         * @param {hallserver_game_record.RecordListRes} message RecordListRes
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RecordListRes.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.recordList = [];
+            if (options.defaults) {
+                object.pageageNum = 0;
+                object.pageageCount = 0;
+                object.totalCount = 0;
+                object.nextCursor = 0;
+            }
+            if (message.pageageNum != null && message.hasOwnProperty("pageageNum"))
+                object.pageageNum = message.pageageNum;
+            if (message.pageageCount != null && message.hasOwnProperty("pageageCount"))
+                object.pageageCount = message.pageageCount;
+            if (message.totalCount != null && message.hasOwnProperty("totalCount"))
+                object.totalCount = message.totalCount;
+            if (message.recordList && message.recordList.length) {
+                object.recordList = [];
+                for (var j = 0; j < message.recordList.length; ++j)
+                    object.recordList[j] = $root.hallserver_game_record.OneRecord.toObject(message.recordList[j], options);
+            }
+            if (message.nextCursor != null && message.hasOwnProperty("nextCursor"))
+                object.nextCursor = message.nextCursor;
+            return object;
+        };
+
+        /**
+         * Converts this RecordListRes to JSON.
+         * @function toJSON
+         * @memberof hallserver_game_record.RecordListRes
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RecordListRes.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for RecordListRes
+         * @function getTypeUrl
+         * @memberof hallserver_game_record.RecordListRes
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        RecordListRes.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_game_record.RecordListRes";
+        };
+
+        return RecordListRes;
+    })();
+
+    return hallserver_game_record;
 })();
 
 $root.hallserver_item = (function() {
