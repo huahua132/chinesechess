@@ -2368,7 +2368,7 @@ $root.errors = (function() {
          * @interface IError
          * @property {number|null} [code] Error code
          * @property {string|null} [msg] Error msg
-         * @property {string|null} [packid] Error packid
+         * @property {number|null} [packId] Error packId
          */
 
         /**
@@ -2403,12 +2403,12 @@ $root.errors = (function() {
         Error.prototype.msg = "";
 
         /**
-         * Error packid.
-         * @member {string} packid
+         * Error packId.
+         * @member {number} packId
          * @memberof errors.Error
          * @instance
          */
-        Error.prototype.packid = "";
+        Error.prototype.packId = 0;
 
         /**
          * Creates a new Error instance using the specified properties.
@@ -2438,8 +2438,8 @@ $root.errors = (function() {
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.code);
             if (message.msg != null && Object.hasOwnProperty.call(message, "msg"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.msg);
-            if (message.packid != null && Object.hasOwnProperty.call(message, "packid"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.packid);
+            if (message.packId != null && Object.hasOwnProperty.call(message, "packId"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.packId);
             return writer;
         };
 
@@ -2483,7 +2483,7 @@ $root.errors = (function() {
                         break;
                     }
                 case 3: {
-                        message.packid = reader.string();
+                        message.packId = reader.int32();
                         break;
                     }
                 default:
@@ -2527,9 +2527,9 @@ $root.errors = (function() {
             if (message.msg != null && message.hasOwnProperty("msg"))
                 if (!$util.isString(message.msg))
                     return "msg: string expected";
-            if (message.packid != null && message.hasOwnProperty("packid"))
-                if (!$util.isString(message.packid))
-                    return "packid: string expected";
+            if (message.packId != null && message.hasOwnProperty("packId"))
+                if (!$util.isInteger(message.packId))
+                    return "packId: integer expected";
             return null;
         };
 
@@ -2549,8 +2549,8 @@ $root.errors = (function() {
                 message.code = object.code | 0;
             if (object.msg != null)
                 message.msg = String(object.msg);
-            if (object.packid != null)
-                message.packid = String(object.packid);
+            if (object.packId != null)
+                message.packId = object.packId | 0;
             return message;
         };
 
@@ -2570,14 +2570,14 @@ $root.errors = (function() {
             if (options.defaults) {
                 object.code = 0;
                 object.msg = "";
-                object.packid = "";
+                object.packId = 0;
             }
             if (message.code != null && message.hasOwnProperty("code"))
                 object.code = message.code;
             if (message.msg != null && message.hasOwnProperty("msg"))
                 object.msg = message.msg;
-            if (message.packid != null && message.hasOwnProperty("packid"))
-                object.packid = message.packid;
+            if (message.packId != null && message.hasOwnProperty("packId"))
+                object.packId = message.packId;
             return object;
         };
 
@@ -3755,6 +3755,7 @@ $root.hallserver_match = (function() {
          * @memberof hallserver_match
          * @interface IMatchGameReq
          * @property {number|null} [gameId] MatchGameReq gameId
+         * @property {number|null} [playType] MatchGameReq playType
          */
 
         /**
@@ -3779,6 +3780,14 @@ $root.hallserver_match = (function() {
          * @instance
          */
         MatchGameReq.prototype.gameId = 0;
+
+        /**
+         * MatchGameReq playType.
+         * @member {number} playType
+         * @memberof hallserver_match.MatchGameReq
+         * @instance
+         */
+        MatchGameReq.prototype.playType = 0;
 
         /**
          * Creates a new MatchGameReq instance using the specified properties.
@@ -3806,6 +3815,8 @@ $root.hallserver_match = (function() {
                 writer = $Writer.create();
             if (message.gameId != null && Object.hasOwnProperty.call(message, "gameId"))
                 writer.uint32(/* id 1, wireType 0 =*/8).int32(message.gameId);
+            if (message.playType != null && Object.hasOwnProperty.call(message, "playType"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.playType);
             return writer;
         };
 
@@ -3842,6 +3853,10 @@ $root.hallserver_match = (function() {
                 switch (tag >>> 3) {
                 case 1: {
                         message.gameId = reader.int32();
+                        break;
+                    }
+                case 2: {
+                        message.playType = reader.int32();
                         break;
                     }
                 default:
@@ -3882,6 +3897,9 @@ $root.hallserver_match = (function() {
             if (message.gameId != null && message.hasOwnProperty("gameId"))
                 if (!$util.isInteger(message.gameId))
                     return "gameId: integer expected";
+            if (message.playType != null && message.hasOwnProperty("playType"))
+                if (!$util.isInteger(message.playType))
+                    return "playType: integer expected";
             return null;
         };
 
@@ -3899,6 +3917,8 @@ $root.hallserver_match = (function() {
             var message = new $root.hallserver_match.MatchGameReq();
             if (object.gameId != null)
                 message.gameId = object.gameId | 0;
+            if (object.playType != null)
+                message.playType = object.playType | 0;
             return message;
         };
 
@@ -3915,10 +3935,14 @@ $root.hallserver_match = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.gameId = 0;
+                object.playType = 0;
+            }
             if (message.gameId != null && message.hasOwnProperty("gameId"))
                 object.gameId = message.gameId;
+            if (message.playType != null && message.hasOwnProperty("playType"))
+                object.playType = message.playType;
             return object;
         };
 

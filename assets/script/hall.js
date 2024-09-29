@@ -269,6 +269,7 @@ cc.Class({
         if (!this.m_matching) {
             let match_game_req = {
                 gameId : 1,
+                playType : 10001,
             }
             let send_buffer = netpack.pack(PACK.hallserver_match.MatchGameReq, proto.hallserver_match.MatchGameReq.encode(match_game_req).finish())
             this.ws.send(send_buffer)
