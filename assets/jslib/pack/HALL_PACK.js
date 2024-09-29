@@ -4,6 +4,7 @@ var pack = {
     hallserver_item : 102,               //玩家道具
     hallserver_match : 103,              //匹配
     hallserver_friend : 104,             //好友
+    hallserver_game_record : 105,        //游戏记录
 }
 
 module.exports = pack
