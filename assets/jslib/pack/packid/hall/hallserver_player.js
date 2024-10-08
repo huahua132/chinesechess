@@ -2,6 +2,7 @@
 var pack = {
     HeartReq         : 1,              //心跳
     PlayerInfoNotice : 80,             //玩家信息通知
+    PlayerInfoSynNotice : 81,          //玩家字段信息同步
 }
 
 module.exports = pack

@@ -145,27 +145,20 @@ cc.Class({
         console.log("PlayerInfoNotice >>>>>>> ", msg)
         let label = this.nickname.getComponent(cc.Label)
         label.string = msg.nickname
+
+        label = this.score.getComponent(cc.Label)
+        label.string = msg.rankScore
+    },
+
+    //玩家信息同步推送
+    PlayerInfoSynNotice(msg) {
+        console.log("PlayerInfoSynNotice >>>>>>> ", msg)
+
     },
 
     //道具信息推送
     ItemListNotice(msg) {
         console.log("ItemListNotice >>>>>>> ", msg)
-        let item_list = msg.itemList
-        for (let i = 0; i < item_list.length; i++) {
-            let one_item = item_list[i]
-            let id = one_item.id
-            let count = one_item.count
-            this.m_item_map[id] = count
-        }
-
-        let label = this.score.getComponent(cc.Label)
-        if (this.m_item_map[ITEM.score]) {
-            label.string = this.m_item_map[ITEM.score]
-        } else {
-            label.string = 0
-        }
-
-        console.log("ItemListNotice >>>> ", this.m_item_map)
     },
 
     //游戏记录
@@ -241,6 +234,11 @@ cc.Class({
             case PACK.hallserver_game_record.RecordListRes: {
                 let msg = proto.hallserver_game_record.RecordListRes.decode(packbuffer);
                 this.RecordListRes(msg)
+                break
+            }
+            case PACK.hallserver_player.PlayerInfoSynNotice: {
+                let msg = proto.hallserver_player.PlayerInfoSynNotice.decode(packbuffer);
+                this.PlayerInfoSynNotice(msg)
                 break
             }
             case PACK.errors.Error: {

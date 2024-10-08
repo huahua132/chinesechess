@@ -6641,6 +6641,7 @@ $root.hallserver_player = (function() {
          * @memberof hallserver_player
          * @interface IPlayerInfoNotice
          * @property {string|null} [nickname] PlayerInfoNotice nickname
+         * @property {number|null} [rankScore] PlayerInfoNotice rankScore
          */
 
         /**
@@ -6665,6 +6666,14 @@ $root.hallserver_player = (function() {
          * @instance
          */
         PlayerInfoNotice.prototype.nickname = "";
+
+        /**
+         * PlayerInfoNotice rankScore.
+         * @member {number} rankScore
+         * @memberof hallserver_player.PlayerInfoNotice
+         * @instance
+         */
+        PlayerInfoNotice.prototype.rankScore = 0;
 
         /**
          * Creates a new PlayerInfoNotice instance using the specified properties.
@@ -6692,6 +6701,8 @@ $root.hallserver_player = (function() {
                 writer = $Writer.create();
             if (message.nickname != null && Object.hasOwnProperty.call(message, "nickname"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.nickname);
+            if (message.rankScore != null && Object.hasOwnProperty.call(message, "rankScore"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.rankScore);
             return writer;
         };
 
@@ -6728,6 +6739,10 @@ $root.hallserver_player = (function() {
                 switch (tag >>> 3) {
                 case 1: {
                         message.nickname = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.rankScore = reader.int32();
                         break;
                     }
                 default:
@@ -6768,6 +6783,9 @@ $root.hallserver_player = (function() {
             if (message.nickname != null && message.hasOwnProperty("nickname"))
                 if (!$util.isString(message.nickname))
                     return "nickname: string expected";
+            if (message.rankScore != null && message.hasOwnProperty("rankScore"))
+                if (!$util.isInteger(message.rankScore))
+                    return "rankScore: integer expected";
             return null;
         };
 
@@ -6785,6 +6803,8 @@ $root.hallserver_player = (function() {
             var message = new $root.hallserver_player.PlayerInfoNotice();
             if (object.nickname != null)
                 message.nickname = String(object.nickname);
+            if (object.rankScore != null)
+                message.rankScore = object.rankScore | 0;
             return message;
         };
 
@@ -6801,10 +6821,14 @@ $root.hallserver_player = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.nickname = "";
+                object.rankScore = 0;
+            }
             if (message.nickname != null && message.hasOwnProperty("nickname"))
                 object.nickname = message.nickname;
+            if (message.rankScore != null && message.hasOwnProperty("rankScore"))
+                object.rankScore = message.rankScore;
             return object;
         };
 
@@ -6835,6 +6859,517 @@ $root.hallserver_player = (function() {
         };
 
         return PlayerInfoNotice;
+    })();
+
+    hallserver_player.oneSynInfo = (function() {
+
+        /**
+         * Properties of an oneSynInfo.
+         * @memberof hallserver_player
+         * @interface IoneSynInfo
+         * @property {string|null} [fieldName] oneSynInfo fieldName
+         * @property {number|null} [isStr] oneSynInfo isStr
+         * @property {string|null} [valueStr] oneSynInfo valueStr
+         * @property {number|Long|null} [value] oneSynInfo value
+         */
+
+        /**
+         * Constructs a new oneSynInfo.
+         * @memberof hallserver_player
+         * @classdesc Represents an oneSynInfo.
+         * @implements IoneSynInfo
+         * @constructor
+         * @param {hallserver_player.IoneSynInfo=} [properties] Properties to set
+         */
+        function oneSynInfo(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * oneSynInfo fieldName.
+         * @member {string} fieldName
+         * @memberof hallserver_player.oneSynInfo
+         * @instance
+         */
+        oneSynInfo.prototype.fieldName = "";
+
+        /**
+         * oneSynInfo isStr.
+         * @member {number} isStr
+         * @memberof hallserver_player.oneSynInfo
+         * @instance
+         */
+        oneSynInfo.prototype.isStr = 0;
+
+        /**
+         * oneSynInfo valueStr.
+         * @member {string} valueStr
+         * @memberof hallserver_player.oneSynInfo
+         * @instance
+         */
+        oneSynInfo.prototype.valueStr = "";
+
+        /**
+         * oneSynInfo value.
+         * @member {number|Long} value
+         * @memberof hallserver_player.oneSynInfo
+         * @instance
+         */
+        oneSynInfo.prototype.value = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new oneSynInfo instance using the specified properties.
+         * @function create
+         * @memberof hallserver_player.oneSynInfo
+         * @static
+         * @param {hallserver_player.IoneSynInfo=} [properties] Properties to set
+         * @returns {hallserver_player.oneSynInfo} oneSynInfo instance
+         */
+        oneSynInfo.create = function create(properties) {
+            return new oneSynInfo(properties);
+        };
+
+        /**
+         * Encodes the specified oneSynInfo message. Does not implicitly {@link hallserver_player.oneSynInfo.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_player.oneSynInfo
+         * @static
+         * @param {hallserver_player.IoneSynInfo} message oneSynInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        oneSynInfo.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.fieldName != null && Object.hasOwnProperty.call(message, "fieldName"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.fieldName);
+            if (message.isStr != null && Object.hasOwnProperty.call(message, "isStr"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.isStr);
+            if (message.valueStr != null && Object.hasOwnProperty.call(message, "valueStr"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.valueStr);
+            if (message.value != null && Object.hasOwnProperty.call(message, "value"))
+                writer.uint32(/* id 4, wireType 0 =*/32).int64(message.value);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified oneSynInfo message, length delimited. Does not implicitly {@link hallserver_player.oneSynInfo.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_player.oneSynInfo
+         * @static
+         * @param {hallserver_player.IoneSynInfo} message oneSynInfo message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        oneSynInfo.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an oneSynInfo message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_player.oneSynInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_player.oneSynInfo} oneSynInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        oneSynInfo.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_player.oneSynInfo();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        message.fieldName = reader.string();
+                        break;
+                    }
+                case 2: {
+                        message.isStr = reader.int32();
+                        break;
+                    }
+                case 3: {
+                        message.valueStr = reader.string();
+                        break;
+                    }
+                case 4: {
+                        message.value = reader.int64();
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an oneSynInfo message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_player.oneSynInfo
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_player.oneSynInfo} oneSynInfo
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        oneSynInfo.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an oneSynInfo message.
+         * @function verify
+         * @memberof hallserver_player.oneSynInfo
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        oneSynInfo.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.fieldName != null && message.hasOwnProperty("fieldName"))
+                if (!$util.isString(message.fieldName))
+                    return "fieldName: string expected";
+            if (message.isStr != null && message.hasOwnProperty("isStr"))
+                if (!$util.isInteger(message.isStr))
+                    return "isStr: integer expected";
+            if (message.valueStr != null && message.hasOwnProperty("valueStr"))
+                if (!$util.isString(message.valueStr))
+                    return "valueStr: string expected";
+            if (message.value != null && message.hasOwnProperty("value"))
+                if (!$util.isInteger(message.value) && !(message.value && $util.isInteger(message.value.low) && $util.isInteger(message.value.high)))
+                    return "value: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates an oneSynInfo message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_player.oneSynInfo
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_player.oneSynInfo} oneSynInfo
+         */
+        oneSynInfo.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_player.oneSynInfo)
+                return object;
+            var message = new $root.hallserver_player.oneSynInfo();
+            if (object.fieldName != null)
+                message.fieldName = String(object.fieldName);
+            if (object.isStr != null)
+                message.isStr = object.isStr | 0;
+            if (object.valueStr != null)
+                message.valueStr = String(object.valueStr);
+            if (object.value != null)
+                if ($util.Long)
+                    (message.value = $util.Long.fromValue(object.value)).unsigned = false;
+                else if (typeof object.value === "string")
+                    message.value = parseInt(object.value, 10);
+                else if (typeof object.value === "number")
+                    message.value = object.value;
+                else if (typeof object.value === "object")
+                    message.value = new $util.LongBits(object.value.low >>> 0, object.value.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an oneSynInfo message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_player.oneSynInfo
+         * @static
+         * @param {hallserver_player.oneSynInfo} message oneSynInfo
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        oneSynInfo.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.fieldName = "";
+                object.isStr = 0;
+                object.valueStr = "";
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.value = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.value = options.longs === String ? "0" : 0;
+            }
+            if (message.fieldName != null && message.hasOwnProperty("fieldName"))
+                object.fieldName = message.fieldName;
+            if (message.isStr != null && message.hasOwnProperty("isStr"))
+                object.isStr = message.isStr;
+            if (message.valueStr != null && message.hasOwnProperty("valueStr"))
+                object.valueStr = message.valueStr;
+            if (message.value != null && message.hasOwnProperty("value"))
+                if (typeof message.value === "number")
+                    object.value = options.longs === String ? String(message.value) : message.value;
+                else
+                    object.value = options.longs === String ? $util.Long.prototype.toString.call(message.value) : options.longs === Number ? new $util.LongBits(message.value.low >>> 0, message.value.high >>> 0).toNumber() : message.value;
+            return object;
+        };
+
+        /**
+         * Converts this oneSynInfo to JSON.
+         * @function toJSON
+         * @memberof hallserver_player.oneSynInfo
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        oneSynInfo.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for oneSynInfo
+         * @function getTypeUrl
+         * @memberof hallserver_player.oneSynInfo
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        oneSynInfo.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_player.oneSynInfo";
+        };
+
+        return oneSynInfo;
+    })();
+
+    hallserver_player.PlayerInfoSynNotice = (function() {
+
+        /**
+         * Properties of a PlayerInfoSynNotice.
+         * @memberof hallserver_player
+         * @interface IPlayerInfoSynNotice
+         * @property {Array.<hallserver_player.IoneSynInfo>|null} [synList] PlayerInfoSynNotice synList
+         */
+
+        /**
+         * Constructs a new PlayerInfoSynNotice.
+         * @memberof hallserver_player
+         * @classdesc Represents a PlayerInfoSynNotice.
+         * @implements IPlayerInfoSynNotice
+         * @constructor
+         * @param {hallserver_player.IPlayerInfoSynNotice=} [properties] Properties to set
+         */
+        function PlayerInfoSynNotice(properties) {
+            this.synList = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * PlayerInfoSynNotice synList.
+         * @member {Array.<hallserver_player.IoneSynInfo>} synList
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @instance
+         */
+        PlayerInfoSynNotice.prototype.synList = $util.emptyArray;
+
+        /**
+         * Creates a new PlayerInfoSynNotice instance using the specified properties.
+         * @function create
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @static
+         * @param {hallserver_player.IPlayerInfoSynNotice=} [properties] Properties to set
+         * @returns {hallserver_player.PlayerInfoSynNotice} PlayerInfoSynNotice instance
+         */
+        PlayerInfoSynNotice.create = function create(properties) {
+            return new PlayerInfoSynNotice(properties);
+        };
+
+        /**
+         * Encodes the specified PlayerInfoSynNotice message. Does not implicitly {@link hallserver_player.PlayerInfoSynNotice.verify|verify} messages.
+         * @function encode
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @static
+         * @param {hallserver_player.IPlayerInfoSynNotice} message PlayerInfoSynNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerInfoSynNotice.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.synList != null && message.synList.length)
+                for (var i = 0; i < message.synList.length; ++i)
+                    $root.hallserver_player.oneSynInfo.encode(message.synList[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified PlayerInfoSynNotice message, length delimited. Does not implicitly {@link hallserver_player.PlayerInfoSynNotice.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @static
+         * @param {hallserver_player.IPlayerInfoSynNotice} message PlayerInfoSynNotice message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PlayerInfoSynNotice.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a PlayerInfoSynNotice message from the specified reader or buffer.
+         * @function decode
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {hallserver_player.PlayerInfoSynNotice} PlayerInfoSynNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerInfoSynNotice.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.hallserver_player.PlayerInfoSynNotice();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1: {
+                        if (!(message.synList && message.synList.length))
+                            message.synList = [];
+                        message.synList.push($root.hallserver_player.oneSynInfo.decode(reader, reader.uint32()));
+                        break;
+                    }
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a PlayerInfoSynNotice message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {hallserver_player.PlayerInfoSynNotice} PlayerInfoSynNotice
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PlayerInfoSynNotice.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a PlayerInfoSynNotice message.
+         * @function verify
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        PlayerInfoSynNotice.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.synList != null && message.hasOwnProperty("synList")) {
+                if (!Array.isArray(message.synList))
+                    return "synList: array expected";
+                for (var i = 0; i < message.synList.length; ++i) {
+                    var error = $root.hallserver_player.oneSynInfo.verify(message.synList[i]);
+                    if (error)
+                        return "synList." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a PlayerInfoSynNotice message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {hallserver_player.PlayerInfoSynNotice} PlayerInfoSynNotice
+         */
+        PlayerInfoSynNotice.fromObject = function fromObject(object) {
+            if (object instanceof $root.hallserver_player.PlayerInfoSynNotice)
+                return object;
+            var message = new $root.hallserver_player.PlayerInfoSynNotice();
+            if (object.synList) {
+                if (!Array.isArray(object.synList))
+                    throw TypeError(".hallserver_player.PlayerInfoSynNotice.synList: array expected");
+                message.synList = [];
+                for (var i = 0; i < object.synList.length; ++i) {
+                    if (typeof object.synList[i] !== "object")
+                        throw TypeError(".hallserver_player.PlayerInfoSynNotice.synList: object expected");
+                    message.synList[i] = $root.hallserver_player.oneSynInfo.fromObject(object.synList[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a PlayerInfoSynNotice message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @static
+         * @param {hallserver_player.PlayerInfoSynNotice} message PlayerInfoSynNotice
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        PlayerInfoSynNotice.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.synList = [];
+            if (message.synList && message.synList.length) {
+                object.synList = [];
+                for (var j = 0; j < message.synList.length; ++j)
+                    object.synList[j] = $root.hallserver_player.oneSynInfo.toObject(message.synList[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this PlayerInfoSynNotice to JSON.
+         * @function toJSON
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        PlayerInfoSynNotice.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Gets the default type url for PlayerInfoSynNotice
+         * @function getTypeUrl
+         * @memberof hallserver_player.PlayerInfoSynNotice
+         * @static
+         * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+         * @returns {string} The default type url
+         */
+        PlayerInfoSynNotice.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+            if (typeUrlPrefix === undefined) {
+                typeUrlPrefix = "type.googleapis.com";
+            }
+            return typeUrlPrefix + "/hallserver_player.PlayerInfoSynNotice";
+        };
+
+        return PlayerInfoSynNotice;
     })();
 
     return hallserver_player;
