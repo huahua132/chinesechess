@@ -1,0 +1,76 @@
+package hallserver_email;
+import "../../commonlualib/protos/common/common.proto";
+
+//协议主码 本服独有协议 占用 101-654 公共占用1-50 游戏公共占用50-100
+enum main {
+	hallserver_email = 106;
+}
+//协议子码 req res 占用1-80  通知占用80-100
+enum sub {
+    ReadEmailReq       = 1;       //请求已读
+    ReadEmailRes       = 2;       //回复已读
+    ItemListEmailReq   = 3;       //领取道具列表
+    ItemListEmailRes   = 4;       //回复领取道具列表
+    DelEmailReq        = 5;       //删除邮件
+    DelEmailRes        = 6;       //回复删除邮件
+
+    AllEmailNotice     = 80;      //通知所有邮件
+    OneEmailNotice     = 81;      //通知一条邮件
+    DelEmailNotice     = 82;      //通知删除邮件
+}
+
+//读取邮件
+message ReadEmailReq {
+    repeated int64 guid_list = 1;       //邮件guid
+}
+
+message ReadEmailRes {
+    repeated int64 guid_list = 1;       //邮件guid
+}
+
+//领取邮件奖励道具
+message ItemListEmailReq {
+    repeated int64 guid_list = 1;       //邮件guid
+}
+
+message ItemListEmailRes {
+    repeated int64 guid_list = 1;       //邮件guid
+}
+
+//删除邮件
+message DelEmailReq {
+    repeated int64 guid_list = 1;       //邮件guid
+}
+
+//回复删除邮件
+message DelEmailRes {
+    repeated int64 guid_list = 1;       //邮件guid
+}
+
+message oneEmail {
+    optional int64 guid = 1;
+    optional int32 email_type = 2;      //邮件类型 1全服邮件 2系统邮件 3好友
+    optional int64 from_id = 3;         //来源ID   好友ID
+    optional string title = 4;          //标题
+    optional string content = 5;        //内容
+    optional int64 create_time = 6;     //创建时间
+    optional int64 vaild_time = 7;      //有效时间
+    repeated common.Item item_list = 8; //道具奖励
+    optional int32 read_flag = 9;       //已读标记 1已读 0未读
+    optional int32 item_flag = 10;      //道具可领标记  0不可领 1可领 2已领取
+}
+
+//下发所有邮件
+message AllEmailNotice {
+    repeated oneEmail email_list = 1;
+}
+
+//下发一条邮件
+message OneEmailNotice {
+    optional oneEmail email = 1;
+}
+
+//通知删除邮件
+message DelEmailNotice {
+    repeated int64 guid_list = 1;       //邮件guid
+}

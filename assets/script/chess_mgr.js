@@ -6,7 +6,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 import {CHESS_TYPE} from '../jslib/enum/CHESS'
 import {TEAM_TYPE} from '../jslib/enum/TEAM'
-import proto from '../proto.js/proto.js'
+import proto from '../proto-js/proto.js'
 import netpack from '../jslib/net/netpack.js'
 import {GAME_STATE} from '../jslib/enum/GAME_STATE.js'
 import pack_helper from '../jslib/pack_helper.js'
@@ -16,7 +16,7 @@ import COMMON_PACK from '../jslib/pack/COMMON_PACK.js'
 import GAME_COMMON_PACK from '../jslib/pack/GAME_COMMON_PACK.js'
 import CHESS_PACK from '../jslib/pack/CHESS_PACK.js'
 
-var PACK = pack_helper.new([COMMON_PACK, GAME_COMMON_PACK, CHESS_PACK])
+var PACK = pack_helper.new(proto, [COMMON_PACK, GAME_COMMON_PACK, CHESS_PACK])
 
 console.log(">>>>>>>>>>>>>>>>>>>PACK>>>>>>>>>>>>>>>", PACK)
 

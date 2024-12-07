@@ -5,16 +5,15 @@
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 var global = require("global")
-import proto from '../proto.js/proto.js'
+import proto from '../proto-js/proto.js'
 import netpack from '../jslib/net/netpack.js'
-import ITEM from '../jslib/enum/ITEM.js'
 import pack_helper from '../jslib/pack_helper.js'
 
 import COMMON_PACK from '../jslib/pack/COMMON_PACK.js'
 import GAME_COMMON_PACK from '../jslib/pack/GAME_COMMON_PACK.js'
 import HALL_PACK from '../jslib/pack/HALL_PACK.js'
 
-var PACK = pack_helper.new([COMMON_PACK, GAME_COMMON_PACK, HALL_PACK])
+var PACK = pack_helper.new(proto, [COMMON_PACK, GAME_COMMON_PACK, HALL_PACK])
 
 console.log(">>>>>>>>>>>>>>>>>>>PACK>>>>>>>>>>>>>>>", PACK)
 
@@ -59,6 +58,15 @@ cc.Class({
         game_record : {
             default : null,
             type : cc.Node,
+        },
+
+        email_list : {
+            default : null,
+            type : cc.Node,
+        },
+        email_prefab : {
+            default: null,
+            type : cc.Prefab,
         },
     },
 
@@ -187,6 +195,72 @@ cc.Class({
             label.string += oneRecord.createTime + '   ' + oneRecord.tableId + '  ' + oneRecord.score + '\n'
         }
     },
+    //所有邮件记录
+    AllEmailNotice(msg) {
+        console.log("AllEmailNotice >>> ", msg, this.email_list)
+        let email_list = this.email_list.getChildByName('mask').getChildByName('email_list')
+        for (let i = 0; i < email_list.childrenCount; i++) {
+            let cnode = email_list.children[i]
+            cnode.destroy()
+        }
+        msg.emailList.sort((a,b) => a.createTime < b.createTime)
+        
+        for (let i = 0; i < msg.emailList.length; i++) {
+            let one_email = msg.emailList[i]
+            let email = cc.instantiate(this.email_prefab)
+            let email_obj = email.getComponent('email')
+            email_obj.init(this, one_email)
+            email_list.addChild(email)
+        }
+    },
+    //单个邮件记录
+    OneEmailNotice(msg) {
+        console.log("OneEmailNotice >>> ", msg)
+        let email_list = this.email_list.getChildByName('mask').getChildByName('email_list')
+        let emailInfo = msg.email
+        let email = cc.instantiate(this.email_prefab)
+        let email_obj = email.getComponent('email')
+        email_obj.init(this, emailInfo)
+        email_list.addChild(email)
+    },
+
+    execEmailEvent(msg,event) {
+        let email_list = this.email_list.getChildByName('mask').getChildByName('email_list')
+        let guidMap = {}
+        for (let i = 0; i < msg.guidList.length; i++) {
+            let guid = msg.guidList[i]
+            guidMap[guid] = true
+        }
+        console.log("execEmailEvent >>> ", event, msg, guidMap)
+        for (let i = 0; i < email_list.childrenCount; i++) {
+            let email = email_list.children[i]
+            let email_obj = email.getComponent('email')
+            if (guidMap[email_obj.getGuid()]) {
+                if (event == "read") {
+                    email_obj.readed()
+                } else if (event == "item_list") {
+                    email_obj.itemListed()
+                }else if (event == "del") {
+                    email.destroy()
+                }
+            }
+        }
+    },
+
+    //通知删除邮件
+    DelEmailNotice(msg) {
+        console.log("DelEmailNotice >>> ", msg)
+        this.execEmailEvent(msg, "del")
+    },
+    //回复已读邮件
+    ReadEmailRes(msg) {
+        this.execEmailEvent(msg, "read")
+    },
+    //回复已领取邮件
+    ItemListEmailRes(msg) {
+        console.log("ItemListEmailRes >>> ", msg)
+        this.execEmailEvent(msg, "item_list")
+    },
     // LIFE-CYCLE CALLBACKS:
     dispatch(packid, packbuffer) {
         console.log("dispatch >>> ",packid)
@@ -239,6 +313,31 @@ cc.Class({
             case PACK.hallserver_player.PlayerInfoSynNotice: {
                 let msg = proto.hallserver_player.PlayerInfoSynNotice.decode(packbuffer);
                 this.PlayerInfoSynNotice(msg)
+                break
+            }
+            case PACK.hallserver_email.AllEmailNotice: {
+                let msg = proto.hallserver_email.AllEmailNotice.decode(packbuffer);
+                this.AllEmailNotice(msg)
+                break
+            }
+            case PACK.hallserver_email.OneEmailNotice: {
+                let msg = proto.hallserver_email.OneEmailNotice.decode(packbuffer);
+                this.OneEmailNotice(msg)
+                break
+            }
+            case PACK.hallserver_email.DelEmailNotice: {
+                let msg = proto.hallserver_email.DelEmailNotice.decode(packbuffer);
+                this.DelEmailNotice(msg)
+                break
+            }
+            case PACK.hallserver_email.ReadEmailRes: {
+                let msg = proto.hallserver_email.ReadEmailRes.decode(packbuffer);
+                this.ReadEmailRes(msg)
+                break
+            }
+            case PACK.hallserver_email.ItemListEmailRes: {
+                let msg = proto.hallserver_email.ItemListEmailRes.decode(packbuffer);
+                this.ItemListEmailRes(msg)
                 break
             }
             case PACK.errors.Error: {
@@ -368,6 +467,51 @@ cc.Class({
             let send_buffer = netpack.pack(PACK.hallserver_game_record.RecordListReq, proto.hallserver_game_record.RecordListReq.encode(record_list_req).finish())
             this.ws.send(send_buffer)
         }
+    },
+
+    //打开邮件列表
+    OnEmailListClick(event) {
+        //关闭
+        this.m_open_email = null
+        if (this.m_email_is_open) {
+            this.m_email_is_open = false
+            this.email_list.active = false
+        } else {
+            this.m_email_is_open = true
+            this.email_list.active = true
+        }
+    },
+
+    //打开邮件
+    OnOpenEmail(email) {
+        console.log("OnOpenEmail >>> ", email, email.getReadFlag(), email.getGuid())
+        if (this.m_open_email) {
+            this.m_open_email.on_click()
+        }
+        this.m_open_email = email
+
+        if (email.getReadFlag() != 1) {
+            let ReadEmailReq = {
+                guidList : [email.getGuid()]
+            }
+            let send_buffer = netpack.pack(PACK.hallserver_email.ReadEmailReq, proto.hallserver_email.ReadEmailReq.encode(ReadEmailReq).finish())
+            this.ws.send(send_buffer)
+        }
+    },
+
+    //关闭邮件
+    OnCloseEmail(email) {
+        console.log("OnCloseEmail >>> ", email)
+        this.m_open_email = null
+    },
+
+    //领取邮件奖励
+    on_item_list_bt(guid) {
+        let ItemListEmailReq = {
+            guidList : [guid]
+        }
+        let send_buffer = netpack.pack(PACK.hallserver_email.ItemListEmailReq, proto.hallserver_email.ItemListEmailReq.encode(ItemListEmailReq).finish())
+        this.ws.send(send_buffer)
     },
 
     start () {

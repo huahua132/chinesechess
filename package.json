@@ -4,6 +4,6 @@
     "protobufjs-cli": "^1.1.1"
   },
   "scripts": {
-    "build-proto:pbjs": "pbjs --dependency protobufjs/minimal.js --target static-module --wrap commonjs --out ./assets/proto.js/proto.js ./assets/proto/*.proto"
+    "build-proto:pbjs": "pbjs --dependency protobufjs/minimal.js --target static-module --wrap commonjs --out ./assets/proto-js/proto.js ./assets/proto/*.proto"
   }
 }

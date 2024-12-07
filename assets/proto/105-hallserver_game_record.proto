@@ -1,0 +1,34 @@
+package hallserver_game_record;
+
+//协议主码 本服独有协议 占用 101-654 公共占用1-50 游戏公共占用50-100
+enum main {
+	hallserver_game_record = 105;
+}
+//协议子码 req res 占用1-80  通知占用80-100
+enum sub {
+    RecordListReq      = 1;       //请求记录列表
+    RecordListRes      = 2;       //回复记录列表
+}
+
+message OneRecord {
+    optional int64 create_time = 1;           //创建时间
+    optional string table_id   = 2;           //桌子ID
+    optional int32 game_id     = 3;           //游戏ID
+    optional int32 score       = 4;           //改变分数
+}
+
+//请求记录列表
+message RecordListReq {
+    optional uint32 pageage_num   = 1;      //第几页
+    optional uint32 pageage_count = 2;      //多少数量
+    optional uint32 cursor        = 3;      //游标
+}
+
+//回复记录列表
+message RecordListRes {
+    optional uint32 pageage_num = 1;        //第几页
+    optional uint32 pageage_count = 2;      //多少数量
+    optional uint32 total_count = 3;        //总数量
+    repeated OneRecord record_list = 4;     //记录列表
+    optional uint32 next_cursor = 5;        //下一个游标
+}
